@@ -1,5 +1,8 @@
 # Railway picks this up from the repo root. Docs:
 # https://docs.railway.com/guides/config-as-code
+#
+# Variables (dashboard): DATABASE_URL, SESSION_SECRET, NODE_ENV=production,
+# ADMIN_PASSWORD (manager /admin), EMPLOYEE_ACCESS_PIN, optional OPENAI_* / SMTP_*.
 
 [deploy]
 # /api/live always 200 (no DB). Use /api/health manually to verify Postgres.
