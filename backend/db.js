@@ -2,6 +2,13 @@ const { Pool } = require("pg");
 
 let pool = null;
 
+function useSsl(databaseUrl) {
+  if (process.env.DATABASE_SSL === "false") return false;
+  const u = databaseUrl || "";
+  if (/localhost|127\.0\.0\.1/i.test(u)) return false;
+  return true;
+}
+
 function getPool() {
   if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is not set");
@@ -9,11 +16,9 @@ function getPool() {
   if (!pool) {
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
-      ssl:
-        process.env.DATABASE_URL.includes("localhost") ||
-        process.env.DATABASE_SSL === "false"
-          ? false
-          : { rejectUnauthorized: false },
+      ssl: useSsl(process.env.DATABASE_URL)
+        ? { rejectUnauthorized: false }
+        : false,
     });
   }
   return pool;

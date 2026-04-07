@@ -32,6 +32,11 @@ app.use(
 );
 
 app.use(express.json({ limit: "512kb" }));
+
+app.get("/api/health", (_req, res) => {
+  res.json({ ok: true });
+});
+
 app.use(express.static(frontendDir));
 
 app.use("/api/submit", submitRouter);
