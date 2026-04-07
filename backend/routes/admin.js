@@ -1,5 +1,9 @@
 const express = require("express");
-const { listSubmissions } = require("../db");
+const {
+  listSubmissions,
+  resolveDatabaseUrl,
+  listPresentDatabaseEnvKeys,
+} = require("../db");
 const {
   isAdminLoginRateLimited,
   noteAdminLoginFailure,
@@ -91,17 +95,30 @@ router.get("/submissions", async (req, res) => {
     return res.json(payload);
   } catch (err) {
     console.error("admin submissions error", err);
-    const msg = err && err.message ? String(err.message) : "";
-    if (msg.includes("DATABASE_URL")) {
+    const notConfigured =
+      (err && err.code === "DB_NOT_CONFIGURED") || !resolveDatabaseUrl();
+
+    if (notConfigured) {
+      const found = listPresentDatabaseEnvKeys();
+      const hint =
+        found.length > 0
+          ? ` Partial database env detected (${found.slice(0, 6).join(", ")}${found.length > 6 ? ", …" : ""}) — connection string may be incomplete or on the wrong service.`
+          : "";
       return res.status(503).json({
         error: "database_not_configured",
         message:
-          "Quiz results live in the database. Set DATABASE_URL on the server, then restart the app.",
+          "Quiz results need PostgreSQL linked to **this** app. In Render/Railway/your host: add or reference DATABASE_URL (sometimes DATABASE_PRIVATE_URL) on the **web** service, redeploy, then open this page again." +
+          hint,
       });
     }
-    return res.status(500).json({
-      error: "Failed to load submissions",
-      message: "Could not load data. Try again in a moment.",
+
+    const detail =
+      err && err.message ? String(err.message).slice(0, 240) : "unknown error";
+    return res.status(503).json({
+      error: "database_unavailable",
+      message:
+        "Could not read from the database (connection, credentials, or SSL). Check DATABASE_URL and that Postgres is reachable. If it persists, see server logs. " +
+        `(${detail})`,
     });
   }
 });

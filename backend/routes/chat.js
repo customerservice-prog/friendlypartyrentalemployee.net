@@ -26,7 +26,8 @@ Rules:
 - Use the REFERENCE PRICE LIST below when the question is about a listed item. Quote those figures exactly when they apply.
 - If something is not covered in the reference, say clearly that you do not see it in the training catalog and the employee should confirm with a manager, the live price book, or the shop system before quoting.
 - Do not invent prices, policies, delivery rules, or legal terms.
-- Be concise and practical: suggest what to say to the customer when helpful.
+- Prefer short, actionable answers staff can read on a phone. Offer sample customer-facing wording when useful.
+- If the employee asks meta questions (e.g. whether you are working), answer briefly and return to rental help.
 - Format answers with short paragraphs or bullet points for quick reading on the job.
 
 REFERENCE PRICE LIST (from official employee training quiz):
@@ -127,11 +128,23 @@ router.post("/", chatRateLimit, async (req, res) => {
       message: { role: "assistant", content: text.trim() || "(No response)" },
     });
   } catch (err) {
-    console.error("OpenAI chat error", err.message);
+    const code =
+      err && typeof err === "object" && err.status != null ? err.status : "";
+    console.error(
+      "OpenAI chat error",
+      err.message || err,
+      code !== "" ? "status=" + code : ""
+    );
     const isTimeout = err instanceof OpenAI.APIConnectionTimeoutError;
+    const isAuth =
+      code === 401 ||
+      (err.message &&
+        /401|invalid.*key|incorrect api key/i.test(String(err.message)));
     const safe = isTimeout
       ? "The assistant took too long to respond. Try a shorter question."
-      : "Assistant request failed. Try again in a moment.";
+      : isAuth
+        ? "Assistant is misconfigured on the server. Use the offline training library or ask your manager to check the API key."
+        : "Assistant request failed. Try again in a moment.";
     return res.status(502).json({
       error: isTimeout ? "assistant_timeout" : "assistant_upstream_error",
       message: safe,

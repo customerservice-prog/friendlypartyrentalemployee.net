@@ -305,14 +305,38 @@
     return window.__FPR_ASSISTANT_KB_PROMISE;
   };
 
+  /**
+   * Fast path: official pricing rows + staff Q&A only (no pattern fallback).
+   * Call after FPR_PRICING_FAQ_LOAD() so KB is populated.
+   */
+  window.FPR_TRY_KNOWLEDGE_LOOKUP = function(userMessage) {
+    return tryUnifiedKnowledgeAnswer(userMessage);
+  };
+
+  /** Client-side cap so a stuck OpenAI call does not freeze the UI (server may wait longer). */
+  var CHAT_FETCH_MS = 65000;
+
   window.FPR_ASSISTANT_REPLY = async function(messages) {
+    var signal = null;
+    var to = null;
+    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) {
+      signal = AbortSignal.timeout(CHAT_FETCH_MS);
+    } else {
+      var ctl = new AbortController();
+      to = setTimeout(function() {
+        ctl.abort();
+      }, CHAT_FETCH_MS);
+      signal = ctl.signal;
+    }
     try {
       var res = await fetch('/api/chat', {
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: messages }),
+        signal: signal,
       });
+      if (to) clearTimeout(to);
       var data = await res.json().catch(function() {
         return {};
       });
@@ -344,8 +368,22 @@
         status: res.status,
         message: data.message || '',
       };
-    } catch (_) {
-      return { ok: false, content: null, status: 0, message: '' };
+    } catch (err) {
+      if (to) clearTimeout(to);
+      var aborted =
+        err &&
+        (err.name === 'AbortError' ||
+          err.name === 'TimeoutError' ||
+          String(err.message || '').indexOf('aborted') !== -1);
+      return {
+        ok: false,
+        content: null,
+        status: 0,
+        message: aborted
+          ? 'Assistant request timed out.'
+          : '',
+        error: aborted ? 'timeout' : 'network',
+      };
     }
   };
 

@@ -109,6 +109,45 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
   },
   {
     "k": [
+      "not responding",
+      "broken",
+      "not working",
+      "error",
+      "timeout",
+      "assistant down"
+    ],
+    "q": "The AI training assistant is not answering for me.",
+    "a": "Checklist: (1) **Sign in** with your employee PIN on the hub. (2) If a **quiz is open**, finish or leave it — chat is **paused during quizzes**. (3) Ask with **specific words** (item + size + date) so the offline library can match. (4) For list prices, stay signed in so **pricing + staff Q&A** loads. (5) Live cloud AI depends on server setup — if it fails you still get **offline answers**. Call **315-884-1498** for live operations help."
+  },
+  {
+    "k": [
+      "openai",
+      "chatgpt",
+      "cloud ai"
+    ],
+    "q": "Does the training chat use ChatGPT?",
+    "a": "When enabled on the server, **optional cloud AI** may answer after the **local training library** tries first. The browser cannot tell which vendor. **Official quiz prices** still come from our loaded pricing data — not guesses."
+  },
+  {
+    "k": [
+      "offline",
+      "without internet",
+      "library"
+    ],
+    "q": "Does the assistant work without cloud AI?",
+    "a": "Yes. **Signed-in** staff load **official pricing rows** and **staff Q&A** into the browser. That works even when live AI is off or slow."
+  },
+  {
+    "k": [
+      "short answer",
+      "too long",
+      "faster"
+    ],
+    "q": "The bot talks too much.",
+    "a": "Ask: “**One sentence:** …” For prices, name the **item and size** (e.g. “20x30 pole tent price”)."
+  },
+  {
+    "k": [
       "quote",
       "estimate",
       "ballpark"
@@ -1171,7 +1210,4413 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
     ],
     "q": "Fire marshal inspection.",
     "a": "Provide specs and setup diagrams via coordinator; crew complies on site."
+  },
+  {
+    "k": [
+      "tent size",
+      "how big",
+      "guest count",
+      "capacity"
+    ],
+    "q": "How do I pick the right tent size?",
+    "a": "Ask **guest count**, **seated vs standing**, and **layout** (buffet, dance floor, band). Use company layout guides or a lead for math — don't wing capacity. **315-884-1498** for planning help."
+  },
+  {
+    "k": [
+      "popup",
+      "pop up",
+      "pop-up",
+      "ez up",
+      "canopy 10x10"
+    ],
+    "q": "Customer asks about small pop-up / EZ canopy.",
+    "a": "EZ-style **pop-up canopies** are common for vendors and small shade — **exact inventory and prices** come from signed-in pricing / coordinator. Confirm wind rules with customer."
+  },
+  {
+    "k": [
+      "white tent",
+      "wedding tent"
+    ],
+    "q": "They want a white tent for a wedding.",
+    "a": "Confirm **frame vs pole**, **size**, and **sidewalls/lighting** upsells. White weddings often pair **chiavari or white resin chairs** + linens — bundle with shop."
+  },
+  {
+    "k": [
+      "clear tent",
+      "transparent"
+    ],
+    "q": "Do we have clear-top tents?",
+    "a": "If in inventory, quote from **price list or manager**; if not, offer standard frame/pole options. Never promise specialty structures from memory."
+  },
+  {
+    "k": [
+      "napkin",
+      "charger",
+      "plate setting"
+    ],
+    "q": "Chargers / napkin fold / place settings.",
+    "a": "Confirm what **we stock** vs what caterer brings. Offer linens and basics per training; **don't invent** formal place-setting packages."
+  },
+  {
+    "k": [
+      "sweetheart table",
+      "head table"
+    ],
+    "q": "Sweetheart or head table setup.",
+    "a": "Common wedding add-on — note table size, chairs, backdrop/pipe-drape if applicable, and **linens**. Confirm with coordinator."
+  },
+  {
+    "k": [
+      "pipe and drape",
+      "backdrop",
+      "draping"
+    ],
+    "q": "Pipe and drape or fabric backdrop.",
+    "a": "May be a specialty line — check inventory and labor. **Quote with shop**, not from memory."
+  },
+  {
+    "k": [
+      "fog machine",
+      "haze",
+      "bubble machine",
+      "cold spark"
+    ],
+    "q": "Fog, bubbles, cold spark effects.",
+    "a": "**Venue rules vary** — many ban fog/haze. Confirm what's allowed before promising. Route technical specs to events lead."
+  },
+  {
+    "k": [
+      "stanchion",
+      "velvet rope",
+      "crowd control"
+    ],
+    "q": "Stanchions or crowd control.",
+    "a": "If stocked, add to quote; otherwise suggest alternatives. Confirm **count and layout**."
+  },
+  {
+    "k": [
+      "811",
+      "call before you dig",
+      "utilities",
+      "underground"
+    ],
+    "q": "Customer asks about underground utilities.",
+    "a": "For any staking/digging concern, advise them to **contact 811 / local utility locate** per local rules — you don't interpret locate law. Flag for crew."
+  },
+  {
+    "k": [
+      "overnight",
+      "leave overnight",
+      "multi night"
+    ],
+    "q": "Gear stays overnight at venue.",
+    "a": "Confirm **rental period and security** in writing. Customer responsible for **theft/vandalism** per agreement language — don't paraphrase legal terms; office confirms."
+  },
+  {
+    "k": [
+      "customer help",
+      "can i set up myself"
+    ],
+    "q": "Customer wants to set up themselves.",
+    "a": "Our model is usually **pro delivery & setup** for safety and warranty. If **will-call** exists for their items, shop defines scope — don't authorize DIY for gear that requires crew."
+  },
+  {
+    "k": [
+      "photo request",
+      "picture of tent"
+    ],
+    "q": "They want photos of equipment.",
+    "a": "Point to **website gallery** or offer email from office with **approved** photos — don't dig up personal phone pics."
+  },
+  {
+    "k": [
+      "walk through",
+      "site visit"
+    ],
+    "q": "Site visit before event.",
+    "a": "If offered, schedule through office/dispatch — **don't promise** a free site visit without approval."
+  },
+  {
+    "k": [
+      "venmo",
+      "zelle",
+      "cashapp",
+      "apple pay"
+    ],
+    "q": "Pay with Venmo / Zelle / Cash App.",
+    "a": "Only accept methods **your office actually uses**. Default: “I'll confirm how we can take payment for your order.”"
+  },
+  {
+    "k": [
+      "ach",
+      "wire transfer",
+      "bank transfer"
+    ],
+    "q": "Pay by ACH or wire.",
+    "a": "Commercial / large orders may allow it — **office provides instructions**. Never text routing numbers from memory."
+  },
+  {
+    "k": [
+      "double charge",
+      "charged twice"
+    ],
+    "q": "Customer says they were charged twice.",
+    "a": "Gather **amounts, dates, last 4 of card**; apologize; **billing** resolves — don't debit/credit promises on the call."
+  },
+  {
+    "k": [
+      "gift card",
+      "gift certificate"
+    ],
+    "q": "Gift certificates?",
+    "a": "If the company offers them, explain process; if not, say so and offer **other payment** paths."
+  },
+  {
+    "k": [
+      "referral",
+      "tell a friend"
+    ],
+    "q": "Referral program?",
+    "a": "Only describe programs that **officially exist** — otherwise thank them and suggest reviews/word of mouth without promising rewards."
+  },
+  {
+    "k": [
+      "rain out",
+      "forecast",
+      "postpone"
+    ],
+    "q": "Rain in forecast — will we postpone?",
+    "a": "Don't guarantee weather decisions. “We'll follow our agreement and coordinator guidance for your order.” Escalate to **315-884-1498** / manager."
+  },
+  {
+    "k": [
+      "halloween",
+      "trunk or treat",
+      "fall festival"
+    ],
+    "q": "School fall festival / trunk-or-treat.",
+    "a": "Popular picks: **canopies, tables, games, concessions**. Confirm **time window** and **power** for inflatables."
+  },
+  {
+    "k": [
+      "holiday party",
+      "christmas party",
+      "office party"
+    ],
+    "q": "Corporate holiday party.",
+    "a": "Bundle **tables, chairs, linens, lighting, dance floor options**; book early in December."
+  },
+  {
+    "k": [
+      "trivia",
+      "karaoke"
+    ],
+    "q": "They want trivia or karaoke setup.",
+    "a": "Clarify if we supply **AV** or only furniture/tent — often **partial**. Escalate AV packages."
+  },
+  {
+    "k": [
+      "live band",
+      "how much space"
+    ],
+    "q": "How much space for a live band?",
+    "a": "Varies by headcount and gear — involve coordinator. Note **stage**, **power drops**, **shelter**."
+  },
+  {
+    "k": [
+      "food truck",
+      "catering tent"
+    ],
+    "q": "Food truck + tent combo.",
+    "a": "Map **separate power**, **service flow**, and **guest seating**. Confirm truck dimensions and arrival window with customer."
+  },
+  {
+    "k": [
+      "cocktail",
+      "high top",
+      "high-top",
+      "standing table"
+    ],
+    "q": "Cocktail / high-top tables for mingling.",
+    "a": "Ask **how many** and **indoor vs outdoor**. Pair with **bar stools** only if you stock them — confirm inventory. Quote from **price list** when signed in."
+  },
+  {
+    "k": [
+      "kids table",
+      "children table",
+      "short table"
+    ],
+    "q": "Kids' seating or kids' tables.",
+    "a": "Clarify **ages and count**; match **table height** to chairs. Some events mix kids at standard tables — confirm layout with customer."
+  },
+  {
+    "k": [
+      "umbrella",
+      "patio umbrella"
+    ],
+    "q": "Do we rent patio umbrellas?",
+    "a": "If in catalog, quote it; if not, offer **pop-up canopy** alternatives. Don't promise styles we don't carry."
+  },
+  {
+    "k": [
+      "cathedral",
+      "window sidewall"
+    ],
+    "q": "Sidewalls with windows / cathedral walls.",
+    "a": "Often an **add-on** to tents — confirm style and **count of sections** with shop before quoting."
+  },
+  {
+    "k": [
+      "tent air conditioning",
+      "tent ac",
+      "cooling tent"
+    ],
+    "q": "AC inside a tent.",
+    "a": "Specialty **climate** gear may apply — sizing and power need **crew/coordinator** sign-off. Never guarantee comfort from memory."
+  },
+  {
+    "k": [
+      "misting fan",
+      "cooling fan"
+    ],
+    "q": "Misting or cooling fans outdoors.",
+    "a": "Popular for summer — confirm **water source**, **electrical**, and **venue rules**. Quote per inventory."
+  },
+  {
+    "k": [
+      "slip and slide",
+      "water games"
+    ],
+    "q": "Slip-and-slide or big water attractions.",
+    "a": "Confirm **insurance, venue rules, drainage, and staffing**. Large water pieces may be restricted — escalate to shop."
+  },
+  {
+    "k": [
+      "dunk tank",
+      "dunking booth"
+    ],
+    "q": "Dunk tank rental.",
+    "a": "If offered, review **safety, water, setup surface, and supervision** with shop — not a casual upsell without approval."
+  },
+  {
+    "k": [
+      "mechanical bull",
+      "bull ride"
+    ],
+    "q": "Mechanical bull or similar ride.",
+    "a": "Often specialty — **availability, operator, and insurance** are manager-level. Don't promise on the first call without check."
+  },
+  {
+    "k": [
+      "arcade",
+      "arcade game"
+    ],
+    "q": "Arcade games or carnival games.",
+    "a": "Different from standard inventory — verify **what we actually carry** (e.g. yard games vs full arcade)."
+  },
+  {
+    "k": [
+      "giant jenga",
+      "yard game package"
+    ],
+    "q": "Package of yard games only.",
+    "a": "Bundle **cornhole, giant games, etc.** with tables/chairs for picnics — confirm **counts** and **delivery window**."
+  },
+  {
+    "k": [
+      "helium",
+      "balloon filling"
+    ],
+    "q": "Do we fill helium or supply helium tanks?",
+    "a": "Only say yes if **officially offered** — many shops **do not** handle balloons. Default: “I'll check whether we supply helium for your date.”"
+  },
+  {
+    "k": [
+      "aisle runner",
+      "wedding aisle"
+    ],
+    "q": "Wedding aisle runner.",
+    "a": "May be linens/specialty — confirm **length, surface, and stakes/tape rules** with coordinator."
+  },
+  {
+    "k": [
+      "ceremony only",
+      "chairs only ceremony"
+    ],
+    "q": "Ceremony chairs only (short rental).",
+    "a": "Still capture **date, venue access, strike time**. Minimums may apply — office confirms."
+  },
+  {
+    "k": [
+      "memorial",
+      "celebration of life",
+      "repast"
+    ],
+    "q": "Memorial or celebration-of-life reception.",
+    "a": "Use **empathetic tone**. Suggest **simple tent, tables, chairs, coffee** bundles; confirm **timing** and **venue rules**."
+  },
+  {
+    "k": [
+      "quinceanera",
+      "quince"
+    ],
+    "q": "Quinceañera party rentals.",
+    "a": "Often **throne chair, tent, dance floor, uplighting, linens** — confirm **colors** and **timeline** early."
+  },
+  {
+    "k": [
+      "bar mitzvah",
+      "bat mitzvah"
+    ],
+    "q": "Bar or bat mitzvah celebration.",
+    "a": "Similar to large parties: **seating, tent, dance floor, AV** needs — involve coordinator for tight schedules."
+  },
+  {
+    "k": [
+      "prom",
+      "after prom",
+      "school dance"
+    ],
+    "q": "School prom or after-prom.",
+    "a": "Confirm **venue contract**, **end time**, and **adult supervision** requirements. Photo booth / lighting common upsells."
+  },
+  {
+    "k": [
+      "employee portal",
+      "training pin",
+      "quiz hub"
+    ],
+    "q": "Where do staff sign in for training?",
+    "a": "Direct them to the **training hub** on your site (manager shares the **employee PIN**). Quizzes may require **integrity acknowledgment** before starting."
+  },
+  {
+    "k": [
+      "sold out",
+      "out of stock",
+      "not available"
+    ],
+    "q": "Item is sold out for their date.",
+    "a": "Apologize; offer **next-closest substitute** or **alternate date** — **never** promise inventory without checking the system."
+  },
+  {
+    "k": [
+      "upgrade",
+      "better chair",
+      "nicer chair"
+    ],
+    "q": "Customer wants to upgrade chairs last minute.",
+    "a": "Check **inventory and price delta**; confirm **delivery/change fee** policy with office before promising."
+  },
+  {
+    "k": [
+      "folding chair vs resin",
+      "which chair"
+    ],
+    "q": "Folding vs resin chair — what's the difference?",
+    "a": "**Resin** often looks sharper for events; **metal folding** is utilitarian. Quote both from **training/price list**; explain **comfort and look** honestly."
+  },
+  {
+    "k": [
+      "buffet layout",
+      "serving table"
+    ],
+    "q": "How to lay out tables for a buffet?",
+    "a": "Suggest **flow** (start → sides → mains) and **linens**; **exact counts** depend on guest # — involve lead if large."
+  },
+  {
+    "k": [
+      "wifi",
+      "internet",
+      "hotspot"
+    ],
+    "q": "Customer needs WiFi for POS or streaming at event.",
+    "a": "We typically **don't** guarantee internet — they should arrange **venue WiFi or cellular hotspot**. Don't sell network services unless officially offered."
+  },
+  {
+    "k": [
+      "charcuterie board",
+      "grazing table"
+    ],
+    "q": "Charcuterie / grazing table hardware.",
+    "a": "Rent **tables, linens, chill setups** if applicable — **food** is usually caterer. Clarify scope."
+  },
+  {
+    "k": [
+      "farm table",
+      "harvest table",
+      "rustic table"
+    ],
+    "q": "Customer wants farm / harvest tables.",
+    "a": "Confirm **inventory and dimensions** — often paired with **cross-back or bench** seating. Quote from **price list**; rustic weddings book early."
+  },
+  {
+    "k": [
+      "cross back",
+      "vineyard chair",
+      "x back"
+    ],
+    "q": "Cross-back or vineyard-style chairs.",
+    "a": "Upsell for **rustic / wine-country** look — verify **colors in stock** vs customer sample photo."
+  },
+  {
+    "k": [
+      "bench seating",
+      "picnic bench"
+    ],
+    "q": "Benches instead of chairs.",
+    "a": "Great for **casual or farm tables** — confirm **capacity per bench** and **ADA** considerations with coordinator."
+  },
+  {
+    "k": [
+      "serpentine",
+      "half moon",
+      "curved table"
+    ],
+    "q": "Serpentine or curved banquet tables.",
+    "a": "Used for **buffets or displays** — confirm **how many sections** and **linen** style with shop."
+  },
+  {
+    "k": [
+      "king table",
+      "long head table"
+    ],
+    "q": "One very long head table.",
+    "a": "May need **multiple linens** or **joins** — map **length** and **delivery path** (doors/halls)."
+  },
+  {
+    "k": [
+      "spandex cover",
+      "stretch cover"
+    ],
+    "q": "Spandex / stretch covers for tables or stages.",
+    "a": "If stocked, match **table shape and size** exactly — awkward fits go to coordinator."
+  },
+  {
+    "k": [
+      "fitted linen",
+      "floor length"
+    ],
+    "q": "Floor-length linens vs short.",
+    "a": "Ask **formal level** and **trip hazard** rules at venue. Quote **per size** from training — don't guess yardage."
+  },
+  {
+    "k": [
+      "led table",
+      "glow furniture",
+      "illuminated"
+    ],
+    "q": "LED / glowing cocktail tables or bars.",
+    "a": "Specialty — confirm **battery vs plug**, **count**, and **venue rules**. Often needs events lead approval."
+  },
+  {
+    "k": [
+      "mirror ball",
+      "disco ball"
+    ],
+    "q": "Disco or mirror ball.",
+    "a": "If AV/lighting inventory includes it, add **rigging/safety** notes — otherwise escalate to AV coordinator."
+  },
+  {
+    "k": [
+      "monogram",
+      "gobo",
+      "custom lighting"
+    ],
+    "q": "Custom monogram or gobo projection.",
+    "a": "Usually **ordered art + timing** — don't promise same-week art. **Shop/manufacturer** confirms spec."
+  },
+  {
+    "k": [
+      "pole wrap",
+      "pole drape",
+      "leg skirt"
+    ],
+    "q": "Hiding tent poles or dressing legs.",
+    "a": "Offer **draping/pole covers** if in catalog — confirm **color** and **which tent type**."
+  },
+  {
+    "k": [
+      "rush order",
+      "this week",
+      "need it soon"
+    ],
+    "q": "Customer needs everything in a few days.",
+    "a": "Check **inventory + crew** before yes. “I'll confirm what's available for your date and our next open install slot.”"
+  },
+  {
+    "k": [
+      "next day",
+      "tomorrow rental"
+    ],
+    "q": "Can we deliver tomorrow?",
+    "a": "Possible only if **inventory and routing** allow — **never** promise without dispatch. Weekend Saturdays fill fast."
+  },
+  {
+    "k": [
+      "weekday discount",
+      "friday cheaper"
+    ],
+    "q": "Is weekday cheaper than Saturday?",
+    "a": "Pricing rules vary — “I'll confirm rates for your specific date and items.” Don't invent day-of-week discounts."
+  },
+  {
+    "k": [
+      "stairs fee",
+      "long carry"
+    ],
+    "q": "Extra fee for stairs or long carry?",
+    "a": "Labor adders may apply — **only quote what office/dispatch approves**."
+  },
+  {
+    "k": [
+      "mileage",
+      "far away",
+      "out of town"
+    ],
+    "q": "Delivery many miles away.",
+    "a": "Distance and **drive time** affect routing — log **full address** early; **fee** from office, not memory."
+  },
+  {
+    "k": [
+      "mud return",
+      "dirty return",
+      "not cleaned"
+    ],
+    "q": "Returned equipment is extremely muddy.",
+    "a": "Note condition; **cleaning fees** may apply per policy — customer service stays neutral; billing decides."
+  },
+  {
+    "k": [
+      "dead grass",
+      "yellow lawn",
+      "ruined lawn"
+    ],
+    "q": "Customer says tent killed the grass.",
+    "a": "Empathize; **no fault admissions**. “I'll document this and have our team review photos and timeline.” Escalate."
+  },
+  {
+    "k": [
+      "stake holes",
+      "holes in yard"
+    ],
+    "q": "Holes left from stakes after pickup.",
+    "a": "Normal staking can disturb turf — set **expectations at booking** when possible. Document if dispute."
+  },
+  {
+    "k": [
+      "artificial turf",
+      "astro turf",
+      "fake grass"
+    ],
+    "q": "Tent on artificial turf.",
+    "a": "**Staking often not allowed** — may need **weights** and **floor protection**. Must involve **experienced crew** before promising."
+  },
+  {
+    "k": [
+      "golf course",
+      "country club"
+    ],
+    "q": "Venue is a golf course or country club.",
+    "a": "Expect **strict load-in routes, timing, and COI**. Get **venue contact** and **rules sheet** early."
+  },
+  {
+    "k": [
+      "museum",
+      "historic site"
+    ],
+    "q": "Historic building or museum grounds.",
+    "a": "**Floor protection, noise, and footprint** rules are strict — coordinator + venue facility contact required."
+  },
+  {
+    "k": [
+      "gym floor",
+      "school gym"
+    ],
+    "q": "Event in a school gym — floor protection.",
+    "a": "Confirm **allowed wheels**, **floor covers**, and **tape rules** with facility manager — wrong answer can cost repairs."
+  },
+  {
+    "k": [
+      "trade show",
+      "10x10 booth"
+    ],
+    "q": "Trade show 10x10 booth rental.",
+    "a": "Confirm **height limits, drape color, and pipe dimensions** with show contractor — our **pipe & drape** may or may not match spec."
+  },
+  {
+    "k": [
+      "additional insured",
+      "additionally insured"
+    ],
+    "q": "Venue wants to be additional insured on COI.",
+    "a": "“I'll have our coordinator send the certificate with the wording **the venue provided**.” **Don't** edit legal certificate text yourself."
+  },
+  {
+    "k": [
+      "escort cards",
+      "place cards",
+      "seating chart"
+    ],
+    "q": "Escort card or seating chart table setup.",
+    "a": "Rent **table + linen + easel or mirror** if in inventory — **printing/design** is customer or planner. Confirm **size** and **outdoor wind** plan."
+  },
+  {
+    "k": [
+      "gift table",
+      "card box"
+    ],
+    "q": "Gift and card table at wedding.",
+    "a": "Standard **6ft or round** with linen; remind customer **security** is their responsibility unless venue provides it."
+  },
+  {
+    "k": [
+      "champagne wall",
+      "donut wall",
+      "display wall"
+    ],
+    "q": "Champagne wall / donut wall / display backdrop.",
+    "a": "If stocked, quote **unit + install**; if not, offer **pipe & drape or step-and-repeat** alternatives. **Food handling** stays with caterer."
+  },
+  {
+    "k": [
+      "wedding arch",
+      "ceremony arch",
+      "metal arch"
+    ],
+    "q": "Arches for ceremony backdrop.",
+    "a": "Separate from tent — confirm **height, width, anchoring**, and **florist attachment rules**. Wind plan for outdoor."
+  },
+  {
+    "k": [
+      "chuppah",
+      "mandap",
+      "cultural ceremony"
+    ],
+    "q": "Cultural ceremony structure (chuppah / mandap style).",
+    "a": "Treat as **custom layout + anchoring** — involve coordinator; confirm **dimensions** with officiant or planner."
+  },
+  {
+    "k": [
+      "portable toilet",
+      "porta potty",
+      "restroom trailer"
+    ],
+    "q": "Customer needs restrooms.",
+    "a": "If **not** your line, politely say so and suggest **venue restrooms** or **approved restroom vendor**. Don't book third-party unless office does."
+  },
+  {
+    "k": [
+      "wheelchair ramp",
+      "ada ramp",
+      "accessible entrance"
+    ],
+    "q": "Wheelchair ramp into tent.",
+    "a": "**Accessibility** may require **rated ramps and landing** — only promise what **engineering/coordinator** approves."
+  },
+  {
+    "k": [
+      "micro wedding",
+      "elopement",
+      "small wedding"
+    ],
+    "q": "Very small wedding (20–40 guests).",
+    "a": "Still confirm **date, tent or no tent, chair count, weather**. **Minimums** may apply — office clarifies."
+  },
+  {
+    "k": [
+      "rehearsal dinner",
+      "welcome night"
+    ],
+    "q": "Rehearsal dinner rentals (day before).",
+    "a": "Capture **separate date** if different from wedding — **inventory conflict** check is critical."
+  },
+  {
+    "k": [
+      "byob",
+      "bring your own alcohol"
+    ],
+    "q": "Customer wants BYOB at the tent.",
+    "a": "**Alcohol rules vary by venue and contract** — don't give legal OK. “I'll confirm what's allowed for your site and our agreement.”"
+  },
+  {
+    "k": [
+      "cash bar",
+      "open bar"
+    ],
+    "q": "Cash bar vs open bar setup.",
+    "a": "We rent **bars and equipment**, not liquor service, unless licensed/contracted — clarify **who serves** and **venue policy**."
+  },
+  {
+    "k": [
+      "minors drinking",
+      "underage"
+    ],
+    "q": "Worried about minors and alcohol on site.",
+    "a": "**Not** something to troubleshoot casually — escalate to **manager**; staff **don't** supervise liquor compliance."
+  },
+  {
+    "k": [
+      "crew tip",
+      "tip the drivers"
+    ],
+    "q": "Can customer tip delivery crew?",
+    "a": "If allowed, **gratitude is optional** — follow **company policy** (some firms discourage cash on truck). Don't solicit tips."
+  },
+  {
+    "k": [
+      "crew meal",
+      "feed the crew"
+    ],
+    "q": "Customer offers to feed the crew.",
+    "a": "Appreciate offer; **routing and breaks** are dispatch — customer should **not** delay install for long meals without approval."
+  },
+  {
+    "k": [
+      "lightning",
+      "thunderstorm",
+      "severe weather"
+    ],
+    "q": "Thunderstorm during setup or event.",
+    "a": "**Safety first** — crews pause or evacuate per protocol. Inflatables must **deflate** in wind per manufacturer — don't debate with customer."
+  },
+  {
+    "k": [
+      "frozen ground",
+      "winter install"
+    ],
+    "q": "Frozen ground — can we still stake?",
+    "a": "Staking may be **unsafe or impossible** — **weights and alternate anchoring** need crew lead. Winter jobs need extra planning."
+  },
+  {
+    "k": [
+      "propane fire pit",
+      "fire bowl"
+    ],
+    "q": "Propane fire pit at event.",
+    "a": "**Venue ban** is common — confirm **open flame rules** before quoting. Never promise fire features without shop approval."
+  },
+  {
+    "k": [
+      "silent disco",
+      "headphone party"
+    ],
+    "q": "Silent disco headphones.",
+    "a": "If **not** inventory, say so — may partner with AV vendor. Clarify **power, quantity, and return** expectations."
+  },
+  {
+    "k": [
+      "movie license",
+      "show a film",
+      "copyright"
+    ],
+    "q": "Outdoor movie licensing.",
+    "a": "**Public performance rights** are customer/event responsibility — we rent **screen/projector** only; don't advise on licensing law."
+  },
+  {
+    "k": [
+      "lantern release",
+      "dove release"
+    ],
+    "q": "Sky lantern or live bird release.",
+    "a": "Many venues **ban** releases — **fire/mess/welfare** issues. Defer to **venue and laws**; don't greenlight."
+  },
+  {
+    "k": [
+      "farmers market",
+      "weekly tent"
+    ],
+    "q": "Weekly farmers market booth tent.",
+    "a": "Confirm **commitment length**, **wind ratings**, and **weighting** — recurring jobs need **contract**, not verbal."
+  },
+  {
+    "k": [
+      "tax exempt",
+      "nonprofit tax"
+    ],
+    "q": "Nonprofit claims tax exemption.",
+    "a": "**Valid exemption certificate** on file with office — staff **don't** decide tax; **billing** applies rules."
+  },
+  {
+    "k": [
+      "w9",
+      "w-9",
+      "vendor form"
+    ],
+    "q": "Customer needs our W-9.",
+    "a": "Route to **accounting/office** — **never** email a W-9 from memory or unofficial PDF."
+  },
+  {
+    "k": [
+      "charity discount",
+      "501c3"
+    ],
+    "q": "Registered charity wants free or deep discount.",
+    "a": "Only **approved** programs — “I'll pass this to management with your documentation.” Staff don't authorize."
+  },
+  {
+    "k": [
+      "photo only",
+      "no guest seating"
+    ],
+    "q": "They only need a photo-shoot backdrop, no guests.",
+    "a": "Still need **delivery window and strike** — small orders may have **minimum** charges; office confirms."
+  },
+  {
+    "k": [
+      "lounge furniture",
+      "couch rental",
+      "accent chair"
+    ],
+    "q": "Lounge groupings / soft seating.",
+    "a": "If offered, confirm **pieces, colors, indoor vs outdoor**, and **delivery path**. Weather **covers** may be needed for upholstered items outside."
+  },
+  {
+    "k": [
+      "ottoman",
+      "coffee table lounge"
+    ],
+    "q": "Ottomans and coffee tables for lounge areas.",
+    "a": "Match **height** to seating; confirm **quantity** with planner sketch — avoid guessing a “standard” grouping."
+  },
+  {
+    "k": [
+      "pergola",
+      "sail shade",
+      "shade sail"
+    ],
+    "q": "Pergola or shade-sail structure (not a tent).",
+    "a": "Clarify **what we actually rent** — may be **canopy/tent** only. Don't promise **permanent-style** builds without shop sign-off."
+  },
+  {
+    "k": [
+      "solid wall",
+      "white sidewall"
+    ],
+    "q": "Solid vs clear sidewalls.",
+    "a": "**Solid** = privacy/wind; **clear** = views — both affect **layout and HVAC**. Quote per **linear foot / sections** from training or coordinator."
+  },
+  {
+    "k": [
+      "glass doors",
+      "french doors tent"
+    ],
+    "q": "Glass or French-style tent entrance.",
+    "a": "Often **specialty** — confirm **SKU, hardware, and floor transition**. Wind load matters."
+  },
+  {
+    "k": [
+      "catering tent",
+      "prep tent",
+      "kitchen tent"
+    ],
+    "q": "Catering prep tent behind house / venue.",
+    "a": "Ask **caterer dimensions, ventilation, fire marshal rules**. May need **walls, lighting, and power** plan — escalate early."
+  },
+  {
+    "k": [
+      "handwash",
+      "sink station",
+      "portable sink"
+    ],
+    "q": "Portable hand-washing stations.",
+    "a": "If in inventory, confirm **water fill, grey water, and count** — common for **outdoor food** setups."
+  },
+  {
+    "k": [
+      "red carpet",
+      "VIP entrance"
+    ],
+    "q": "Red carpet runner entrance.",
+    "a": "Quote **length and surface tape rules**; outdoor wind may need **weights or adhesive** approved by venue."
+  },
+  {
+    "k": [
+      "step and repeat",
+      "photo backdrop",
+      "logo wall"
+    ],
+    "q": "Step-and-repeat / branded backdrop.",
+    "a": "Confirm **banner size** vs **frame inventory**; **graphics** are customer/planner supplied unless print is a service line."
+  },
+  {
+    "k": [
+      "inflatable arch",
+      "start line arch"
+    ],
+    "q": "Inflatable branded arch for race or entrance.",
+    "a": "**Anchoring and wind rating** critical — operator may be required. Check **what's in inventory** before quoting."
+  },
+  {
+    "k": [
+      "power strip",
+      "surge protector"
+    ],
+    "q": "Can we run everything off power strips?",
+    "a": "Default: **Don't overload**. **Distro and gauges** must match load — customer **home extension cords** are often **not** acceptable for big draws."
+  },
+  {
+    "k": [
+      "extension cord",
+      "customer cord"
+    ],
+    "q": "Customer wants to use their own extension cords.",
+    "a": "Advise **only per shop guidance** — wrong cord gauge creates **fire/trip** risk; crew can refuse unsafe hookups."
+  },
+  {
+    "k": [
+      "generator included",
+      "does price include power"
+    ],
+    "q": "Is a generator included with inflatable / tent?",
+    "a": "**Rarely automatic** — confirm **rental line items** in quote. Never say “included” unless **contract** shows it."
+  },
+  {
+    "k": [
+      "podium",
+      "lectern"
+    ],
+    "q": "Podium or lectern for speeches.",
+    "a": "If stocked, note **indoor vs outdoor** and **mic clip** compatibility — **mic may be separate** inventory line."
+  },
+  {
+    "k": [
+      "stage skirt",
+      "stage skirting"
+    ],
+    "q": "Skirting for stage risers.",
+    "a": "Match **stage perimeter** and **color**; confirm **labor** to install if applicable."
+  },
+  {
+    "k": [
+      "ada viewing",
+      "wheelchair viewing area"
+    ],
+    "q": "Reserved viewing area for wheelchair guests.",
+    "a": "Coordinate **clear sightlines** with layout lead — may affect **chair removal** or **platform** design."
+  },
+  {
+    "k": [
+      "verbal quote",
+      "you said on phone"
+    ],
+    "q": "Customer says verbal quote was lower.",
+    "a": "Stay calm: “**Written quotes** control pricing — I'll pull your file and reconcile.” Don't argue numbers from memory."
+  },
+  {
+    "k": [
+      "quote expired",
+      "old quote"
+    ],
+    "q": "Their quote is months old — still valid?",
+    "a": "**Pricing and inventory change** — “I'll refresh this quote for your date.” Don't honor stale totals without office approval."
+  },
+  {
+    "k": [
+      "price increase",
+      "more expensive now"
+    ],
+    "q": "Why did price go up since last year?",
+    "a": "**Costs and labor** change — keep tone factual. Offer **updated line items**; escalate if hostile."
+  },
+  {
+    "k": [
+      "hold without pay",
+      "no deposit yet"
+    ],
+    "q": "Can you hold gear without deposit?",
+    "a": "**Holds** follow office policy — don't promise long holds **without payment**; offer to **send quote + payment link**."
+  },
+  {
+    "k": [
+      "narrow gate",
+      "fence gate",
+      "tight access"
+    ],
+    "q": "Yard gate too narrow for tent parts.",
+    "a": "Flag **panel sizes** for crew — may need **alternate entry** or **smaller tent style**. Site visit or photos help."
+  },
+  {
+    "k": [
+      "shared driveway",
+      "neighbor driveway"
+    ],
+    "q": "Setup across neighbor property line.",
+    "a": "**Permission** must be explicit — staff don't negotiate property disputes. Escalate to customer + manager."
+  },
+  {
+    "k": [
+      "septic field",
+      "leach field"
+    ],
+    "q": "Tent over septic drain field.",
+    "a": "**Avoid heavy staking/load** — **weights or alternate layout** may be required. **Coordinator + homeowner** decide."
+  },
+  {
+    "k": [
+      "well cap",
+      "well head"
+    ],
+    "q": "Well head in the yard near tent.",
+    "a": "**Protect cap** and **staking** footprint — mark location for crew; don't guess safe distances."
+  },
+  {
+    "k": [
+      "pool deck",
+      "screened pool cage"
+    ],
+    "q": "Event next pool / lanai (Florida-style question).",
+    "a": "**Wind, anchoring, and enclosure rules** are strict — never promise **hardware into pool deck** without engineering/coordinator review."
+  },
+  {
+    "k": [
+      "graduation ceremony",
+      "commencement outdoor"
+    ],
+    "q": "Outdoor graduation ceremony rentals.",
+    "a": "Plan **chairs, stage/risers, sound access, rain backup**, and **ADA seating**. School often needs **PO and insurance** early."
+  },
+  {
+    "k": [
+      "awards banquet",
+      "sports banquet"
+    ],
+    "q": "Sports awards or end-of-season banquet.",
+    "a": "Typical: **tables, chairs, linens, stage head table, backdrop**. Confirm **attendance** and **AV for microphone**."
+  },
+  {
+    "k": [
+      "booster club",
+      "pto",
+      "pta"
+    ],
+    "q": "PTO / booster club fundraiser.",
+    "a": "May need **tax-exempt paperwork** — route to office. Bundle **games + tables + tent** once budget confirmed."
+  },
+  {
+    "k": [
+      "opening day",
+      "little league",
+      "t-ball"
+    ],
+    "q": "Little league opening day or field event.",
+    "a": "Often **canopies, tables, PA (if applicable)** — wind plans for **umbrellas/canopies** near fields."
+  },
+  {
+    "k": [
+      "soccer tournament",
+      "field day"
+    ],
+    "q": "Soccer tournament or field-day shade.",
+    "a": "Multiple **small canopies** may beat one giant tent — confirm **vendor count** and **stakes vs weights** on turf."
+  },
+  {
+    "k": [
+      "turf field",
+      "artificial turf field"
+    ],
+    "q": "Setup on synthetic turf athletic field.",
+    "a": "**Staking usually prohibited** — **weights only** and **floor protection** for vehicle paths. **Athletic director** must approve."
+  },
+  {
+    "k": [
+      "bike rack",
+      "bicycle parking"
+    ],
+    "q": "Bike parking at event.",
+    "a": "If we rent **racks**, confirm **count**; otherwise suggest **venue** solutions — don't promise municipal racks."
+  },
+  {
+    "k": [
+      "coat rack",
+      "hanging coats"
+    ],
+    "q": "Coat check / coat racks for winter event.",
+    "a": "Quote **rack count + hangers** if in inventory; **attendant** is customer/venue unless staffed service exists."
+  },
+  {
+    "k": [
+      "warming tent",
+      "winter event tent"
+    ],
+    "q": "Warming tent for cold-weather outdoor event.",
+    "a": "**Heaters + ventilation + egress** must be engineered — quote **tent + heat package** only with **crew approval**."
+  },
+  {
+    "k": [
+      "water barrel",
+      "ballast barrel"
+    ],
+    "q": "Water barrels for tent ballast.",
+    "a": "If used, confirm **fill/drain on site**, **weight math**, and **venue rules** — **never** exceed engineered ballast plan."
+  },
+  {
+    "k": [
+      "concrete wedge",
+      "wedge anchor"
+    ],
+    "q": "Anchoring tent to concrete or asphalt.",
+    "a": "**Drill anchors** may need **venue approval** and **patch responsibility** — only **trained crew** per company policy."
+  },
+  {
+    "k": [
+      "security deposit",
+      "damage deposit"
+    ],
+    "q": "Security deposit vs damage waiver.",
+    "a": "Explain only per **contract language** — staff **don't** negotiate deposit amounts ad hoc; **billing** sets terms."
+  },
+  {
+    "k": [
+      "smoking",
+      "cigarette",
+      "vape"
+    ],
+    "q": "Smoking or vaping under/near tent.",
+    "a": "**Fabric and heaters** are fire-sensitive — default: follow **venue rules** and **manufacturer warnings**; advise **away from tent walls**."
+  },
+  {
+    "k": [
+      "drone",
+      "uav"
+    ],
+    "q": "Drone flying over our setup.",
+    "a": "Not our **permission** to grant — **FAA/venue/photographer** handle that. We **don't** take liability for drone ops."
+  },
+  {
+    "k": [
+      "film crew",
+      "tv news",
+      "filming"
+    ],
+    "q": "TV news or film crew at event.",
+    "a": "Route **media** questions to **management** — staff **don't** sign releases or promise B-roll access to equipment."
+  },
+  {
+    "k": [
+      "influencer",
+      "free rental exchange"
+    ],
+    "q": "Influencer wants free rentals for posts.",
+    "a": "**Marketing decision only** — “I'll pass to our marketing/owner.” Don't commit gear or dates."
+  },
+  {
+    "k": [
+      "political rally",
+      "campaign event"
+    ],
+    "q": "Political or campaign rally.",
+    "a": "Treat as **high-profile logistics** — **security, permits, load times** with manager involvement; stay **neutral** in tone."
+  },
+  {
+    "k": [
+      "polling place",
+      "election day"
+    ],
+    "q": "Equipment for polling or community voting site.",
+    "a": "**Official booking** usually through **county/board** — confirm **ADA, queue lines, and hours**; use **stanchions/tables** as spec'd."
+  },
+  {
+    "k": [
+      "lost and found"
+    ],
+    "q": "Lost and found after event.",
+    "a": "Document items; follow **company lost-and-found policy** — **don't** promise shipping without billing approval."
+  },
+  {
+    "k": [
+      "allergy",
+      "latex balloon"
+    ],
+    "q": "Allergies — latex balloons or décor.",
+    "a": "If customer cites **latex allergy**, flag **no latex** to planner; we may still have **non-balloon** décor routes."
+  },
+  {
+    "k": [
+      "stroller",
+      "diaper changing"
+    ],
+    "q": "Family festival — strollers everywhere.",
+    "a": "Suggest **wider aisles** in layout; **safety** is customer's crowd management — we provide **space plan inputs** only."
+  },
+  {
+    "k": [
+      "petting zoo",
+      "animals on site"
+    ],
+    "q": "Farm animals or petting zoo next to tent.",
+    "a": "**Biohazard/mess** near flooring — coordinate **turf protection** and **spacing** with vendor; not our vendor unless we offer."
+  },
+  {
+    "k": [
+      "fireworks",
+      "sparkler alternative"
+    ],
+    "q": "Customer wants fireworks near tent.",
+    "a": "**Most venues restrict** fireworks near structures — defer to **venue + fire official**; suggest **approved alternatives** cautiously."
+  },
+  {
+    "k": [
+      "insurance claim",
+      "ladder fell"
+    ],
+    "q": "Incident with equipment — possible claim.",
+    "a": "**No admissions**. “I'm documenting details for our team.” Collect **photos, time, contacts**; escalate immediately."
+  },
+  {
+    "k": [
+      "osha",
+      "inspector",
+      "regulation"
+    ],
+    "q": "Customer cites OSHA / inspectors on site.",
+    "a": "Don't debate regs — “Our crews follow **company safety procedures**.” Route **technical** questions to **management**."
+  },
+  {
+    "k": [
+      "napkin color",
+      "swatch",
+      "linen match"
+    ],
+    "q": "Customer wants napkins to match a swatch / wedding color.",
+    "a": "Offer to **compare to in-stock linen colors** — **dye-lot matches** aren't guaranteed. Coordinator may order **specific** lines if available."
+  },
+  {
+    "k": [
+      "paper napkin",
+      "disposable"
+    ],
+    "q": "Paper vs cloth napkins.",
+    "a": "**Cloth** = upscale / rental fee; **paper** may be caterer-supplied. Clarify **who provides** what on the quote."
+  },
+  {
+    "k": [
+      "charger only",
+      "plate charger"
+    ],
+    "q": "Charger plates without full china.",
+    "a": "Common for **plated caterer** — confirm **count** matches seats + head table. Return **clean** expectations per contract."
+  },
+  {
+    "k": [
+      "water goblet",
+      "wine glass",
+      "stemware"
+    ],
+    "q": "Stemware — water vs wine glasses.",
+    "a": "Quote **per piece** from inventory; confirm **caterer pouring** vs **self-serve**. **Loss/breakage** terms in contract."
+  },
+  {
+    "k": [
+      "coffee urn",
+      "coffee service"
+    ],
+    "q": "Coffee service rentals (urns, percolators).",
+    "a": "Confirm **110V power**, **cups**, and **cream/sugar** responsibility (often caterer). **Quantity** = guest count × hours."
+  },
+  {
+    "k": [
+      "beverage dispenser",
+      "drink dispenser"
+    ],
+    "q": "Beverage dispensers for lemonade / iced tea.",
+    "a": "If stocked, confirm **capacity, count, ice**, and **drip trays** — outdoor **bugs** may need **lids**."
+  },
+  {
+    "k": [
+      "punch bowl"
+    ],
+    "q": "Punch bowl rental.",
+    "a": "Verify **bowl + ladle + cups** package; **alcohol punch** rules follow **venue and caterer**."
+  },
+  {
+    "k": [
+      "ice chest",
+      "ice bin",
+      "beverage tub"
+    ],
+    "q": "Ice bins / galvanized tubs for drinks.",
+    "a": "Quote **count**; **ice purchase** is often customer or venue — we rent **containers** unless ice is a product line."
+  },
+  {
+    "k": [
+      "cooler rental",
+      "rolling cooler"
+    ],
+    "q": "Coolers for backup cold storage.",
+    "a": "Confirm **interior dimensions** and **drain** after event — **clean return** policy applies."
+  },
+  {
+    "k": [
+      "slush machine",
+      "margarita machine"
+    ],
+    "q": "Frozen drink machine (slush / margarita).",
+    "a": "Clarify **mix/supplies**, **alcohol legality**, and **power**. Often **shop** assigns **SKU + syrups** — don't promise flavors from memory."
+  },
+  {
+    "k": [
+      "cotton candy sugar",
+      "floss sugar"
+    ],
+    "q": "Cotton candy supplies — sugar / cones.",
+    "a": "If machine is rental line, confirm **supply pack** is on quote — **restock cost** for long events."
+  },
+  {
+    "k": [
+      "snow cone syrup",
+      "sno cone flavor"
+    ],
+    "q": "Snow cone syrup flavors.",
+    "a": "Match **machine order** to **syrup kit**; confirm **spoons/straws** if applicable."
+  },
+  {
+    "k": [
+      "popcorn kit",
+      "popcorn supplies"
+    ],
+    "q": "Popcorn machine supplies (oil, kernels, bags).",
+    "a": "Bundle **consumables** with machine rental when offered; **allergy** note for shared equipment."
+  },
+  {
+    "k": [
+      "hot dog steamer",
+      "roller grill"
+    ],
+    "q": "Hot dog equipment — steamer vs roller.",
+    "a": "Confirm **which SKU**, **power**, and **food handling** (customer/caterer). **Grease** cleanup rules on return."
+  },
+  {
+    "k": [
+      "nacho cheese",
+      "nacho warmer"
+    ],
+    "q": "Nachos — cheese warmer and chips.",
+    "a": "Confirm **cheese bags / chips** supply package; **refill** policy for long festivals."
+  },
+  {
+    "k": [
+      "string lights",
+      "bistro lights",
+      "cafe lights"
+    ],
+    "q": "String / bistro lighting in tent or yard.",
+    "a": "Ask **coverage area**, **dimming**, and **power drops** — **labor** to hang may be separate line item."
+  },
+  {
+    "k": [
+      "edison bulb",
+      "filament light"
+    ],
+    "q": "Edison-style string lights.",
+    "a": "Aesthetic choice — confirm **inventory style** vs customer photo; **outdoor wet rating** where needed."
+  },
+  {
+    "k": [
+      "uplight",
+      "uplighting",
+      "color wash"
+    ],
+    "q": "Wireless uplights / color wash.",
+    "a": "Confirm **how many fixtures**, **battery vs wired**, and **color** (white vs RGB). Venue may limit **laser/color**."
+  },
+  {
+    "k": [
+      "ceiling liner",
+      "tent liner"
+    ],
+    "q": "Tent ceiling liner (white draped ceiling).",
+    "a": "Specialty install — **labor + tent compatibility** must match; **height loss** inside tent matters for chandeliers."
+  },
+  {
+    "k": [
+      "white dance floor",
+      "black dance floor"
+    ],
+    "q": "White or black dance floor finish.",
+    "a": "**SKU-specific** — confirm **square footage**, **subfloor** needs, and **shoe warnings** (heels can scratch some finishes)."
+  },
+  {
+    "k": [
+      "portable stage",
+      "24 inch stage"
+    ],
+    "q": "Low portable stage for band or head table.",
+    "a": "Confirm **size modules**, **stairs**, **skirting**, and **weight load** — **engineer stamp** may be required for large builds."
+  },
+  {
+    "k": [
+      "dj riser",
+      "subwoofer"
+    ],
+    "q": "DJ riser or space for subs.",
+    "a": "Map **vibration** concerns for **historic floors**; **outdoor** subs need **weather plan**."
+  },
+  {
+    "k": [
+      "aisle carpet",
+      "indoor aisle"
+    ],
+    "q": "Carpet runner for indoor ceremony aisle.",
+    "a": "Confirm **length, width, color**, and **tape vs tack** rules of **venue floor**."
+  },
+  {
+    "k": [
+      "bar height",
+      "portable bar"
+    ],
+    "q": "Standard bar height vs counter height.",
+    "a": "Match **stools** if any — clarify **service side** vs **guest side**; **LED bar** may differ heights."
+  },
+  {
+    "k": [
+      "champagne tower",
+      "coupe glass"
+    ],
+    "q": "Champagne tower / stacked coupes.",
+    "a": "**Glass count + pour timing** with caterer — **not** our pour unless contracted; **spill/slip** risk on dance floor nearby."
+  },
+  {
+    "k": [
+      "metric",
+      "meters",
+      "centimeters"
+    ],
+    "q": "Customer gives tent size in meters / metric.",
+    "a": "Convert carefully or ask for **feet** — round numbers for **quotes** should match **inventory SKUs** (usually ft). Double-check with coordinator."
+  },
+  {
+    "k": [
+      "bad reception",
+      "breaking up",
+      "cant hear"
+    ],
+    "q": "Bad cell connection on sales call.",
+    "a": "Offer to **switch to email/text** for name/date/address; repeat critical details slowly; send **written recap** after."
+  },
+  {
+    "k": [
+      "speakerphone",
+      "in the car"
+    ],
+    "q": "Customer is driving on speaker.",
+    "a": "Keep it brief; suggest **callback when parked** before confirming **legal/contract** details."
+  },
+  {
+    "k": [
+      "language",
+      "accent",
+      "repeat slower"
+    ],
+    "q": "Hard to understand — accent or language barrier.",
+    "a": "Slow down, simple words, **email backup**; offer **manager/bilingual** help if available — never mock or show frustration."
+  },
+  {
+    "k": [
+      "wrong email",
+      "sent quote wrong address"
+    ],
+    "q": "Quote went to wrong email — privacy concern.",
+    "a": "**Stop** — verify identity before resending; **redact** or recall if possible; follow **office security** steps."
+  },
+  {
+    "k": [
+      "delete my data",
+      "privacy",
+      "gdpr"
+    ],
+    "q": "Customer wants data deleted / privacy request.",
+    "a": "Don't promise on the spot — “I'll route this to **management** for our records policy.” Document **ticket**."
+  },
+  {
+    "k": [
+      "text okay",
+      "is texting allowed"
+    ],
+    "q": "Customer prefers SMS for planning.",
+    "a": "Only use **approved business texting** — if personal cells are discouraged, give **office line** and **email**."
+  },
+  {
+    "k": [
+      "photo of contract",
+      "send picture"
+    ],
+    "q": "Customer texts a photo of signed contract.",
+    "a": "Ask them to **email HQ** for filing — **SMS** may not be official archive; verify **order number**."
+  },
+  {
+    "k": [
+      "voicemail script",
+      "leave message"
+    ],
+    "q": "What should I say on voicemail callbacks?",
+    "a": "Template: **name, business, callback #, order/date topic** — keep under **30 seconds**."
+  },
+  {
+    "k": [
+      "banner",
+      "vinyl banner",
+      "mesh banner"
+    ],
+    "q": "Outdoor vinyl / mesh banner with grommets.",
+    "a": "Confirm **size, finishing, wind slits**, and **install hardware** — **who hangs** (us vs customer)."
+  },
+  {
+    "k": [
+      "feather flag",
+      "swooper flag",
+      "wind flag"
+    ],
+    "q": "Feather / swooper advertising flags.",
+    "a": "**Base type** matters (ground spike vs rolling base); **wind limits** — confirm **SKU** before promising outdoors."
+  },
+  {
+    "k": [
+      "a-frame sign",
+      "sandwich board"
+    ],
+    "q": "A-frame or sandwich-board signs.",
+    "a": "Check **venue sidewalk rules** — some towns **ban** certain placements; **weight/wind** for outdoor."
+  },
+  {
+    "k": [
+      "traffic cone",
+      "cones",
+      "deluxe cones"
+    ],
+    "q": "Traffic cones for parking or crowd flow.",
+    "a": "Quote **count** and **reflective vs standard**; **pickup** vs **delivery** on large quantities."
+  },
+  {
+    "k": [
+      "barricade",
+      "bike rack barricade",
+      "steel barrier"
+    ],
+    "q": "Crowd barricades / metal bike-rack style fencing.",
+    "a": "May be specialty — confirm **linear feet**, **delivery**, and **connection hardware**."
+  },
+  {
+    "k": [
+      "trash can",
+      "garbage can",
+      "waste bin"
+    ],
+    "q": "Trash / recycling containers for event.",
+    "a": "If stocked, confirm **liner policy** and **haul-off** — **venue** may require **specific carting**."
+  },
+  {
+    "k": [
+      "handicap parking",
+      "ada parking cones"
+    ],
+    "q": "Blocking ADA spaces for delivery.",
+    "a": "**Never** block **ADA stalls** — coordinate **loading zone** with **venue/security**; cones ≠ permission."
+  },
+  {
+    "k": [
+      "generator quiet",
+      "silent generator"
+    ],
+    "q": "Customer wants a quiet generator.",
+    "a": "Compare **inverter vs standard** inventory if available — **dBA claims** only from **spec sheet**, not memory."
+  },
+  {
+    "k": [
+      "fuel delivery",
+      "refuel generator"
+    ],
+    "q": "Generator ran out of fuel mid-event.",
+    "a": "**Emergency dispatch** per on-call procedure — don't promise **free refuel**; document **contract fuel terms**."
+  },
+  {
+    "k": [
+      "extension time",
+      "keep longer"
+    ],
+    "q": "Event running late — keep rentals longer.",
+    "a": "**Extension** may incur **per-day** charges — check **inventory** for next job; **dispatch** approves."
+  },
+  {
+    "k": [
+      "early strike",
+      "pickup early"
+    ],
+    "q": "They want pickup earlier than scheduled.",
+    "a": "Check **crew routing** — early may be **possible** or may incur **fee**; don't guarantee without dispatch."
+  },
+  {
+    "k": [
+      "partial strike",
+      "take tent leave tables"
+    ],
+    "q": "Pick up some items but leave others overnight.",
+    "a": "Log **clear list** — **partial strikes** confuse crews; **manager** must sign off on **split billing**."
+  },
+  {
+    "k": [
+      "moisture",
+      "condensation",
+      "tent dripping"
+    ],
+    "q": "Condensation dripping inside tent.",
+    "a": "Explain **humidity + temperature** can cause **sweating** — **heaters, rain, and venting** interplay; **not always a leak**. Escalate if **active leak** suspected."
+  },
+  {
+    "k": [
+      "wind flap",
+      "noisy tent"
+    ],
+    "q": "Tent walls flapping loudly in wind.",
+    "a": "**Safety review** — may need **sidewalls down**, **extra ballast**, or **partial close**. Customer safety > aesthetics."
+  },
+  {
+    "k": [
+      "bugs",
+      "mosquitos",
+      "flies tent"
+    ],
+    "q": "Bugs bad inside lit tent at night.",
+    "a": "Suggest **venue pest plan**; **lighting placement** can attract insects — **caterer/venue** often handles treatments, not us."
+  },
+  {
+    "k": [
+      "zipline",
+      "rope course"
+    ],
+    "q": "Customer asks about zip-line or ropes course.",
+    "a": "**Almost certainly not** our product line — clarify we're **party rental**, not adventure attractions, unless shop says otherwise."
+  },
+  {
+    "k": [
+      "inventory list",
+      "full catalog pdf"
+    ],
+    "q": "Customer wants a full inventory PDF / every SKU.",
+    "a": "Point to **friendlypartyrental.com** for browsing; **custom spreadsheets** go through **office** — staff don't email unofficial lists."
+  },
+  {
+    "k": [
+      "line item",
+      "itemized invoice"
+    ],
+    "q": "They want every line item explained.",
+    "a": "Walk through **quote line-by-line**; anything **unclear** gets a note to **coordinator** — don't invent internal codes."
+  },
+  {
+    "k": [
+      "po number",
+      "purchase order number"
+    ],
+    "q": "Add their PO# to the order.",
+    "a": "Capture **exact PO string**; **billing** attaches it — wrong PO delays **AP** for schools and companies."
+  },
+  {
+    "k": [
+      "vendor setup",
+      "supplier portal"
+    ],
+    "q": "Customer asks us to register in their vendor portal.",
+    "a": "**Accounting** handles **vendor packets** — take **contact email** and **deadline**; don't upload tax docs yourself unless trained."
+  },
+  {
+    "k": [
+      "certificate of origin",
+      "msds"
+    ],
+    "q": "They want MSDS / hazmat sheets on tents.",
+    "a": "Tents aren't **consumer chemicals** — if they need **flammability letters** for venue, route to **office** for **official docs**."
+  },
+  {
+    "k": [
+      "eu customer",
+      "international card"
+    ],
+    "q": "International customer or foreign credit card.",
+    "a": "**Payment acceptance** is office policy — don't promise **card types**; offer **wire/ACH** if approved."
+  },
+  {
+    "k": [
+      "split payment",
+      "two cards"
+    ],
+    "q": "Split payment across two cards.",
+    "a": "If allowed, **billing** processes — collect **amounts per card** clearly; **no** split verbal without system confirmation."
+  },
+  {
+    "k": [
+      "parents paying",
+      "third party pay"
+    ],
+    "q": "Someone else (parent / boss) pays deposit.",
+    "a": "**Billing name** and **cardholder consent** matter for **chargebacks** — follow **fraud policy**; get **authorization** form if required."
+  },
+  {
+    "k": [
+      "chargeback",
+      "disputed charge"
+    ],
+    "q": "Customer filed a chargeback.",
+    "a": "**Stop** phone debate — forward to **billing** with **order #** and **timeline**; preserve **signed agreement** references."
+  },
+  {
+    "k": [
+      "insurance rider",
+      "equipment insurance"
+    ],
+    "q": "Customer wants to insure rented equipment on their policy.",
+    "a": "They may need **serial values** or **replacement cost** — only **office** provides **official values**; **not** from memory."
+  },
+  {
+    "k": [
+      "subrent",
+      "cross rent",
+      "broker"
+    ],
+    "q": "Another rental company wants to cross-rent our gear.",
+    "a": "**Only management** approves **subrents** — collect **company, COI, pickup logistics**; staff don't commit inventory."
+  },
+  {
+    "k": [
+      "film set",
+      "production company"
+    ],
+    "q": "Movie or TV production rental.",
+    "a": "**High liability** — **COI, schedule slips, and OT** common; involve **events lead** early; **union rules** may affect labor."
+  },
+  {
+    "k": [
+      "parade float",
+      "parade staging"
+    ],
+    "q": "Parade staging / city parade logistics.",
+    "a": "**Permits and police** gate timing — confirm **load-in windows** before quoting **large footprint**."
+  },
+  {
+    "k": [
+      "marathon",
+      "start line arch timer"
+    ],
+    "q": "Marathon / 5K start-finish infrastructure.",
+    "a": "Coordinate **city permits**, **timing company**, and **wind plan** for arches — **multi-vendor** jobs need a **single POC**."
+  },
+  {
+    "k": [
+      "concert venue",
+      "festival gate"
+    ],
+    "q": "Festival perimeter or gate rentals.",
+    "a": "**Barricade linear feet** + **entry choke** design — escalate to **large-events** lead; **security** is customer/venue."
+  },
+  {
+    "k": [
+      "hotel loading dock",
+      "freight elevator"
+    ],
+    "q": "Ballroom at hotel — loading dock rules.",
+    "a": "Get **dock times**, **freight elevator dimensions**, and **union move-in** notes — surprises **void** tight installs."
+  },
+  {
+    "k": [
+      "warehouse walk in",
+      "will call hours"
+    ],
+    "q": "Customer will-call pickup hours.",
+    "a": "State only **published** will-call windows — **after-hours** pickup needs **scheduled approval**."
+  },
+  {
+    "k": [
+      "return dirty",
+      "wipe down"
+    ],
+    "q": "How clean must returns be?",
+    "a": "Follow **contract check-in language** — **mud/food** may trigger **fees**; explain **good faith wipe** vs **full wash**."
+  },
+  {
+    "k": [
+      "missing piece",
+      "small part lost"
+    ],
+    "q": "Customer lost stakes / small hardware.",
+    "a": "**Replacement cost** per **missing-items** schedule — **don't waive** fees without **manager**; document **count at pickup**."
+  },
+  {
+    "k": [
+      "paint on tent",
+      "decor tape damage"
+    ],
+    "q": "Tape or décor damaged tent fabric.",
+    "a": "**Photos + manager** — repair bills follow **contract**; **no** fault debate on the phone."
+  },
+  {
+    "k": [
+      "goat",
+      "livestock"
+    ],
+    "q": "Live animals in/near tent.",
+    "a": "**Venue + liability** — not our scope unless **specific insured** attraction; **manure/welfare** issues escalate."
+  },
+  {
+    "k": [
+      "foam party chemicals",
+      "biodegradable foam"
+    ],
+    "q": "Foam party chemical safety question.",
+    "a": "**SDS and manufacturer dilution** only — staff **don't** mix chemicals; **events lead** pairs **machine + product**."
+  },
+  {
+    "k": [
+      "kite",
+      "drone light show"
+    ],
+    "q": "Drone light show or kites overhead.",
+    "a": "**Airspace + venue** approval — we **don't** coordinate FAA; focus only on **ground hazards** to our structures."
+  },
+  {
+    "k": [
+      "scissor lift",
+      "boom lift"
+    ],
+    "q": "Customer wants to hang lights with their lift.",
+    "a": "**Only qualified operators** — our crew may **refuse** shared lifts without **safety plan**; **venue lift rules** apply."
+  },
+  {
+    "k": [
+      "forklift customer",
+      "fork lift"
+    ],
+    "q": "Customer has a forklift to unload truck.",
+    "a": "**Liability + spotter** rules — **driver signature** and **dock plan**; don’t bypass **trained crew** policy without manager."
+  },
+  {
+    "k": [
+      "livestream backdrop",
+      "zoom background",
+      "webcam backdrop"
+    ],
+    "q": "Streamer / Zoom / hybrid meeting backdrop.",
+    "a": "**Pipe & drape, step-and-repeat, or branded panel** — confirm **camera width, height, and glare** (matte vs shiny)."
+  },
+  {
+    "k": [
+      "podcast backdrop",
+      "photo press wall"
+    ],
+    "q": "Podcast or press conference backdrop.",
+    "a": "Match **mic placement** and **logo size** to **frame**; **sound-dampening** is usually AV, not tent fabric."
+  },
+  {
+    "k": [
+      "watch party",
+      "outdoor tv",
+      "projector super bowl"
+    ],
+    "q": "Outdoor watch party — big screen / projector.",
+    "a": "Clarify if we rent **screen + projector + power** or only **tent/seating**; **sports broadcast rights** are customer's problem."
+  },
+  {
+    "k": [
+      "handheld mic",
+      "wired microphone"
+    ],
+    "q": "Extra handheld microphones quantity.",
+    "a": "Confirm **mixer compatibility** with client's AV — we **don't** guess **XLR vs wireless** without inventory check."
+  },
+  {
+    "k": [
+      "flag stand",
+      "presentation flags"
+    ],
+    "q": "Flag stands next to podium.",
+    "a": "**Inventory-specific** — **weighted base** for outdoor; **venue** may restrict certain flags."
+  },
+  {
+    "k": [
+      "bunting",
+      "patriotic decor",
+      "fourth of july"
+    ],
+    "q": "Patriotic bunting / July 4th décor rentals.",
+    "a": "If stocked, quote **linear feet + install**; **fireworks proximity** stays separate safety topic."
+  },
+  {
+    "k": [
+      "pumpkin patch",
+      "farm fall festival"
+    ],
+    "q": "Fall farm festival / pumpkin patch tenting.",
+    "a": "**High dust/mud** — plan **floor and cleaning**; **traffic spikes** may need **barricades**."
+  },
+  {
+    "k": [
+      "christmas tree lot",
+      "tree sale tent"
+    ],
+    "q": "Christmas tree sales lot — tent or heat.",
+    "a": "**Heater spacing + ventilation** critical around **greens** — only **approved heat** per shop; **fire lane** clearances."
+  },
+  {
+    "k": [
+      "santa set",
+      "santa chair throne"
+    ],
+    "q": "Santa photo set — chair and backdrop.",
+    "a": "Often **throne + backdrop + queue stanchions**; confirm **mall rules** if applicable."
+  },
+  {
+    "k": [
+      "easter egg hunt",
+      "spring field day"
+    ],
+    "q": "Easter egg hunt / spring outdoor party.",
+    "a": "**Canopy clusters** for registration; **kid-height tables** — **allergy** note if candy handed out by others."
+  },
+  {
+    "k": [
+      "new years eve",
+      "nye party"
+    ],
+    "q": "New Year's Eve rental timing.",
+    "a": "**Late-night strike** or **next-day** pickup may be **premium** — confirm **calendar pricing** with office."
+  },
+  {
+    "k": [
+      "unlevel yard",
+      "slope",
+      "hill"
+    ],
+    "q": "Sloped or uneven lawn for tent.",
+    "a": "**Leg adjustments / leveling** may be limited — **engineered subfloor** or **alternate pad** might be needed; **site visit**."
+  },
+  {
+    "k": [
+      "shim",
+      "leveling blocks"
+    ],
+    "q": "Leveling blocks / shims under staging.",
+    "a": "Only **approved methods** — **not** random cribbing that shifts; **crew lead** decides."
+  },
+  {
+    "k": [
+      "plywood subfloor",
+      "raised floor"
+    ],
+    "q": "Plywood or modular subfloor over mud.",
+    "a": "**SKU + labor** heavy — **weight on grass** and **trip edges** need plan; **manager** signs off."
+  },
+  {
+    "k": [
+      "weight limit table",
+      "how much weight table"
+    ],
+    "q": "How much weight can tables hold?",
+    "a": "Give only **published load guidance** — **no guessing** for **cakes, engines, or stacks**; escalate unusual loads."
+  },
+  {
+    "k": [
+      "smoke smell",
+      "cigarette smell tent"
+    ],
+    "q": "Tent smells like smoke from prior event.",
+    "a": "**Don't promise** odor removal on the phone — **cleaning fees / swap** decided by **shop**; document before dispatch."
+  },
+  {
+    "k": [
+      "musty smell",
+      "mildew smell"
+    ],
+    "q": "Customer reports musty smell when tent opens.",
+    "a": "**Inspection** required — could be **storage moisture**; **swap** vs **treat** is **operations** decision."
+  },
+  {
+    "k": [
+      "mosquito misting",
+      "bug fogger"
+    ],
+    "q": "Customer wants to fog or mist for mosquitos inside tent.",
+    "a": "**Respiratory + chemical** risks — **not** staff-applied unless **licensed program**; defer to **pest pro**."
+  },
+  {
+    "k": [
+      "floodplain",
+      "high water"
+    ],
+    "q": "Site near floodplain or stream.",
+    "a": "**Weather + egress** risk — **permits** may block structures; **manager** reviews **hydrology** notes."
+  },
+  {
+    "k": [
+      "retaining wall",
+      "tiered yard"
+    ],
+    "q": "Terraced yard with retaining walls.",
+    "a": "**Staking near walls** can stress masonry — **engineering** may forbid; **weights + layout** alternative."
+  },
+  {
+    "k": [
+      "gaming event",
+      "lan party",
+      "esports"
+    ],
+    "q": "LAN party or esports event tables/power.",
+    "a": "**Power density** extreme — **not** just one house cord; **electrician / distro** plan required; escalate."
+  },
+  {
+    "k": [
+      "led wall",
+      "jumbotron"
+    ],
+    "q": "LED video wall / jumbotron rental.",
+    "a": "**Usually specialty vendor** — confirm if we **broker** or **decline**; **rigging** is engineer territory."
+  },
+  {
+    "k": [
+      "ice resurfacer",
+      "hockey rink"
+    ],
+    "q": "Winter event on/near ice rink.",
+    "a": "**Slip + temp + condensation** — likely **nonstandard**; only **events lead** approves layout."
+  },
+  {
+    "k": [
+      "helicopter",
+      "aerial drop"
+    ],
+    "q": "Helicopter candy drop or landing nearby.",
+    "a": "**Air ops + FAA + venue** — **not** coordinated by rentals phone agent; **safety perimeter** for tent stakes matters."
+  },
+  {
+    "k": [
+      "balloon arch install",
+      "organic balloon"
+    ],
+    "q": "Organic balloon arch installation.",
+    "a": "If **balloons** aren't our service, refer to **balloon pro** — we may only provide **frame/pipe** when applicable."
+  },
+  {
+    "k": [
+      "duplicate booking",
+      "double booked"
+    ],
+    "q": "Worried we double-booked their date.",
+    "a": "Apologize; **immediately** verify in system with **order #** — if conflict exists, **manager** resolves **substitution or credit**; don't guess."
+  },
+  {
+    "k": [
+      "wrong tent delivered",
+      "smaller tent"
+    ],
+    "q": "Wrong tent size showed up.",
+    "a": "**Stop work** if safe; **photos + dispatcher** — **correct SKU** and **timeline** only from operations; **no blame** on the phone."
+  },
+  {
+    "k": [
+      "crew late",
+      "not here yet"
+    ],
+    "q": "Setup crew is late — customer angry.",
+    "a": "Acknowledge; **dispatch ETA** is source of truth — give **updated window** when available; **no fabricated** times."
+  },
+  {
+    "k": [
+      "crew rude",
+      "unprofessional"
+    ],
+    "q": "Customer complains crew was rude.",
+    "a": "**No debate**. “I'm sorry — I'll report this to management for follow-up.” Collect **facts**, not emotions."
+  },
+  {
+    "k": [
+      "photos before event",
+      "preview setup"
+    ],
+    "q": "Can we see photos of tent before guests arrive?",
+    "a": "We **don't guarantee** progress photos — **ask dispatcher** if crew can snap **safe** shots; **privacy** of other jobs applies."
+  },
+  {
+    "k": [
+      "drone photo our tent",
+      "aerial photo"
+    ],
+    "q": "Customer wants drone shots of finished tent.",
+    "a": "**Their drone, their permits** — we **don't** authorize airspace; warn about **lines/stakes** underfoot."
+  },
+  {
+    "k": [
+      "wedding planner",
+      "day of coordinator"
+    ],
+    "q": "Wedding planner will be day-of coordinator.",
+    "a": "Get **planner name + cell** on file — **crew instructions** go through **dispatch**; planner doesn't override **safety**."
+  },
+  {
+    "k": [
+      "florist access",
+      "vendor load in"
+    ],
+    "q": "Florist needs early access same morning.",
+    "a": "**Load-in matrix** — who arrives when — goes to **dispatch**; **stacking trades** causes conflict without a **schedule**."
+  },
+  {
+    "k": [
+      "caterer kitchen power",
+      "temp kitchen"
+    ],
+    "q": "Caterer needs temp kitchen tent + heavy power.",
+    "a": "**Amp draw** math required — **not** “extra generator guess”; **electrician** or **events engineer** signs off."
+  },
+  {
+    "k": [
+      "buffet line traffic",
+      "serving order"
+    ],
+    "q": "How should buffet face guest flow?",
+    "a": "Suggest **single-sided vs double** with **planner** — **fire egress** can't be blocked; **stanchions** help queues."
+  },
+  {
+    "k": [
+      "cake table",
+      "dessert table"
+    ],
+    "q": "Dedicated cake / dessert table.",
+    "a": "**Stable level surface**, **linen**, **shade/heat** plan — **not** in direct sun for **fondant**; **AC draft** caution."
+  },
+  {
+    "k": [
+      "dj needs table",
+      "dj table size"
+    ],
+    "q": "What table does DJ need?",
+    "a": "Ask **DJ rider** or **equipment footprint** — **6ft** common but **not universal**; **power + cover** if rain."
+  },
+  {
+    "k": [
+      "band green room",
+      "artist holding"
+    ],
+    "q": "Band wants a green room tent or holding area.",
+    "a": "**Separate small tent or curtained zone** — **climate, lockable?**, **noise** to neighbors; quote with **manager**."
+  },
+  {
+    "k": [
+      "after party second venue"
+    ],
+    "q": "After-party at different address same night.",
+    "a": "**Second delivery** may need **second contract** — **crew hours** and **truck** routing; don't append verbally."
+  },
+  {
+    "k": [
+      "noise ordinance",
+      "sound curfew"
+    ],
+    "q": "Town noise curfew at 10pm.",
+    "a": "**Amplified sound** must respect **ordinance** — **DJ/band** manages levels; we **don't** police decibels but share **venue rules**."
+  },
+  {
+    "k": [
+      "sparkler send off time",
+      "sparkler exit"
+    ],
+    "q": "Sparkler exit timing with photographer.",
+    "a": "**Venue + fire** rules first — **length** of sparklers and **bucket of sand** for duds; **not** our product to supervise."
+  },
+  {
+    "k": [
+      "send off tunnel",
+      "arch of people"
+    ],
+    "q": "Guests form tunnel for exit — spacing.",
+    "a": "Suggest **stanchions** or **aisle width** so **dresses** don't snag; **safety** over Pinterest layout."
+  },
+  {
+    "k": [
+      "valet parking",
+      "parking attendant"
+    ],
+    "q": "Customer asks if we arrange valet.",
+    "a": "**Transport/valet** not core unless **office** partners — refer to **venue** or **specialty vendor**."
+  },
+  {
+    "k": [
+      "shuttle bus",
+      "guest transportation"
+    ],
+    "q": "Shuttle buses from hotel to venue.",
+    "a": "Logistics **outside equipment rental** — we can note **drop loop** clearance for **large buses**."
+  },
+  {
+    "k": [
+      "horse trailer",
+      "equestrian"
+    ],
+    "q": "Horse event near tent — trailers parking.",
+    "a": "**Turning radius** and **mud** matter — **separate** from guest tenting; **coordinate gate** with **property owner**."
+  },
+  {
+    "k": [
+      "car show",
+      "automotive meet"
+    ],
+    "q": "Car show — canopies between vehicles.",
+    "a": "**Fire lane** and **spacing** — **weights** not stakes on **asphalt** without approval; **city permit** common."
+  },
+  {
+    "k": [
+      "swap meet",
+      "flea market vendor"
+    ],
+    "q": "Swap meet vendor tent package.",
+    "a": "**Repeating weekly** vs one-off — **contract terms** and **wind** responsibility; **minimum footprint** fees possible."
+  },
+  {
+    "k": [
+      "gun show",
+      "weapons expo"
+    ],
+    "q": "Gun show or weapons expo rentals.",
+    "a": "**High compliance** venue — **only management** quotes; **security + insurance** beyond normal; **no** casual phone promise."
+  },
+  {
+    "k": [
+      "tattoo convention",
+      "body art expo"
+    ],
+    "q": "Convention needing booths / pipe & drape.",
+    "a": "**Grid layout + power** per vendor — **multi-day** labor; **events lead** pricing."
+  },
+  {
+    "k": [
+      "storage tent",
+      "job site shelter"
+    ],
+    "q": "Construction job-site storage tent.",
+    "a": "**Long-term wind/snow** loads differ from **weekend party** — **commercial temp structure** review; **manager** only."
+  },
+  {
+    "k": [
+      "first amendment",
+      "free speech rally"
+    ],
+    "q": "First Amendment / protest / rally infrastructure.",
+    "a": "**Permits, security, and liability** are beyond a normal quote — **only management** with **legal** review; **neutral** tone on the phone."
+  },
+  {
+    "k": [
+      "religious service",
+      "tent church"
+    ],
+    "q": "Outdoor religious service under tent.",
+    "a": "**Seating count, sound, ADA**, and **communion / ritual** spacing — involve **planner/officiant**; **respectful** scheduling for strike."
+  },
+  {
+    "k": [
+      "funeral procession",
+      "graveside"
+    ],
+    "q": "Graveside or procession tent (brief).",
+    "a": "**Short windows** — confirm **strike time** with **funeral director**; **compact canopy** may fit better than full pole tent."
+  },
+  {
+    "k": [
+      "military ceremony",
+      "retreat flag"
+    ],
+    "q": "Military ceremony or honor guard.",
+    "a": "**Flag protocol** is theirs — we provide **staging/chairs** per order; **no** uniform or protocol coaching."
+  },
+  {
+    "k": [
+      "naturalization",
+      "citizenship ceremony"
+    ],
+    "q": "Government or citizenship ceremony.",
+    "a": "**Agency PO + security** — escalate to **office**; **exact SKU** from contract, not impulse quotes."
+  },
+  {
+    "k": [
+      "auction tent",
+      "bid paddles"
+    ],
+    "q": "Live auction under tent — sightlines.",
+    "a": "**Riser, lighting on items**, **power for auctioneer mic** — **AV** often separate vendor; **layout** with nonprofit lead."
+  },
+  {
+    "k": [
+      "gala seated dinner",
+      "rounds of 10"
+    ],
+    "q": "Gala plated dinner — rounds of 10.",
+    "a": "Map **service aisles** and **head table**; confirm **linen** level with **caterer plate size**."
+  },
+  {
+    "k": [
+      "sommelier",
+      "wine service"
+    ],
+    "q": "Wine service stations.",
+    "a": "**Tables + ice bins + dump buckets** if applicable — **liquor license** is venue/caterer; we **don't** pour."
+  },
+  {
+    "k": [
+      "raw bar",
+      "oyster bar"
+    ],
+    "q": "Seafood raw bar setup.",
+    "a": "**Chilling, drainage, food safety** — **caterer** designs; we rent **tables/small tent** as ordered."
+  },
+  {
+    "k": [
+      "brunch",
+      "morning after wedding"
+    ],
+    "q": "Morning-after wedding brunch tent.",
+    "a": "**Earlier crew** and **coffee power** — may be **second billable day**; confirm **strike from night before**."
+  },
+  {
+    "k": [
+      "tea party",
+      "baby tea"
+    ],
+    "q": "Formal tea or garden tea party.",
+    "a": "**Smaller tables**, **mixed seating**, **shade** — confirm **cup/saucer** source (caterer vs rental china if offered)."
+  },
+  {
+    "k": [
+      "luau",
+      "tiki"
+    ],
+    "q": "Luau / tiki theme décor questions.",
+    "a": "Theming is **planner/floral** — we rent **structures, tables, lights**; **open flame / torches** follow **venue + fire** rules."
+  },
+  {
+    "k": [
+      "western theme",
+      "hay bale"
+    ],
+    "q": "Western theme — hay bales for seating.",
+    "a": "**Hay** may be **allergen/mess** and **fire** concern — confirm **venue approval**; **bench or chair** safer default."
+  },
+  {
+    "k": [
+      "ice sculpture",
+      "ice luge"
+    ],
+    "q": "Ice sculpture or ice luge melting.",
+    "a": "**Drain + floor protection** under **ice** — **time-to-melt** affects **layout**; refer **ice artist** for specs."
+  },
+  {
+    "k": [
+      "confetti cannon",
+      "co2 burst"
+    ],
+    "q": "Co2 confetti cannons or bursts.",
+    "a": "**Indoor/venue rules** and **cleanup fees** — many venues **ban** loose confetti; **coordination** with DJ/AV."
+  },
+  {
+    "k": [
+      "livestream guest",
+      "zoom wedding"
+    ],
+    "q": "Hybrid wedding — Zoom screen for remote guests.",
+    "a": "**Dedicated table, power, uplight**, and **audible speaker** for vows — **upload speed** is customer/venue IT."
+  },
+  {
+    "k": [
+      "sign language",
+      "interpreter"
+    ],
+    "q": "ASL interpreter placement.",
+    "a": "**Sightlines** near **couple** or **stage** — reserve **fenced floor space**; **planner** sets program."
+  },
+  {
+    "k": [
+      "wheelchair route",
+      "curb ramp"
+    ],
+    "q": "Wheelchair route from parking to tent.",
+    "a": "**Surface, slope, mud after rain** — we note **tent entry** height; **venue** owns **parking path** fixes."
+  },
+  {
+    "k": [
+      "oxygen",
+      "medical tent"
+    ],
+    "q": "Medical tent or first-aid station.",
+    "a": "**Licensed medical** partners define needs — we **don't** advise clinical layout; **emergency vehicle access** keep clear."
+  },
+  {
+    "k": [
+      "cool room",
+      "walk in cooler"
+    ],
+    "q": "Walk-in cooler trailer on site.",
+    "a": "**Usually specialty vendor** — confirm **power, level pad, ADA around doors**; may be **brokered**, not inventory."
+  },
+  {
+    "k": [
+      "green room talent",
+      "celebrity trailer"
+    ],
+    "q": "Celebrity / talent trailer coordination.",
+    "a": "**High security** — **no** unpublished talent info; **routing** and **privacy screening** via **production lead**."
+  },
+  {
+    "k": [
+      "rain plan b",
+      "plan b tent"
+    ],
+    "q": "Book a backup tent “just in case.”",
+    "a": "**Holds cost money** — office defines **deposit/hold policy**; **weather calls** follow **contract cutoff** language."
+  },
+  {
+    "k": [
+      "dismantle early",
+      "strike early"
+    ],
+    "q": "Venue forces early strike vs contract.",
+    "a": "**Contract hours** rule — **overage** may bill; get **written venue notice**; escalate to **manager** if dispute."
+  },
+  {
+    "k": [
+      "noise complaint mid event",
+      "police called"
+    ],
+    "q": "Police called for noise during event.",
+    "a": "**Stay calm** — **venue host** and **planner** lead; our crew **reduces** generator/lift noise if asked; **no** arguments with law enforcement."
+  },
+  {
+    "k": [
+      "neighbor complaint before event"
+    ],
+    "q": "Neighbor calls before event about tent on property line.",
+    "a": "**Property line** is **customer** issue — we **don't** mediate; suggest **survey/pin** clarity before install."
+  },
+  {
+    "k": [
+      "school field",
+      "athletic field"
+    ],
+    "q": "School wants tent on turf practice field.",
+    "a": "**Athletic director** approval + **no stakes** policy — plan **weights** and **protective decking** for heavy traffic paths."
+  },
+  {
+    "k": [
+      "bleachers",
+      "grandstand"
+    ],
+    "q": "Tent near bleachers or stadium.",
+    "a": "**Egress** and **crowd flow** — don't block **stairs** or **ADA ramps**; **sound** may bounce — note for planner."
+  },
+  {
+    "k": [
+      "track and field",
+      "running track"
+    ],
+    "q": "Setup next to rubber running track.",
+    "a": "**No spikes/stakes** on track — **mats or weights** only; **facility manager** signs off on any **vehicle creep**."
+  },
+  {
+    "k": [
+      "tennis court",
+      "pickleball"
+    ],
+    "q": "Tent on or beside tennis/pickleball courts.",
+    "a": "**Surface protection** mandatory — **no anchors** through court; **wind** on open courts is harsh — **ballast plan**."
+  },
+  {
+    "k": [
+      "marina dock",
+      "boat dock"
+    ],
+    "q": "Event adjacent to dock or marina.",
+    "a": "**Corrosion/slip** and **hose tripping** — **power** distances; **park rules** for **tent setback** from water."
+  },
+  {
+    "k": [
+      "vineyard row",
+      "winery between vines"
+    ],
+    "q": "Tent between vineyard rows.",
+    "a": "**Row width** and **irrigation lines** — **no stakes** near lines; **ag manager** must approve **footprint**."
+  },
+  {
+    "k": [
+      "apple orchard",
+      "pumpkin farm field"
+    ],
+    "q": "U-pick farm or orchard event.",
+    "a": "**Mud season**, **tractor access**, and **PHI/bio** — **family traffic** vs **equipment paths**; **insurance** may require **addendum**."
+  },
+  {
+    "k": [
+      "zoo event",
+      "zoo after hours"
+    ],
+    "q": "After-hours zoo or animal park event.",
+    "a": "**Animal stress / noise / lighting** rules — **only** with **venue events** team; **our** scope is **structures/furniture** per contract."
+  },
+  {
+    "k": [
+      "airport vicinity",
+      "flight path"
+    ],
+    "q": "Venue near airport — tall tent or inflatables.",
+    "a": "**Height restrictions** may apply — **venue** provides limits; **never** promise **max height** without **written** clearance."
+  },
+  {
+    "k": [
+      "train tracks",
+      "railroad adjacent"
+    ],
+    "q": "Site next to active rail line.",
+    "a": "**Vibration + noise + trespass** — **setback** from **right-of-way**; **flag any** fence gaps for **safety** briefing."
+  },
+  {
+    "k": [
+      "highway visibility",
+      "road frontage"
+    ],
+    "q": "Visible from highway — sign regulations.",
+    "a": "**DOT/local sign codes** — customer **permits** for **banners/flags**; we **don't** permit on their behalf."
+  },
+  {
+    "k": [
+      "cell tower",
+      "rf interference"
+    ],
+    "q": "Worried about cell / RF interference with AV.",
+    "a": "**AV vendor** troubleshoots — **not** rental equipment issue unless **our** powered items **cause** hum (rare); **escalate** to AV."
+  },
+  {
+    "k": [
+      "archaeological",
+      "historic burial"
+    ],
+    "q": "Historic site / possible archaeological sensitivity.",
+    "a": "**No casual staking** — **site archaeologist** or **SHPO** rules; **manager** only quotes after **written** OK."
+  },
+  {
+    "k": [
+      "native land",
+      "tribal land"
+    ],
+    "q": "Event on tribal or treaty land.",
+    "a": "**Tribal permits** separate from **county** — **don't** guess; customer **liaison** with **nation**; **office** reviews contract."
+  },
+  {
+    "k": [
+      "light pollution",
+      "dark sky"
+    ],
+    "q": "Dark-sky or astronomy-adjacent venue wants minimal light.",
+    "a": "**Uplight/walls** may be restricted — offer **dimmed** or **curfew** plan; **battery** small path lights vs floods."
+  },
+  {
+    "k": [
+      "beehive",
+      "apiary"
+    ],
+    "q": "Customer keeps bees near tent site.",
+    "a": "**Food service** proximity — **stings** risk; **relocate hive discussion** is **homeowner**, not us; note for **crew allergies**."
+  },
+  {
+    "k": [
+      "chicken coop",
+      "livestock yard"
+    ],
+    "q": "Small hobby farm next to install.",
+    "a": "**Biosecurity** and **dog/leash** — **crew** stays on **agreed path**; **manure** wheels cleaned per **farm rules** if asked."
+  },
+  {
+    "k": [
+      "alligator",
+      "wildlife florida"
+    ],
+    "q": "Wildlife (e.g. alligators) near water feature.",
+    "a": "**Venue safety** briefing — **not** our expertise; **no** swimming or **water-edge** décor without **venue approval**."
+  },
+  {
+    "k": [
+      "dust storm",
+      "high wind dust"
+    ],
+    "q": "Dust bowl conditions on dry fairgrounds.",
+    "a": "**Eye/respirator** for crew per **policy**; **zip sidewalls** may help; **cancellation** thresholds in **contract**."
+  },
+  {
+    "k": [
+      "hail",
+      "severe hail"
+    ],
+    "q": "Forecast includes hail.",
+    "a": "**Insurance / acts of God** language — **don't** promise **replacement mid-event**; **safety** > property when **sky** threatens."
+  },
+  {
+    "k": [
+      "tornado watch",
+      "tornado warning"
+    ],
+    "q": "Tornado watch/warning during event.",
+    "a": "**Venue shelter plan** — **deflate inflatables**, **clear guests** per **emergency** protocol; **crew** follows **company** storm rules."
+  },
+  {
+    "k": [
+      "heat advisory",
+      "heat index"
+    ],
+    "q": "Extreme heat advisory.",
+    "a": "**Hydration, shade, misting fans** if available — **generator** capacity; **elder/child** guests: flag for **planner**."
+  },
+  {
+    "k": [
+      "air quality",
+      "smoke wildfire"
+    ],
+    "q": "Wildfire smoke or poor air quality.",
+    "a": "**Outdoor event** may need **contingency** — **HEPA/indoor** not our scope; **refund policy** is **contract/management**."
+  },
+  {
+    "k": [
+      "tick",
+      "lyme"
+    ],
+    "q": "Ticks / Lyme — outdoor grassy site.",
+    "a": "**Advisory** only: **long grass** near woods — suggest **repellent** and **post-event check**; **not** medical advice."
+  },
+  {
+    "k": [
+      "poison ivy",
+      "sumac"
+    ],
+    "q": "Crew/customer worried about poison ivy at site.",
+    "a": "**Flag growth** during **site visit photos** — **crew PPE** per policy; **removal** is **property owner**, not rental default."
+  },
+  {
+    "k": [
+      "rfp",
+      "request for proposal"
+    ],
+    "q": "School or government RFP process.",
+    "a": "**Formal bids** go through **office** — collect **due date, scope PDF, insurance mins**; staff **don't** sign RFP responses alone."
+  },
+  {
+    "k": [
+      "sole source",
+      "piggyback contract"
+    ],
+    "q": "Customer asks for sole-source or piggyback on another contract.",
+    "a": "**Legal/procurement** only — ”I'll send this to our office for **compliance** review.”"
+  },
+  {
+    "k": [
+      "prevailing wage",
+      "davis bacon"
+    ],
+    "q": "Prevailing wage / public works labor rules.",
+    "a": "**Not** determined on the sales line — **estimating** and **HR** handle **certified payroll** if applicable."
+  },
+  {
+    "k": [
+      "bonded",
+      "performance bond"
+    ],
+    "q": "Customer requires performance bond.",
+    "a": "**Bond capacity** is **ownership/finance** — quote **deposit/retainer** paths only per **policy**; **no** verbal bond promise."
+  },
+  {
+    "k": [
+      "coi sample",
+      "certificate template"
+    ],
+    "q": "Email me a blank COI template.",
+    "a": "Send **official template** from **office** only — **no** homemade COI; **holder name** must match **venue request**."
+  },
+  {
+    "k": [
+      "spanish contract",
+      "contrato",
+      "translate contract"
+    ],
+    "q": "Spanish-language contract request.",
+    "a": "**English master** usually governs — **translated** copies via **approved** vendor; **staff** don't translate legal clauses."
+  },
+  {
+    "k": [
+      "canada border",
+      "cross border"
+    ],
+    "q": "Gear crossing US/Canada border.",
+    "a": "**Customs/broker** is **customer** or **specialty logistics** — **not** standard delivery quote."
+  },
+  {
+    "k": [
+      "storage between",
+      "warehouse hold"
+    ],
+    "q": "Hold my rentals in your warehouse between Saturday and Sunday.",
+    "a": "**Warehouse storage** may incur **fee** — **availability** is **ops** decision; **inventory** may **ship to next job**."
+  },
+  {
+    "k": [
+      "rain date discount",
+      "postponement fee"
+    ],
+    "q": "Postponement from rain — new date fee.",
+    "a": "**Contract** defines **reschedule** fees — **don't waive** on the phone; **manager** approves **goodwill**."
+  },
+  {
+    "k": [
+      "credit memo",
+      "account credit"
+    ],
+    "q": "Apply last year's credit memo to this order.",
+    "a": "**Accounting** applies credits — verify **open balance** and **expiration**; **don't** promise dollars without **ledger** check."
+  },
+  {
+    "k": [
+      "price lock",
+      "lock in price"
+    ],
+    "q": "Lock price for 12 months.",
+    "a": "**Price locks** are **policy-specific** — default: **quotes expire** as printed; **annual contract** via **sales lead**."
+  },
+  {
+    "k": [
+      "escalation clause",
+      "fuel surcharge"
+    ],
+    "q": "Fuel surcharge on invoice.",
+    "a": "If **contract** allows **surcharge**, cite **clause**; otherwise **billing** must approve — **no** surprise line items."
+  },
+  {
+    "k": [
+      "damage waiver vs insurance",
+      "ldw"
+    ],
+    "q": "Difference between damage waiver and real insurance.",
+    "a": "Explain only per **written** program — **not** insurance advice; **coverage gaps** go to **customer's** broker."
+  },
+  {
+    "k": [
+      "subrogation waiver",
+      "waiver of subrogation"
+    ],
+    "q": "Venue wants waiver of subrogation.",
+    "a": "**COI endorsement** request — **office + broker**; **timeline** may be **days**, not **same hour**."
+  },
+  {
+    "k": [
+      "named insured",
+      "additional insured wording"
+    ],
+    "q": "Exact COI wording mismatch — venue rejected certificate.",
+    "a": "Forward **verbatim** **venue paragraph** to **coordinator** — **don't** paraphrase **legal** wording on email."
+  },
+  {
+    "k": [
+      "union load in",
+      "iats"
+    ],
+    "q": "Union load-in rules at venue.",
+    "a": "**Stagehands / dock** may be **union only** — our **labor** stops where **contract** says; **customer** pays **labor bill** per venue."
+  },
+  {
+    "k": [
+      "rigging points",
+      "ceiling hang"
+    ],
+    "q": "Hang lighting from ceiling rig points.",
+    "a": "**Venue structural** and **certified rigger** — **not** tent crew by default; **separate vendor** and **load calc**."
+  },
+  {
+    "k": [
+      "sprinkler head",
+      "fire sprinkle"
+    ],
+    "q": "Decor touching sprinkler heads in ballroom.",
+    "a": "**Fire marshal** rules — **keep clear** zones; **height** of tent liner vs **heads** needs **facility** sign-off."
+  },
+  {
+    "k": [
+      "asbestos",
+      "lead paint"
+    ],
+    "q": "Older building — asbestos or lead concern.",
+    "a": "**Stop** and **escalate** — **no** drilling or disturbing **historic** finishes without **abatement** clearance."
+  },
+  {
+    "k": [
+      "hazmat pickup",
+      "fuel spill"
+    ],
+    "q": "Fuel or chemical spill near equipment.",
+    "a": "**911** if **immediate** danger — **SDS** for **our** chemicals only; **site spill** is **HazMat** coordinator."
+  },
+  {
+    "k": [
+      "cctv",
+      "security camera"
+    ],
+    "q": "Customer asks if we record on-site video.",
+    "a": "**Company policy** only — **don't** assume **dash/body cams**; **privacy** notice for **crews** is **HR**."
+  },
+  {
+    "k": [
+      "nda",
+      "non disclosure"
+    ],
+    "q": "Sign their NDA before quoting celebrity event.",
+    "a": "**Only authorized signer** — forward to **legal/owner**; **don't** sign **personal** NDA as staff."
+  },
+  {
+    "k": [
+      "embargo date",
+      "surprise party"
+    ],
+    "q": "Surprise party — embargo outreach until date.",
+    "a": "**Internal note** “**no vendor calls** to guest of honor #” — still log **real contact** for **delivery**."
+  },
+  {
+    "k": [
+      "gift kickback",
+      "vendor kickback"
+    ],
+    "q": "Planner offers kickback for steering business.",
+    "a": "**Decline** — **ethics policy**; report to **management**; **no** informal **commissions**."
+  },
+  {
+    "k": [
+      "bribe",
+      "cash under table"
+    ],
+    "q": "Customer hints at under-table cash.",
+    "a": "**Refuse** — **compliance**; **no** humor; end conversation if **pressure** continues; **report**."
+  },
+  {
+    "k": [
+      "same day invoice",
+      "need invoice today"
+    ],
+    "q": "Customer needs invoice same day as event.",
+    "a": "**Billing turnaround** varies — capture **email for AP** and **PO#**; **don't** promise **instant** PDF without **accounting** confirmation."
+  },
+  {
+    "k": [
+      "net terms",
+      "net45",
+      "net 60"
+    ],
+    "q": "Customer demands Net 45 / Net 60.",
+    "a": "**Credit app** required — **only finance** approves terms; **verbal** net terms **invalid**."
+  },
+  {
+    "k": [
+      "early pay discount",
+      "2 10 net 30"
+    ],
+    "q": "Early-pay discount on invoice.",
+    "a": "If **policy** exists, cite **exact** terms; otherwise **no** ad-hoc discounts without **manager**."
+  },
+  {
+    "k": [
+      "sales tax id",
+      "resale certificate"
+    ],
+    "q": "Drop sales tax — we have resale certificate.",
+    "a": "**Valid cert on file** before **tax-exempt** billing — **accounts** verifies; **don't** zero tax from a **phone photo** alone."
+  },
+  {
+    "k": [
+      "multi state nexus",
+      "remote sales tax"
+    ],
+    "q": "Which state gets the sales tax?",
+    "a": "**Multi-jurisdiction** rules are **accounting** — staff **quote subtotal** and note “**tax per contract**.”"
+  },
+  {
+    "k": [
+      "currency cad",
+      "pay in canadian"
+    ],
+    "q": "Pay in Canadian dollars or foreign currency.",
+    "a": "**USD** default unless **office** agrees **FX** — **no** Venmo-to-personal in **foreign** currency."
+  },
+  {
+    "k": [
+      "paypal",
+      "paypal goods"
+    ],
+    "q": "Pay via PayPal.",
+    "a": "**Only official** company PayPal — **never** personal; **fees** may pass through per **policy**."
+  },
+  {
+    "k": [
+      "square",
+      "tap to pay"
+    ],
+    "q": "Tap-to-pay on delivery.",
+    "a": "**Card-present** only if **device + policy** allow — **driver** follows **training**; **no** manual card **over phone** if prohibited."
+  },
+  {
+    "k": [
+      "check on delivery",
+      "cod check"
+    ],
+    "q": "COD check to driver.",
+    "a": "**Acceptance** per **AR policy** — **driver** may **decline** **starter** or **third-party** checks; **exact** amount only."
+  },
+  {
+    "k": [
+      "stop payment",
+      "check bounced"
+    ],
+    "q": "Customers check bounced or stop-paid.",
+    "a": "**Accounting** collects — **don't argue**; **service hold** on future orders until **cleared**."
+  },
+  {
+    "k": [
+      "lien",
+      "mechanics lien"
+    ],
+    "q": "Threatening mechanic's lien on our gear.",
+    "a": "**Legal** immediately — **no** threatening back; **document** **all** comms; **ownership** of gear is **ours** unless **sold**."
+  },
+  {
+    "k": [
+      "bankruptcy",
+      "chapter 11"
+    ],
+    "q": "Customer or venue in bankruptcy.",
+    "a": "**Stop** extending **credit** — **legal** instructs **next steps**; **deposits** may be **restricted**."
+  },
+  {
+    "k": [
+      "garnishment",
+      "wage garnishment"
+    ],
+    "q": "Garnishment notice for employee who ordered.",
+    "a": "**HR/legal** — **not** sales; **don't** discuss **payroll** with **creditor** callers."
+  },
+  {
+    "k": [
+      "fraud order",
+      "stolen card"
+    ],
+    "q": "Suspicious rush order / maybe stolen card.",
+    "a": "**Fraud playbook** — verify **billing/shipping** match, **callback** known **org** number; **decline** if **red flags**."
+  },
+  {
+    "k": [
+      "identity theft",
+      "not my order"
+    ],
+    "q": "Caller says order wasn't them — identity theft.",
+    "a": "**Freeze** further **contact** using stolen PII — **security** + **accounting**; **document** **dispute** ref."
+  },
+  {
+    "k": [
+      "eu gdpr",
+      "delete my data"
+    ],
+    "q": "EU resident GDPR data request.",
+    "a": "**Privacy** inbox only — **timeline** per **policy**; **don't** mass-export **PII** from **CRM** personally."
+  },
+  {
+    "k": [
+      "ccpa",
+      "california privacy"
+    ],
+    "q": "California privacy rights request.",
+    "a": "**Same** as **formal privacy** channel — **no** one-off delete of **DB** rows by **frontline**."
+  },
+  {
+    "k": [
+      "subprocessor",
+      "dpa"
+    ],
+    "q": "Customer needs DPA / subprocessor list.",
+    "a": "**Legal** provides **DPA** — **standard quotes** don't include **DP terms** unless **enterprise** contract."
+  },
+  {
+    "k": [
+      "soc2",
+      "iso 27001"
+    ],
+    "q": "Customer needs SOC2 / ISO certs.",
+    "a": "We issue **what exists** — **don't** claim **certifications** we **lack**; **security** FAQ from **IT/management**."
+  },
+  {
+    "k": [
+      "pen test",
+      "security questionnaire"
+    ],
+    "q": "Fill security questionnaire 200 questions.",
+    "a": "**Enterprise** process — **forward** to **IT**; **not** a **same-day** phone task."
+  },
+  {
+    "k": [
+      "force majeure",
+      "act of god clause"
+    ],
+    "q": "Customer cites force majeure to cancel free.",
+    "a": "**Contract** language governs — **credit vs forfeit**; **no** binding interpretation on **phone**; **legal** if disputed."
+  },
+  {
+    "k": [
+      "liquidated damages",
+      "ld clause"
+    ],
+    "q": "Venue contract mentions liquidated damages for late strike.",
+    "a": "**Our** contract with customer must **allocate** **who pays** **LD** — **manager** reviews **venue rider**."
+  },
+  {
+    "k": [
+      "indemnify",
+      "hold harmless broad"
+    ],
+    "q": "Broad hold-harmless / indemnify us for everything.",
+    "a": "**Insurance + legal** review **one-sided** indemnities — **sales** doesn't **strike** clauses."
+  },
+  {
+    "k": [
+      "arbitration",
+      "class action waiver"
+    ],
+    "q": "Customer refuses arbitration clause.",
+    "a": "**Legal** only — note **objection**; **don't** rewrite **MSA** in **email**."
+  },
+  {
+    "k": [
+      "minor signed contract",
+      "under 18"
+    ],
+    "q": "Contract signed by someone under 18.",
+    "a": "**Guardian/co-signer** likely required — **voidability** risk; **manager** + **legal** for **weddings** with **young** signers."
+  },
+  {
+    "k": [
+      "kid chair",
+      "kiddie chair",
+      "children chair"
+    ],
+    "q": "Children's chairs vs adult chairs.",
+    "a": "Confirm **counts by age** — **folding kid chairs** if stocked; else **mixed** seating with **shorter legs** at tables."
+  },
+  {
+    "k": [
+      "booster seat",
+      "high chair"
+    ],
+    "q": "High chairs or booster seats for dinner.",
+    "a": "**Inventory-specific** — many rental lines **don't** stock **high chairs**; suggest **venue/caterer** or **parent brings**."
+  },
+  {
+    "k": [
+      "stroller parking",
+      "stroller corral"
+    ],
+    "q": "Stroller parking at tented wedding.",
+    "a": "**Roped zone** or **sidelines** — **not** blocking **egress**; **weather** cover optional."
+  },
+  {
+    "k": [
+      "playpen",
+      "pack n play"
+    ],
+    "q": "Rent a pack-n-play or play yard.",
+    "a": "**Baby gear** often **not** rental inventory — **retail** buy or **guest** brings; **liability** for **sleep** gear is **high**."
+  },
+  {
+    "k": [
+      "sensory friendly",
+      "autism friendly"
+    ],
+    "q": "Sensory-friendly event — quieter zone.",
+    "a": "**Side tent** or **curtained corner** with **lower lights**; **noise** plan with **DJ**; **no** medical guarantees."
+  },
+  {
+    "k": [
+      "nursing mothers",
+      "lactation space"
+    ],
+    "q": "Private space for nursing.",
+    "a": "**Small tent or curtained area** + **chair**; **power** if pump; **signage** for **privacy**."
+  },
+  {
+    "k": [
+      "veteran discount",
+      "military id"
+    ],
+    "q": "Military or veteran discount.",
+    "a": "**Only** if **official** promo exists — ID check process via **manager**; **don't** invent **%** on the call."
+  },
+  {
+    "k": [
+      "teacher discount",
+      "educator"
+    ],
+    "q": "Teacher / school staff discount.",
+    "a": "**Policy-based** — **ID** + **approved** code; otherwise **polite decline**."
+  },
+  {
+    "k": [
+      "first responder",
+      "nurse week"
+    ],
+    "q": "First-responder appreciation discount.",
+    "a": "**Marketing calendar** only — forward to **promotions**; **no** **off-the-cuff** free add-ons."
+  },
+  {
+    "k": [
+      "loyalty points",
+      "repeat customer rewards"
+    ],
+    "q": "I'm a repeat customer — points or perks?",
+    "a": "**CRM note** only unless **program** exists — “I'll **flag** your account for the office.”"
+  },
+  {
+    "k": [
+      "yelp review",
+      "review for discount"
+    ],
+    "q": "Leave review for discount.",
+    "a": "**Ethics**: **no** pay-for-review — **Google** TOS risk; **decline** **quid pro quo**; **thank** organic reviews."
+  },
+  {
+    "k": [
+      "tiktok",
+      "reel",
+      "film crew small"
+    ],
+    "q": "Content creator films our setup for TikTok.",
+    "a": "**Media release** is **marketing/owner** — **no** **free gear** for **exposure** without **contract**."
+  },
+  {
+    "k": [
+      "wedding insurance",
+      "event insurance"
+    ],
+    "q": "Should they buy wedding insurance?",
+    "a": "**General** info only — “**Many couples** carry **event** coverage”; **not** **agent** advice; **our** COI is **liability**, not their **cancellation**."
+  },
+  {
+    "k": [
+      "weather insurance",
+      "rain insurance"
+    ],
+    "q": "Rain insurance for outdoor wedding.",
+    "a": "**Third-party** policies — **we don't sell**; **refund** rules remain **our contract**."
+  },
+  {
+    "k": [
+      "planner commission",
+      "referral fee planner"
+    ],
+    "q": "Wedding planner asks for vendor commission.",
+    "a": "**Only** per **signed** **referral** agreements — **finance** tracks; **verbal** commission **%** without paperwork is **void**."
+  },
+  {
+    "k": [
+      "venue preferred vendor",
+      "kickback venue"
+    ],
+    "q": "Venue says we must use their preferred list.",
+    "a": "**Customer choice** — if **freedom** clause, **OK**; if **exclusive**, **venue** contracts with **them**, not us arguing."
+  },
+  {
+    "k": [
+      "corkage",
+      "cake cut fee"
+    ],
+    "q": "Venue corkage / cake-cutting fee grumble.",
+    "a": "**Venue rules**, not ours — **sympathize**; **don't** **bash** **venue** partners."
+  },
+  {
+    "k": [
+      "shuttle late",
+      "bus late guests"
+    ],
+    "q": "Shuttle bus ran late — dinner delayed.",
+    "a": "**Timeline** is **planner** — we **hold** **hot** **holding** gear if contracted; **no** **refund** **for** **bus** **vendor**."
+  },
+  {
+    "k": [
+      "photo timeline drift",
+      "running late wedding"
+    ],
+    "q": "Wedding running 45 minutes late — crew waiting.",
+    "a": "**OT** per **contract** after **grace**; **dispatch** logs **clock**; **no** **open-ended** **free** **waits**."
+  },
+  {
+    "k": [
+      "power blink",
+      "generator stumbled"
+    ],
+    "q": "Lights flickered — generator stumbled.",
+    "a": "**Load** may have **spiked** — **AV** should **sequence** **turn-on**; **crew** checks **fuel/breaker** if **our** **gen**."
+  },
+  {
+    "k": [
+      "extension trip house",
+      "house breaker trip"
+    ],
+    "q": "House breaker tripped powering our gear.",
+    "a": "**Reduce** **load** — **separate** **circuits**; **licensed electrician** if **panel** issue — **don't** **reset** **unknown** **panels** **repeatedly**."
+  },
+  {
+    "k": [
+      "fuel smell generator",
+      "exhaust fume"
+    ],
+    "q": "Guests smell generator exhaust.",
+    "a": "**Relocate** **gen** **downwind** **farther** if safe; **never** **indoors**; **CO** **risk** — **priority** **safety**."
+  },
+  {
+    "k": [
+      "guy wire",
+      "stake trip hazard"
+    ],
+    "q": "Guy-wires or stakes are trip hazards.",
+    "a": "**Bright** **flags**, **covers**, or **route** **reroute** per **safety**; **night** **path** **lighting** suggestion."
+  },
+  {
+    "k": [
+      "generator theft",
+      "fuel theft"
+    ],
+    "q": "Someone siphoned generator fuel overnight.",
+    "a": "**Police report** + **photos** — **customer** site **security** unless **contract** says **otherwise**; **billing** **fuel** **top-up**."
+  },
+  {
+    "k": [
+      "vandalism tent",
+      "graffiti tent"
+    ],
+    "q": "Tent vandalized overnight at site.",
+    "a": "**Police** + **insurance** — **repair** **vs** **replace** by **ops**; **customer** **may** bear **deductible** per **agreement**."
+  },
+  {
+    "k": [
+      "aisle width",
+      "how wide aisle"
+    ],
+    "q": "How wide should aisles be between tables?",
+    "a": "Depends on **chair depth** and **service** — **36–48 in+** common for **servers**; **fire marshal** may **mandate** **wider**; **planner** confirms."
+  },
+  {
+    "k": [
+      "sweetheart table",
+      "head table shape"
+    ],
+    "q": "Sweetheart table shape — round vs rectangular.",
+    "a": "**Floor plan** from **planner** — **linen** size follows **table** SKU; **backdrop** depth affects **aisle**."
+  },
+  {
+    "k": [
+      "king table u shape"
+    ],
+    "q": "U-shaped or king-table seating.",
+    "a": "**Many tables + linens** — **delivery path** for **building** the **U**; **speech** sightlines to **head**."
+  },
+  {
+    "k": [
+      "assigned seating chart",
+      "escort print"
+    ],
+    "q": "Who prints escort cards?",
+    "a": "**Stationer or planner** unless **we** offer **print** — **rent** **holders/trays** only if in **inventory**."
+  },
+  {
+    "k": [
+      "napkin fold",
+      "pocket napkin"
+    ],
+    "q": "Specific napkin fold style.",
+    "a": "**Catering** or **venue** often **folds** — rental **napkins** may be **bulk**; **don't** promise **origami**."
+  },
+  {
+    "k": [
+      "chair sash",
+      "bow on chair"
+    ],
+    "q": "Sashes or bows on every chair.",
+    "a": "**Labor** line item if **we** tie — **count** = **chairs**; **color** dye-lot with **linens**."
+  },
+  {
+    "k": [
+      "mantle drape",
+      "fireplace decor"
+    ],
+    "q": "Drape over indoor fireplace mantel.",
+    "a": "**Heat / code** — **no** **fabric** on **active** **fire**; **venue** decides **pilot** **on/off**."
+  },
+  {
+    "k": [
+      "ceiling hook",
+      "rig from ceiling"
+    ],
+    "q": "Hang décor from ballroom ceiling hooks.",
+    "a": "**Rated points** + **certified** **rigger** — **weight** form; **not** **tent** **crew** default."
+  },
+  {
+    "k": [
+      "ballroom columns",
+      "wrap columns"
+    ],
+    "q": "Wrap venue columns in fabric.",
+    "a": "**Venue** approval + **fire** **retardant** certs if required — **pipe** **wrap** **quote** from **specialty** if needed."
+  },
+  {
+    "k": [
+      "outdoor rug",
+      "artificial grass rug"
+    ],
+    "q": "Outdoor rug or turf runner on grass.",
+    "a": "**Trip** edges + **moisture** under **rug** — **stakes** **can't** go **through** **rug** **without** **plan**."
+  },
+  {
+    "k": [
+      "heater near linen",
+      "fire near drape"
+    ],
+    "q": "Heater placement near drapes or linens.",
+    "a": "**Manufacturer** **clearance** — **rotate** to **aim** **away** from **fabric**; **refusal** to **run** **unsafe** **setup**."
+  },
+  {
+    "k": [
+      "candle real flame",
+      "open flame centerpiece"
+    ],
+    "q": "Real candles in centerpieces.",
+    "a": "**Venue** often **bans**; **LED** **substitute** — **don't** **approve** **open** **flame** **yourself**."
+  },
+  {
+    "k": [
+      "sparkler bucket",
+      "sand bucket"
+    ],
+    "q": "Sand bucket for used sparklers.",
+    "a": "**Metal** **can** with **sand** or **water** per **fire** plan — **we** may supply **bucket** if **SKU**; **not** **babysit** **burn**."
+  },
+  {
+    "k": [
+      "cold spark machine"
+    ],
+    "q": "Cold spark indoor pyro effect.",
+    "a": "**Licensed** **pyro** **vendor** — **venue** **permit**; **not** **standard** **rental** **SKU** **without** **shop**."
+  },
+  {
+    "k": [
+      "dry ice",
+      "fog low lying"
+    ],
+    "q": "Low-lying fog with dry ice.",
+    "a": "**Venue** **air** **quality** + **alarms** — **specialty** **operator**; **CO2/O2** **risk** in **basements**."
+  },
+  {
+    "k": [
+      "laser show",
+      "laser dj"
+    ],
+    "q": "Laser beams from DJ.",
+    "a": "**FDA/aviation** **rules** — **haze** **may** **trip** **smoke** **alarms**; **venue** **contract** governs."
+  },
+  {
+    "k": [
+      "virtual guest",
+      "zoom tablet"
+    ],
+    "q": "Tablet for Zoom guest at head table.",
+    "a": "**Power + Wi-Fi + mic** routing — **AV** table; **echo** **test** **before** **ceremony**."
+  },
+  {
+    "k": [
+      "photo booth backdrop only"
+    ],
+    "q": "Backdrop stand without photo booth.",
+    "a": "**Pipe** **or** **stand** **rental** — **dimensions** for **step-and-repeat**; **wind** **weight** if **outdoor**."
+  },
+  {
+    "k": [
+      "selfie station",
+      "ring light"
+    ],
+    "q": "Selfie station with ring light.",
+    "a": "**Power** + **table**; **camera** is **customer** unless **we** **bundle** **equipment**."
+  },
+  {
+    "k": [
+      "live painter",
+      "event painter"
+    ],
+    "q": "Live wedding painter needs easel space.",
+    "a": "**10x10** **shade** + **light** + **trip** hazard **for** **guests** — **corner** placement."
+  },
+  {
+    "k": [
+      "pet attendants",
+      "dog wedding"
+    ],
+    "q": "Dog in ceremony — water bowl and tie-out.",
+    "a": "**No** **stake** **through** **irrigation**; **handler** is **customer**; **backup** **plan** if **barking**."
+  },
+  {
+    "k": [
+      "ice sculpture drip pan"
+    ],
+    "q": "Drip pan size for ice sculpture.",
+    "a": "**Match** **artist** **spec** — **drain** **directed** **away** from **dance** **floor**."
+  },
+  {
+    "k": [
+      "donut wall stands",
+      "donut peg board"
+    ],
+    "q": "Donut wall stand rental.",
+    "a": "**Capacity** **#** **holes** vs **order** — **grease** **on** **linens** **risk**; **table** **liner** suggestion."
+  },
+  {
+    "k": [
+      "champagne saber",
+      "saber bottle"
+    ],
+    "q": "Champagne sabrage at event.",
+    "a": "**Glass** **shards** **risk** — **venue** **OK**? **Outdoor** preferred; **not** **our** **skill** **unless** **hired** **sommelier**."
+  },
+  {
+    "k": [
+      "rice throw",
+      "bird seed toss"
+    ],
+    "q": "Rice or birdseed toss after ceremony.",
+    "a": "**Venue** **bans** **sometimes** — **slip** **hazard**; **biodegradable** **petals** **or** **bubbles** **alternatives**."
+  },
+  {
+    "k": [
+      "inventory screenshot",
+      "send me photos of chairs"
+    ],
+    "q": "Customer wants photos of exact chairs in warehouse.",
+    "a": "**Official** gallery or **scheduled** **walk-through** — **don't** **DM** random **warehouse** **pics** **without** **policy**."
+  },
+  {
+    "k": [
+      "floor plan cad",
+      "autocad layout"
+    ],
+    "q": "Venue sent CAD — can we load into layout?",
+    "a": "Forward **file** to **events** **design** — **frontline** **doesn't** **draft** **CAD**; **turnaround** **quoted** **by** **lead**."
+  },
+  {
+    "k": [
+      "pipe and drape height",
+      "drape ceiling height"
+    ],
+    "q": "Pipe-and-drape section height vs ballroom ceiling.",
+    "a": "**Upright** **SKU** max height — **within** **sprinkler** **clearance**; **facility** **sign-off**."
+  },
+  {
+    "k": [
+      "drape color black",
+      "velvet drape"
+    ],
+    "q": "Black velvet drape vs standard banjo.",
+    "a": "**SKU** **names** match **inventory** — **swatch** **or** **planner** **sample** before **promising** **blackout**."
+  },
+  {
+    "k": [
+      "stage stairs handrail"
+    ],
+    "q": "Portable stage stairs need handrail.",
+    "a": "**Code** may **require** **rail** above **height** — **shop** **adds** **rail** **SKU**; **not** **optional** if **inspector** says **no**."
+  },
+  {
+    "k": [
+      "wheelchair lift stage",
+      "ada lift"
+    ],
+    "q": "Wheelchair lift to stage.",
+    "a": "**Specialty** **vendor** — **we** may **supply** **ramp** **modules** **only** if **in** **catalog**; **ADA** **path** **engineered**."
+  },
+  {
+    "k": [
+      "clear acrylic podium",
+      "ghost podium"
+    ],
+    "q": "Clear acrylic lectern.",
+    "a": "**Scratch** **care** on **transport** — **cleaning** **fee** if **return** **hazed**; **confirm** **SKU**."
+  },
+  {
+    "k": [
+      "white leather lounge",
+      "vip couch"
+    ],
+    "q": "White VIP leather lounge pieces.",
+    "a": "**Cover** **in** **rain** **or** **provide** **tent** **flap** — **stain** **fee** in **contract** language."
+  },
+  {
+    "k": [
+      "ottoman with storage"
+    ],
+    "q": "Ottoman that opens for storage.",
+    "a": "**Security** **—** **don't** **promise** **lockable** **unless** **SKU** says **lock**; **items** **left** **inside** **not** **our** **vault**."
+  },
+  {
+    "k": [
+      "charging station table",
+      "usb table"
+    ],
+    "q": "Tables built-in USB charging.",
+    "a": "**If** **stocked**, confirm **amp** **budget** per **table**; **extension** **off** **house** **may** **trip**."
+  },
+  {
+    "k": [
+      "wifi cradlepoint",
+      "cellular router"
+    ],
+    "q": "Rent cellular router for Wi-Fi.",
+    "a": "**IT** **specialty** **—** **data** **plan** **is** **carrier**; **we** **may** **not** **offer**; **venue** **first**."
+  },
+  {
+    "k": [
+      "satellite internet",
+      "starlink event"
+    ],
+    "q": "Satellite internet dish at outdoor event.",
+    "a": "**Sky** **view** **+** **tripod** **footprint** **—** **not** **tent** **default**; **third** **party** **IT**."
+  },
+  {
+    "k": [
+      "satellite bar trailer",
+      "tap truck"
+    ],
+    "q": "Beer trailer or tap truck next to tent.",
+    "a": "**Separate** **contract** **with** **trailer** **vendor** **—** **clearance** **for** **tow** **in**; **power** **tie-in**."
+  },
+  {
+    "k": [
+      "food truck height",
+      "awning truck"
+    ],
+    "q": "Food truck awning hits tent edge.",
+    "a": "**Setbacks** **planned** **before** **install** **—** **dispatch** **needs** **truck** **dims**."
+  },
+  {
+    "k": [
+      "kosher catering",
+      "separate kitchen tent"
+    ],
+    "q": "Separate kitchen tent for kosher prep.",
+    "a": "**Dedicated** **tent** **+** **gear** **or** **wash** **protocol** **—** **caterer** **directs**; **we** **quote** **structure**."
+  },
+  {
+    "k": [
+      "halal",
+      "dietary station"
+    ],
+    "q": "Halal station layout separation.",
+    "a": "**Layout** **spacing** **with** **caterer** **—** **not** **religious** **authority**; **follow** **caterer** **map**."
+  },
+  {
+    "k": [
+      "nut free wedding",
+      "allergy aware"
+    ],
+    "q": "Nut-free wedding cross-contact worry.",
+    "a": "**Food** **is** **caterer** **—** **we** **provide** **clean** **linens** **if** **ordered**; **no** **allergy** **cert** on **rental** **forks**."
+  },
+  {
+    "k": [
+      "gluten free buffet labels"
+    ],
+    "q": "Buffet cards for gluten-free items.",
+    "a": "**Stationery** **is** **caterer** **or** **planner** **—** **we** **don't** **label** **food** **contents**."
+  },
+  {
+    "k": [
+      "open flame cooking",
+      "live cooking station"
+    ],
+    "q": "Live fire cooking under tent edge.",
+    "a": "**NFPA** **+** **venue** — **hood** or **outdoor** **offset** required; **our** **fabric** **distance** **rules**."
+  },
+  {
+    "k": [
+      "hibachi tent",
+      "teppanyaki"
+    ],
+    "q": "Hibachi grill in tented reception.",
+    "a": "**Grease** **fire** **risk** **—** **vent** **+** **extinguisher** **plan**; **often** **outside** **flap** **or** **uncovered** **corner**."
+  },
+  {
+    "k": [
+      "oyster shucking station",
+      "shucker"
+    ],
+    "q": "Oyster shucker station shell disposal.",
+    "a": "**Trash** **+** **ice** **bin** **—** **sharp** **shell** **gloves** **are** **caterer**; **floor** **protection** **from** **wet**."
+  },
+  {
+    "k": [
+      "raw bar ice calculator"
+    ],
+    "q": "How much ice for raw bar?",
+    "a": "**Caterer** **rule** **of** **thumb** **—** **we** **rent** **bins** **not** **ice** **math** unless **we** **sell** **ice**."
+  },
+  {
+    "k": [
+      "coffee cart",
+      "espresso cart"
+    ],
+    "q": "Espresso cart power need.",
+    "a": "**20–30A+** **often** **—** **vendor** **spec** **sheet**; **house** **power** **may** **fail** **on** **two** **machines**."
+  },
+  {
+    "k": [
+      "smoothie bike",
+      "pedal power blender"
+    ],
+    "q": "Human-powered blender bike.",
+    "a": "**Novelty** **—** **availability** **tiny**; **liability** **waiver** **with** **operator** **vendor**."
+  },
+  {
+    "k": [
+      "hydration station",
+      "water dispenser refill"
+    ],
+    "q": "Large water jugs for hydration station.",
+    "a": "**Table** **+** **dispenser** **if** **stocked** **—** **jugs** **filled** **by** **caterer** **or** **customer**."
+  },
+  {
+    "k": [
+      "load in dock height",
+      "loading dock clearance"
+    ],
+    "q": "Loading dock height vs our truck.",
+    "a": "Get **dock level**, **bump clearance**, and **freight elevator** dims — **equipment** that **won't** **fit** needs **alternate** **route**."
+  },
+  {
+    "k": [
+      "freight elevator weight",
+      "elevator lbs"
+    ],
+    "q": "Freight elevator weight limit for dance floor panels.",
+    "a": "**Scale** **panels** per **vendor** **spec** — **split** **loads** across **trips**; **overloading** **voids** **liability**."
+  },
+  {
+    "k": [
+      "bubble wrap floor",
+      "floor protection film"
+    ],
+    "q": "Temporary floor protection film in venue.",
+    "a": "**Venue** **may** **supply** — **we** **tape** **only** per **facility** **rules**; **adhesive** **damage** **fees** risk."
+  },
+  {
+    "k": [
+      "marble floor",
+      "historic tile"
+    ],
+    "q": "Setup on polished marble or historic tile.",
+    "a": "**No** **drag** **skids** — **lay** **approved** **protection** first; **crew** **soft** **wheels** **only** **if** **policy** allows."
+  },
+  {
+    "k": [
+      "carpet venue",
+      "deep pile carpet"
+    ],
+    "q": "Ballroom deep-pile carpet — tables sinking.",
+    "a": "**Pads** or **ply** **under** **heavy** **bases** if **permitted**; **indentation** **disputes** **→** **venue** **contract**."
+  },
+  {
+    "k": [
+      "sprung floor",
+      "dance studio floor"
+    ],
+    "q": "Dance studio sprung wood floor.",
+    "a": "**No** **stakes**, **minimal** **point** **load** — **weights** **and** **wide** **footprints**; **studio** **owner** **sign-off**."
+  },
+  {
+    "k": [
+      "ice arena concrete",
+      "rink slab"
+    ],
+    "q": "Event on de-iced rink slab.",
+    "a": "**Slip** **+** **meltwater** **drain** — **subfloor** **for** **guest** **heels**; **rug** **perimeter** **trip** **check**."
+  },
+  {
+    "k": [
+      "sand venue",
+      "beach corporate"
+    ],
+    "q": "Corporate event on compacted sand.",
+    "a": "**Weights** **not** **stakes**; **corrosion** **rinse** **plan** for **metal** **bases**; **wind** **exposure** **high**."
+  },
+  {
+    "k": [
+      "solar farm field",
+      "utility field"
+    ],
+    "q": "Event near solar array or utility field.",
+    "a": "**Easement** **+** **security** — **may** **be** **off-limits**; **only** **written** **site** **approval**."
+  },
+  {
+    "k": [
+      "parking garage ceiling",
+      "low clearance"
+    ],
+    "q": "Route through low parking garage.",
+    "a": "Measure **van** **+** **loaded** **height** — **air** **deflector** down; **one** **wrong** **beam** **hit** **trashes** **schedule**."
+  },
+  {
+    "k": [
+      "one way street",
+      "council permit load"
+    ],
+    "q": "Load on one-way city street — permit?",
+    "a": "**Traffic** **plan** is **customer** **or** **city** — **we** **follow** **posted** **cordons** **only**."
+  },
+  {
+    "k": [
+      "overnight truck parking",
+      "truck stay on site"
+    ],
+    "q": "Can delivery truck stay overnight?",
+    "a": "**Venue** **and** **city** **ordinance** — **often** **no**; **crew** **returns** **day** **2** unless **contracted** **staging**."
+  },
+  {
+    "k": [
+      "dumpster corral",
+      "waste corral"
+    ],
+    "q": "Hide dumpster with drape or fence.",
+    "a": "**Pipe** **drape** **or** **screens** — **odor** **still** **exists**; **don't** **promise** **scent** **control**."
+  },
+  {
+    "k": [
+      "compostable plates",
+      "eco disposables"
+    ],
+    "q": "Only compostable disposables policy.",
+    "a": "**Caterer** **choice** — **we** **supply** **tables** **only**; **sorting** **bins** **if** **customer** **orders** **waste** **package**."
+  },
+  {
+    "k": [
+      "zero waste event"
+    ],
+    "q": "Venue requires zero-waste event.",
+    "a": "**Hauler** **+** **caterer** **own** **zero-waste** — **rental** **side** **is** **reuse** **of** **our** **inventory**; **no** **foam** **from** **us** **if** **banned**."
+  },
+  {
+    "k": [
+      "led bulb color temp",
+      "warm white"
+    ],
+    "q": "String lights 2700K vs 4000K.",
+    "a": "**SKU** **spec** **only** — **don't** **match** **by** **eye** **over** **phone**; **order** **samples** **or** **trust** **inventory** **tag**."
+  },
+  {
+    "k": [
+      "dimmer rack string lights"
+    ],
+    "q": "Dim string lights on dimmer rack.",
+    "a": "**Compatibility** **of** **LED** **drivers** — **flicker** **risk**; **AV** **electrician** **sequences** **turn** **on**."
+  },
+  {
+    "k": [
+      "battery uplight runtime"
+    ],
+    "q": "How long do wireless uplights last?",
+    "a": "**Manufacturer** **hours** **at** **full** **—** **quote** **spares** **or** **swap** **plan** **for** **long** **receptions**."
+  },
+  {
+    "k": [
+      "gobo metal glass",
+      "steel gobo"
+    ],
+    "q": "Breakup gobo vs custom steel gobo.",
+    "a": "**Source** **gobo** **from** **lighting** **vendor** — **size** **for** **fixture** **gate**; **our** **team** **doesn't** **machine** **metal**."
+  },
+  {
+    "k": [
+      "followspot operator"
+    ],
+    "q": "Rent follow spot for awards.",
+    "a": "**Licensed** **operator** **+** **fixture** **package** — **usually** **AV** **sub** **vendor**."
+  },
+  {
+    "k": [
+      "stinger cable",
+      "socapex"
+    ],
+    "q": "Socapex / multicable for stage.",
+    "a": "**Heavy** **current** **—** **only** **qualified** **distro** **crew**; **customer** **cords** **rejected** **if** **under** **gauge**."
+  },
+  {
+    "k": [
+      "distro cam lock"
+    ],
+    "q": "Cam-lok feeder to distro.",
+    "a": "**Company** **truck** **packages** **only** — **tie-in** **at** **venue** **disconnect** **requires** **electrician**."
+  },
+  {
+    "k": [
+      "house power tie in"
+    ],
+    "q": "Tie into building disconnect for event power.",
+    "a": "**Licensed** **electrical** **only** — **not** **general** **labor**; **venue** **may** **bill** **for** **tie-in** **window**."
+  },
+  {
+    "k": [
+      "parallel generator sync"
+    ],
+    "q": "Parallel two generators for redundancy.",
+    "a": "**Paralleling** **gear** **+** **tech** **—** **not** **two** **gens** **plugged** **together** **ad** **hoc**; **engineer** **signs**."
+  },
+  {
+    "k": [
+      "fuel cube",
+      "external fuel tank"
+    ],
+    "q": "External fuel cube for long generator run.",
+    "a": "**UL** **tank** **rules** **+** **spill** **containment** — **permits** **in** **some** **cities**; **refuel** **contract** **hours**."
+  },
+  {
+    "k": [
+      "color run powder",
+      "holi powder"
+    ],
+    "q": "Color powder run near tent and gear.",
+    "a": "**Fine dust** **clogs** **zipper** **and** **blower** **filters** — **avoid** **staging** **in** **throw** **zone**; **charge** **deep** **clean** **if** **exposed**."
+  },
+  {
+    "k": [
+      "foam color stain",
+      "colored foam"
+    ],
+    "q": "Colored foam party stains vinyl or chairs.",
+    "a": "**Pigment** **may** **stain** — **contract** **cleaning** **clause**; **test** **patch** **on** **customer** **by** **shop** **only**."
+  },
+  {
+    "k": [
+      "slime station kids"
+    ],
+    "q": "Kids slime-making station near rentals.",
+    "a": "**Glue/borax** **spills** — **plastic** **floor** **shield**; **no** **slime** **on** **upholstered** **lounge** **without** **cover**."
+  },
+  {
+    "k": [
+      "tie dye station"
+    ],
+    "q": "Outdoor tie-dye craft station.",
+    "a": "**Dye** **splatter** — **downwind** **away** **from** **linens**; **disposable** **table** **covers** **mandatory**."
+  },
+  {
+    "k": [
+      "paint and sip",
+      "acrylic pour"
+    ],
+    "q": "Paint party near rented furniture.",
+    "a": "**Drop** **cloths** **+** **no** **carpet** **without** **venue** **OK**; **brush** **water** **bucket** **away** **from** **power**."
+  },
+  {
+    "k": [
+      "glitter bar",
+      "body glitter"
+    ],
+    "q": "Glitter station — cleanup nightmare.",
+    "a": "**Microplastic** **+** **venue** **ban** **possible** — **outdoor** **prefer**; **vacuum** **fee** **scheduled** **post-event**."
+  },
+  {
+    "k": [
+      "confetti cannon indoor"
+    ],
+    "q": "Electric confetti cannon indoors.",
+    "a": "**Venue** **must** **approve** — **ceiling** **height** **+** **sprinkler** **masking**; **operator** **only**."
+  },
+  {
+    "k": [
+      "snow machine faux"
+    ],
+    "q": "Fake snow machine for party.",
+    "a": "**Fluid** **type** **+** **slip** **film** **on** **floor** — **traction** **mats** **near** **dance** **entry**."
+  },
+  {
+    "k": [
+      "bubble machine floor"
+    ],
+    "q": "Bubble fluid makes dance floor slick.",
+    "a": "**Stop** **bubbles** **before** **dancing** **or** **reroute** **machine**; **mop** **with** **venue** **chemical** **OK**."
+  },
+  {
+    "k": [
+      "co2 jet cryo"
+    ],
+    "q": "CO2 cryo jets on dance floor.",
+    "a": "**Overspray** **cold** **burn** **risk** — **distance** **per** **vendor** **spec**; **alarm** **interlock** **with** **HVAC**."
+  },
+  {
+    "k": [
+      "inflatable games mud"
+    ],
+    "q": "Inflatable obstacle after rain — mud.",
+    "a": "**Extra** **tarp** **runway** **to** **blower**; **crew** **may** **delay** **inflate** until **surface** **safe**."
+  },
+  {
+    "k": [
+      "dunk tank drain"
+    ],
+    "q": "Where dunk tank drains after event.",
+    "a": "**Sanitary** **vs** **storm** **—** **city** **rules**; **customer** **gets** **permit** **path**; **we** **don't** **dump** **gray** **water** **illegally**."
+  },
+  {
+    "k": [
+      "waterslide recycle water"
+    ],
+    "q": "Water slide recirc pump water dirty.",
+    "a": "**Health** **department** **rules** **for** **public** **events** — **cater** **may** **need** **fresh** **fill**."
+  },
+  {
+    "k": [
+      "pony ride circle",
+      "petting pen fence"
+    ],
+    "q": "Temporary fence for pony ring.",
+    "a": "**Panel** **fence** **rental** **if** **SKU**; **height** **for** **species**; **liability** **with** **animal** **vendor**."
+  },
+  {
+    "k": [
+      "carousel mini",
+      "carnival ride"
+    ],
+    "q": "Mini carnival ride on grass.",
+    "a": "**Level** **pad** **+** **engineering** **stamp** **often** **required**; **not** **our** **ride** **unless** **brokered**."
+  },
+  {
+    "k": [
+      "ferris wheel small"
+    ],
+    "q": "Portable wheel footprint near tent.",
+    "a": "**Setback** **from** **stakes** **and** **guy** **wires** — **composite** **layout** **by** **GC** **or** **event** **engineer**."
+  },
+  {
+    "k": [
+      "aframe sandwich sign wind"
+    ],
+    "q": "Sandwich boards blowing over in wind.",
+    "a": "**Weights** **or** **lay** **flat** **threshold** **wind**; **injury** **liability** **if** **not** **secured**."
+  },
+  {
+    "k": [
+      "yard sign stakes",
+      "directional arrows"
+    ],
+    "q": "Coroplast signs with stakes in hard ground.",
+    "a": "**Pre-soak** **holes** **or** **drill** **pilot** **—** **utility** **strike** **risk**; **811** **already** **cited** **elsewhere**."
+  },
+  {
+    "k": [
+      "balloon tie weight",
+      "latex helium"
+    ],
+    "q": "Helium bunch tie-down weight per balloon.",
+    "a": "**Not** **our** **balloon** **SKU** **usually** — **weights** **per** **code** **indoor**; **outdoor** **still** **tether**."
+  },
+  {
+    "k": [
+      "piñata indoor"
+    ],
+    "q": "Piñata indoors under tent.",
+    "a": "**Swing** **arc** **clear** **lights** **and** **sprinklers**; **candy** **slip** **—** **broom** **plan**."
+  },
+  {
+    "k": [
+      "axe throwing mobile"
+    ],
+    "q": "Mobile axe lane next to tent.",
+    "a": "**Setback** **+** **fencing** **—** **alcohol** **proximity** **rules**; **we** **don't** **operate** **axes**."
+  },
+  {
+    "k": [
+      "escape room trailer"
+    ],
+    "q": "Escape-room trailer parked beside party.",
+    "a": "**Separate** **vendor** **cord** **routing** — **clear** **extinguisher** **access** **between** **structures**."
+  },
+  {
+    "k": [
+      "photo 360 spinner",
+      "orbit booth"
+    ],
+    "q": "360 spinner platform weight.",
+    "a": "**Distributed** **load** **on** **floor** — **level** **+** **cable** **trip** **hazard** **tape**."
+  },
+  {
+    "k": [
+      "silent headphone count"
+    ],
+    "q": "How many silent-disco headsets to order.",
+    "a": "**Peak** **concurrent** **users** **+** **10%** **spares** **—** **frequency** **plan** **by** **vendor**."
+  },
+  {
+    "k": [
+      "karaoke license",
+      "ascap karaoke"
+    ],
+    "q": "Do we need license for karaoke?",
+    "a": "**Public** **performance** **of** **recordings** **—** **venue** **license** **or** **customer**; **we** **rent** **mics** **only**."
+  },
+  {
+    "k": [
+      "branded tent top",
+      "logo tent peak"
+    ],
+    "q": "Print our logo on the tent top.",
+    "a": "**Custom** **print** **—** **weeks** **lead** **time** **and** **wind** **rated** **material** **spec**; **only** **office** **quotes** **after** **art** **approval**."
+  },
+  {
+    "k": [
+      "mesh banner tent leg",
+      "vinyl leg wrap"
+    ],
+    "q": "Brand wraps on tent legs.",
+    "a": "**Attachment** **without** **piercing** **vinyl** **—** **clips** **or** **sleeves** **per** **shop**; **remove** **before** **strike** **if** **reused**."
+  },
+  {
+    "k": [
+      "sponsorship tier a b c"
+    ],
+    "q": "Sponsor tiers for festival tents.",
+    "a": "**Package** **inventory** **bundles** **—** **sales** **lead** **owns** **pricing**; **don't** **verbally** **grant** **category** **exclusivity**."
+  },
+  {
+    "k": [
+      "naming rights arch"
+    ],
+    "q": "Sponsor name on inflatable arch.",
+    "a": "**Art** **proof** **+** **manufacturer** **PMS** **match**; **install** **window** **before** **runners** **arrive**."
+  },
+  {
+    "k": [
+      "program insert ad"
+    ],
+    "q": "Can we buy ad space in printed program?",
+    "a": "**Not** **our** **publication** **—** **event** **organizer** **or** **charity**; **we** **stay** **vendor** **neutral** **in** **calls**."
+  },
+  {
+    "k": [
+      "exclusivity beverage"
+    ],
+    "q": "Exclusive pour rights with tent package.",
+    "a": "**Legal** **with** **beverage** **sponsor** **—** **we** **don't** **negotiate** **exclusivity** **clauses** **as** **equipment** **vendor**."
+  },
+  {
+    "k": [
+      "competitor gear on site"
+    ],
+    "q": "Another rental company's chairs in same room.",
+    "a": "**Customer** **choice** **—** **don't** **trash** **competitors**; **coordinate** **layout** **conflicts** **with** **planner**."
+  },
+  {
+    "k": [
+      "coi competing vendor"
+    ],
+    "q": "Venue wants our COI because other vendor lacks.",
+    "a": "**We** **provide** **only** **our** **policy** **—** **don't** **cover** **other** **vendor's** **omissions**."
+  },
+  {
+    "k": [
+      "damage who pays mixed rental"
+    ],
+    "q": "Chair damaged — two rental companies on site.",
+    "a": "**Tag** **with** **your** **asset** **ID** **at** **delivery** **photos**; **dispute** **goes** **billing** **with** **evidence**."
+  },
+  {
+    "k": [
+      "ghost vendor no show"
+    ],
+    "q": "Other vendor never showed — can we fill in cheap?",
+    "a": "**Surge** **pricing** **still** **follows** **rate** **card** **unless** **manager** **authorizes** **goodwill**; **no** **shade** **at** **fellow** **vendor**."
+  },
+  {
+    "k": [
+      "load grid shared dock"
+    ],
+    "q": "Shared loading dock schedule tight.",
+    "a": "**15-minute** **slots** **—** **missed** **slot** **may** **bump** **to** **night** **load** **fee**; **dispatcher** **plans** **truck** **stack**."
+  },
+  {
+    "k": [
+      "dock supervisor signature"
+    ],
+    "q": "Dock supervisor must sign bill of lading.",
+    "a": "**Driver** **obtains** **signature** **photo** **—** **customer** **proxy** **only** **if** **pre-approved** **in** **writing**."
+  },
+  {
+    "k": [
+      "lift gate broken truck"
+    ],
+    "q": "Truck lift-gate failed at delivery.",
+    "a": "**Alternate** **offload** **plan** **—** **fork** **on** **site** **or** **manual** **team** **OT**; **document** **equipment** **failure** **for** **fleet**."
+  },
+  {
+    "k": [
+      "vehicle height bridge"
+    ],
+    "q": "Low bridge on GPS route to venue.",
+    "a": "**Commercial** **vehicle** **height** **card** **in** **cab** **—** **reroute** **before** **strike** **clearance** **issue**."
+  },
+  {
+    "k": [
+      "overwidth permit escort"
+    ],
+    "q": "Wide load permit for truss.",
+    "a": "**DOT** **escort** **cars** **—** **customer** **pays** **permit** **or** **included** **in** **heavy** **haul** **quote** **only** **if** **stated**."
+  },
+  {
+    "k": [
+      "crew hotel block"
+    ],
+    "q": "Out-of-town crew hotel rooms.",
+    "a": "**Per** **diem** **contract** **line** **—** **not** **auto** **in** **local** **quote**; **travel** **package** **by** **estimating**."
+  },
+  {
+    "k": [
+      "crew meal buyout"
+    ],
+    "q": "Client wants to cater crew lunch on site.",
+    "a": "**Accept** **if** **no** **delay** **to** **install** **—** **OSHA** **rest** **still** **required**; **dispatch** **communicates** **break** **windows**."
+  },
+  {
+    "k": [
+      "union steward site"
+    ],
+    "q": "Union steward stops our unload.",
+    "a": "**Stop** **work** **politely** **—** **call** **dispatcher** **+** **customer** **GC**; **don't** **argue** **jurisdiction** **on** **dock**."
+  },
+  {
+    "k": [
+      "right to work state"
+    ],
+    "q": "We're in right-to-work state — union?",
+    "a": "**Venue** **CBAs** **still** **bind** **labor** **rules** **on** **that** **property** **—** **don't** **give** **legal** **labor** **advice**."
+  },
+  {
+    "k": [
+      "tip pool house"
+    ],
+    "q": "Venue adds mandatory service charge.",
+    "a": "**Transparent** **in** **customer** **invoice** **—** **not** **our** **line** **item** **unless** **we** **collect** **as** **pass-through** **per** **contract**."
+  },
+  {
+    "k": [
+      "service charge tax"
+    ],
+    "q": "Is service charge taxable?",
+    "a": "**Accounting** **rule** **by** **state** **—** **quote** **subtotal** **and** **let** **finance** **apply** **tax** **matrix**."
+  },
+  {
+    "k": [
+      "gratuity auto event"
+    ],
+    "q": "Auto gratuity for large event staff.",
+    "a": "**If** **labor** **is** **ours**, **policy** **defines** **%;** **if** **caterer's**, **not** **our** **conversation**."
+  },
+  {
+    "k": [
+      "cash bar kit"
+    ],
+    "q": "Rent cash-drawer lockbox for bar.",
+    "a": "**Security** **—** **armored** **pickup** **not** **included**; **venue** **liquor** **license** **holder** **owns** **cash** **controls**."
+  },
+  {
+    "k": [
+      "id scanner rental"
+    ],
+    "q": "ID scanner for 21+ wristband.",
+    "a": "**Compliance** **tool** **—** **buy** **through** **approved** **vendor** **if** **we** **don't** **stock**; **privacy** **policy** **for** **data**."
+  },
+  {
+    "k": [
+      "wristband color meaning"
+    ],
+    "q": "Color wristbands for drink tiers.",
+    "a": "**Customer** **prints** **legend** **signs** **—** **we** **may** **supply** **unprinted** **bands** **only** **if** **SKU** **exists**."
+  },
+  {
+    "k": [
+      "inventory serial",
+      "asset tag photo"
+    ],
+    "q": "Customer wants serial photos of chairs delivered.",
+    "a": "**Delivery** **photos** **per** **policy** **—** **asset** **tags** in **frame**; **no** **warehouse** **screenshots** **of** **unrelated** **stock**."
+  },
+  {
+    "k": [
+      "color batch dye lot"
+    ],
+    "q": "Linens must match dye lot from last year.",
+    "a": "**New** **order** **may** **differ** **slightly** **—** **swatch** **compare** **or** **fresh** **full** **set** **quote**; **don't** **promise** **perfect** **match**."
+  },
+  {
+    "k": [
+      "spandex wrinkle steam"
+    ],
+    "q": "Can you steam spandex covers on site?",
+    "a": "**Heat** **limits** **on** **stretch** **fabric** **—** **only** **trained** **linen** **tech** **per** **shop**; **burn** **risk**."
+  },
+  {
+    "k": [
+      "velvet nap crush"
+    ],
+    "q": "Crushed velvet nap marks after folding.",
+    "a": "**Steam** **hang** **time** **—** **not** **guaranteed** **perfect** **before** **guest** **photos**; **planner** **buffers** **timing**."
+  },
+  {
+    "k": [
+      "sequin linen shedding"
+    ],
+    "q": "Sequin tablecloth shedding glitter.",
+    "a": "**Indoor** **cleanup** **fee** **possible**; **outdoor** **wind** **amplifies** **loss** **—** **disclose** **shed** **risk**."
+  },
+  {
+    "k": [
+      "mirror table scratch"
+    ],
+    "q": "Mirror top table scratched after event.",
+    "a": "**PHOTOS** **at** **delivery** **vs** **pickup** **—** **cover** **during** **use** **rules** **in** **contract**; **avoid** **guess** **on** **fault**."
+  },
+  {
+    "k": [
+      "acrylic ghost chair scratch"
+    ],
+    "q": "Clear chairs look scuffed — charge?",
+    "a": "**Many** **show** **micro** **marks** **under** **light** **—** **set** **expectation** **at** **booking**; **damage** **vs** **wear** **by** **manager**."
+  },
+  {
+    "k": [
+      "resin chair weight limit"
+    ],
+    "q": "Can two people sit on one resin folding?",
+    "a": "**No** **—** **one** **rated** **occupant** **per** **chair**; **collapse** **injury** **and** **damage** **risk**."
+  },
+  {
+    "k": [
+      "banquet table brace"
+    ],
+    "q": "Long banquet table sagging in middle.",
+    "a": "**Leg** **brace** **or** **center** **support** **SKU** **required** **beyond** **span** **limit** **—** **layout** **from** **spec** **sheet**."
+  },
+  {
+    "k": [
+      "folding table hinge pinch"
+    ],
+    "q": "Kid pinched finger in folding table hinge.",
+    "a": "**First** **aid** **—** **document** **—** **supervise** **kids** **around** **setup**; **OSHA** **≠** **party** **but** **empathy** **and** **report**."
+  },
+  {
+    "k": [
+      "glass top table wind"
+    ],
+    "q": "Glass tabletop outdoor — wind flip risk?",
+    "a": "**Remove** **or** **lower** **if** **gust** **forecast** **high** **—** **shatter** **hazard**; **weights** **on** **base** **only** **per** **design**."
+  },
+  {
+    "k": [
+      "umbrella hole grommet table"
+    ],
+    "q": "Patio table umbrella hole vs our linen.",
+    "a": "**Cut** **linen** **only** **if** **sold** **as** **custom** **—** **stock** **may** **not** **fit** **center** **hole** **without** **alteration** **fee**."
+  },
+  {
+    "k": [
+      "charger plate stack height"
+    ],
+    "q": "How high can we stack chargers in crate?",
+    "a": "**Mfg** **carton** **limit** **—** **chip** **edges** **if** **overstacked**; **driver** **refuses** **unsafe** **load**."
+  },
+  {
+    "k": [
+      "flatware count missing forks"
+    ],
+    "q": "Returned flatware short 12 forks.",
+    "a": "**Count** **sheet** **at** **check-in** — **replace** **loss** **per** **schedule** **fee**; **no** **instant** **accusation** **of** **theft**."
+  },
+  {
+    "k": [
+      "china chip ring edge"
+    ],
+    "q": "Small chip on plate rim — still usable?",
+    "a": "**Pull** **from** **service** **set** **—** **guest** **cut** **risk**; **damage** **bucket** **for** **shop** **repair** **or** **scrap**."
+  },
+  {
+    "k": [
+      "stemware polish streak"
+    ],
+    "q": "Wine glasses look streaky from dishwasher.",
+    "a": "**Polish** **cloth** **finish** **for** **high** **end** **—** **time** **labor** **line** **if** **contracted**; **tap** **water** **spots** **vs** **lip** **stick**."
+  },
+  {
+    "k": [
+      "thermos coffee urn drip"
+    ],
+    "q": "Coffee urn tap drips on linen.",
+    "a": "**Drip** **tray** **required** **—** **replace** **faulty** **spigot** **before** **event** **if** **found** **at** **prep**."
+  },
+  {
+    "k": [
+      "chafing dish wind outdoor"
+    ],
+    "q": "Chafing dishes won't stay lit outdoors.",
+    "a": "**Wind** **guard** **or** **move** **under** **sidewall** **flap** **—** **open** **flame** **ban** **may** **force** **electric** **chafer**."
+  },
+  {
+    "k": [
+      "percolator coffee weak"
+    ],
+    "q": "Percolator coffee too weak for crowd.",
+    "a": "**Ratio** **is** **caterer** **recipe** **—** **we** **rent** **urn** **capacity** **not** **taste** **QA**."
+  },
+  {
+    "k": [
+      "popcorn grease floor"
+    ],
+    "q": "Popcorn machine grease on dance floor.",
+    "a": "**Absorbent** **+** **degrease** **approved** **by** **venue** **floor** **warranty** **—** **cleaning** **fee**."
+  },
+  {
+    "k": [
+      "sno cone syrup sticky turf"
+    ],
+    "q": "Syrup on artificial turf after snow cones.",
+    "a": "**Rinse** **plan** **—** **turf** **may** **stain** **sweet** **dye**; **mat** **under** **machine** **mandatory**."
+  },
+  {
+    "k": [
+      "hot dog roller grease trap"
+    ],
+    "q": "Grease overflow from roller grill.",
+    "a": "**Empty** **trap** **between** **shifts** **—** **fire** **risk** **if** **ignored**; **operator** **training** **card** **on** **file**."
+  },
+  {
+    "k": [
+      "nacho cheese burn"
+    ],
+    "q": "Guest burned on nacho cheese pump.",
+    "a": "**First aid** **if** **needed** — **document**; **machine** **shield** **and** **warning** **sign** **per** **vendor** **manual** **placement**."
+  },
+  {
+    "k": [
+      "slush machine alcohol"
+    ],
+    "q": "Customer wants to pour vodka in slush machine.",
+    "a": "**Licensed** **operator** **+** **recipe** **from** **manufacturer** **—** **we** **don't** **authorize** **ad** **hoc** **abuse** **of** **equipment**."
+  },
+  {
+    "k": [
+      "cotton candy sugar ants"
+    ],
+    "q": "Ants swarmed cotton candy cart.",
+    "a": "**Close** **carts** **overnight** **—** **pest** **is** **site** **issue** **for** **perimeter** **treatment** **—** **not** **instant** **our** **fix**."
   }
 ];
 
-module.exports.STAFF_ASSISTANT_QNA_VERSION = 1;
+module.exports.STAFF_ASSISTANT_QNA_VERSION = 24;

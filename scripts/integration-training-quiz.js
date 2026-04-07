@@ -82,6 +82,7 @@ async function main() {
   };
   delete env.DATABASE_URL;
   delete env.DATABASE_PRIVATE_URL;
+  delete env.OPENAI_API_KEY;
 
   const child = spawn(process.execPath, ["backend/server.js"], {
     cwd: root,
@@ -262,6 +263,19 @@ async function main() {
     if (r.status !== 200 || r.body.assistantPausedForQuiz !== false) {
       return fail(
         `me unpaused after activity clear: ${r.status} ${JSON.stringify(r.body)}`
+      );
+    }
+
+    r = await fetchJson("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: "Hello" }],
+      }),
+    });
+    if (r.status !== 503 || r.body.error !== "assistant_unavailable") {
+      return fail(
+        `chat without OPENAI expected 503 assistant_unavailable, got ${r.status} ${JSON.stringify(r.body)}`
       );
     }
 

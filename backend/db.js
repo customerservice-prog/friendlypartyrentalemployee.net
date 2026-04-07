@@ -88,10 +88,19 @@ function useSsl(databaseUrl) {
   return true;
 }
 
+/** Thrown when no Postgres URL can be resolved (used by admin API messaging). */
+function databaseNotConfiguredError() {
+  const err = new Error(
+    "Postgres is not configured (no DATABASE_URL or equivalent env vars)"
+  );
+  err.code = "DB_NOT_CONFIGURED";
+  return err;
+}
+
 function getPool() {
   const connectionString = resolveDatabaseUrl();
   if (!connectionString) {
-    throw new Error("DATABASE_URL is not set");
+    throw databaseNotConfiguredError();
   }
   if (!pool) {
     pool = new Pool({

@@ -82,7 +82,7 @@
 
         addBubble(
           "system",
-          "🤖 Assistant ready — **no OpenAI required.** After sign-in it loads **official pricing quiz** plus **140+ staff training answers** (booking, delivery, safety, complaints, policies). Ask naturally; it scores your question against the full library before falling back to quick topics."
+          "🤖 Assistant ready. After sign-in we load **official pricing** plus **staff training Q&A**. Each question is matched to that library **first** (fast, quiz-accurate). If there is no strong match and the server has OpenAI enabled, **cloud AI** fills in—otherwise topic shortcuts handle general questions."
         );
 
         form.addEventListener("submit", async (e) => {
@@ -113,8 +113,18 @@
             if (window.FPR_PRICING_FAQ_LOAD) {
               await window.FPR_PRICING_FAQ_LOAD();
             }
+            var kbHit =
+              window.FPR_TRY_KNOWLEDGE_LOOKUP &&
+              window.FPR_TRY_KNOWLEDGE_LOOKUP(text);
+            if (kbHit) {
+              addBubble("assistant", kbHit);
+              history.push({ role: "assistant", content: kbHit });
+              return;
+            }
+            var triedCloud = false;
             var api = { ok: false };
             if (me.assistantUsesOpenAI && window.FPR_ASSISTANT_REPLY) {
+              triedCloud = true;
               api = await window.FPR_ASSISTANT_REPLY(history);
             }
             if (!api.ok && api.status === 403 && api.message) {
@@ -122,10 +132,25 @@
               history.push({ role: "assistant", content: api.message });
               return;
             }
-            var response =
-              api.ok && api.content
-                ? api.content
-                : window.FPR_LOCAL_AI(text);
+            var usedCloud = api.ok && api.content;
+            var response = usedCloud
+              ? api.content
+              : window.FPR_LOCAL_AI(text);
+            if (
+              !usedCloud &&
+              triedCloud &&
+              (!api.ok || api.error === "timeout")
+            ) {
+              var note =
+                "*Live AI did not return an answer in time — showing the **offline training library** instead.*\n\n";
+              if (api.message && api.status === 502) {
+                note =
+                  "*" +
+                  api.message +
+                  "*\n\n";
+              }
+              response = note + response;
+            }
             addBubble("assistant", response);
             history.push({ role: "assistant", content: response });
           } finally {
