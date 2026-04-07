@@ -1,0 +1,7 @@
+# Railway picks this up from the repo root. Docs:
+# https://docs.railway.com/guides/config-as-code
+
+[deploy]
+healthcheckPath = "/api/health"
+healthcheckTimeout = 120
+restartPolicyType = "ON_FAILURE"
