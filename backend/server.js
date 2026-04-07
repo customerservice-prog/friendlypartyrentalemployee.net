@@ -9,6 +9,8 @@ const adminRouter = require("./routes/admin");
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
+/** Railway and most PaaS require listening on all interfaces, not only localhost. */
+const LISTEN_HOST = process.env.LISTEN_HOST || "0.0.0.0";
 const rootDir = path.join(__dirname, "..");
 const frontendDir = path.join(rootDir, "frontend");
 
@@ -62,10 +64,22 @@ async function start() {
       "SESSION_SECRET is not set; using insecure default — set SESSION_SECRET in production"
     );
   }
-  await initDb();
-  app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+
+  await new Promise((resolve, reject) => {
+    const server = app.listen(PORT, LISTEN_HOST, () => {
+      console.log(`Server listening on http://${LISTEN_HOST}:${PORT}`);
+      resolve();
+    });
+    server.on("error", reject);
   });
+
+  try {
+    await initDb();
+    console.log("Database ready");
+  } catch (err) {
+    console.error("Database initialization failed:", err);
+    process.exit(1);
+  }
 }
 
 start().catch((err) => {

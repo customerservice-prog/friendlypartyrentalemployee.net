@@ -50,6 +50,9 @@ function getPool() {
       ssl: useSsl(connectionString)
         ? { rejectUnauthorized: false }
         : false,
+      connectionTimeoutMillis: 15_000,
+      idleTimeoutMillis: 30_000,
+      max: 10,
     });
   }
   return pool;
