@@ -2,6 +2,7 @@
 # https://docs.railway.com/guides/config-as-code
 
 [deploy]
-healthcheckPath = "/api/health"
+# /api/live always 200 (no DB). Use /api/health manually to verify Postgres.
+healthcheckPath = "/api/live"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

@@ -1,5 +1,11 @@
 require("dotenv").config();
 
+console.log(
+  "[boot] friendly-party-rental-quiz",
+  "node=" + process.version,
+  "cwd=" + process.cwd()
+);
+
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
@@ -13,6 +19,12 @@ const submitRouter = require("./routes/submit");
 const adminRouter = require("./routes/admin");
 
 const app = express();
+
+/** Liveness for PaaS (no DB) — use this as Railway Healthcheck Path so deploys succeed even while DB is misconfigured. */
+app.get("/api/live", (_req, res) => {
+  res.set("Cache-Control", "no-store");
+  res.status(200).json({ ok: true });
+});
 
 function readPort() {
   const raw = process.env.PORT;
@@ -53,7 +65,7 @@ app.use(
 
 app.use(express.json({ limit: "512kb" }));
 
-/** Railway counts deploy as healthy only on HTTP 200; we require a working Postgres URL + ping. */
+/** Readiness: Postgres URL + `SELECT 1`. Use for monitoring; Railway deploy healthcheck should use `/api/live`. */
 app.get("/api/health", async (_req, res) => {
   try {
     if (!resolveDatabaseUrl()) {
@@ -109,7 +121,7 @@ async function start() {
       found.length ? found.join(", ") : "(none)"
     );
     console.error(
-      "/api/health will return 503 until DATABASE_URL is set — deploy will stay unhealthy."
+      "/api/health returns 503 until DATABASE_URL is set (quiz save/admin need DB). Deploy uses /api/live."
     );
     return;
   }
