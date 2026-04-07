@@ -111,27 +111,9 @@
         transition: border-color 0.15s;
       }
       input[type="text"]:focus,
-      input[type="email"]:focus,
-      textarea:focus {
+      input[type="email"]:focus {
         outline: none;
         border-color: var(--gold-dark);
-      }
-      textarea.integrity-self-report {
-        width: 100%;
-        min-height: 4.5rem;
-        padding: 0.75rem 0.85rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 10px;
-        font: inherit;
-        margin-bottom: 0.35rem;
-        resize: vertical;
-        transition: border-color 0.15s;
-      }
-      .integrity-self-report-hint {
-        font-size: 0.78rem;
-        color: var(--muted);
-        margin: 0 0 1rem;
-        line-height: 1.4;
       }
       .btn {
         display: inline-flex;
@@ -587,21 +569,6 @@
               termination or other employment action.</span
             >
           </label>
-          <label for="integrity-self-report" style="margin-top: 1rem"
-            >Tools or assistance (optional)</label
-          >
-          <textarea
-            id="integrity-self-report"
-            class="integrity-self-report"
-            maxlength="2000"
-            rows="3"
-            autocomplete="off"
-            placeholder="If you used search, notes, AI, or help from someone else, describe briefly for training records (optional)."
-          ></textarea>
-          <p class="integrity-self-report-hint">
-            This is stored with your results for manager review. Leave blank if
-            you completed the quiz on your own.
-          </p>
         </div>
         <label for="emp-name">Your full name</label>
         <input
@@ -742,7 +709,6 @@
       const saveStatus = $("save-status");
       const btnRestart = $("btn-restart");
       const integrityAck = $("quiz-integrity-ack");
-      const selfReportEl = $("integrity-self-report");
 
       const integrityState = {
         tabHiddenCount: 0,
@@ -810,10 +776,6 @@
         const veryFastAnswerCount = timings.filter(
           (t) => t < ANSWER_FAST_MS
         ).length;
-        const selfReportedTools =
-          selfReportEl && typeof selfReportEl.value === "string"
-            ? selfReportEl.value.trim()
-            : "";
         return {
           quiz: "pricing",
           capturedAt: new Date().toISOString(),
@@ -823,7 +785,6 @@
           veryFastAnswerCount,
           medianAnswerMs,
           answerTimingsMs: timings.slice(),
-          selfReportedTools,
         };
       }
 
@@ -1281,7 +1242,6 @@
         empEmail.value = "";
         empJob.value = "";
         if (integrityAck) integrityAck.checked = false;
-        if (selfReportEl) selfReportEl.value = "";
         resetIntegrityMetrics();
         Q = null;
         participantEmail = "";

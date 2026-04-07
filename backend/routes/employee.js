@@ -15,6 +15,10 @@ const {
   clearTrainingQuizLock,
 } = require("../lib/trainingQuizLock");
 const { loadPricingQuiz } = require("../lib/knowledge");
+const {
+  STAFF_ASSISTANT_QNA_ENTRIES,
+  STAFF_ASSISTANT_QNA_VERSION,
+} = require("../lib/staffAssistantQna.generated");
 
 const router = express.Router();
 
@@ -161,6 +165,38 @@ router.get("/pricing-faq", (req, res) => {
     res.status(500).json({
       error: "load_failed",
       message: "Training price list could not be loaded. Try again later.",
+    });
+  }
+});
+
+/**
+ * Full local-assistant payload: official pricing rows + large staff Q&A library.
+ */
+router.get("/assistant-knowledge", (req, res) => {
+  if (!req.session.employeeAuthenticated) {
+    return res.status(401).json({
+      error: "login_required",
+      message: "Sign in with your employee PIN to load the training assistant.",
+    });
+  }
+  try {
+    const Q = loadPricingQuiz();
+    const pricingRows = Q.map((row) => ({
+      s: row.s,
+      q: row.q,
+      answer: row.o[row.a],
+    }));
+    res.json({
+      version: 1,
+      staffQnaVersion: STAFF_ASSISTANT_QNA_VERSION,
+      pricingRows,
+      staffQna: STAFF_ASSISTANT_QNA_ENTRIES,
+    });
+  } catch (e) {
+    console.error("assistant-knowledge", e);
+    res.status(500).json({
+      error: "load_failed",
+      message: "Training knowledge could not be loaded. Try again later.",
     });
   }
 });

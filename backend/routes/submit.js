@@ -48,12 +48,11 @@ function clampInt(n, lo, hi) {
 
 const INTEGRITY_TIMING_MAX = 120;
 
-/** Browser signals + optional self-report; not proof of cheating. */
+/** Browser signals only — trainees are not asked to disclose tools on the quiz. */
 function sanitizeIntegrityReport(raw) {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
     raw = {};
   }
-  const MAX_STR = 2000;
   const o = {
     version: 1,
     quiz: String(raw.quiz || "").trim().slice(0, 32),
@@ -63,9 +62,6 @@ function sanitizeIntegrityReport(raw) {
     pasteDuringQuiz: clampInt(raw.pasteDuringQuiz, 0, 100000),
     veryFastAnswerCount: clampInt(raw.veryFastAnswerCount, 0, 5000),
     medianAnswerMs: clampInt(raw.medianAnswerMs, 0, 600000),
-    selfReportedTools: String(raw.selfReportedTools ?? "")
-      .trim()
-      .slice(0, MAX_STR),
   };
   if (Array.isArray(raw.answerTimingsMs)) {
     o.answerTimingsMs = raw.answerTimingsMs
@@ -76,6 +72,102 @@ function sanitizeIntegrityReport(raw) {
   }
   o.reviewHints = buildReviewHints(o);
   return o;
+}
+
+/** Manager-facing summary — not proof; cannot identify a specific product (e.g. ChatGPT vs Google). */
+function buildManagerIntegrityAssessment(o, passed) {
+  let riskScore = 0;
+  const reasons = [];
+  const channels = [];
+
+  if (o.tabHiddenCount >= 4) {
+    riskScore += 2;
+    reasons.push(
+      `Left the quiz page repeatedly (${o.tabHiddenCount} times while the quiz was visible). Often consistent with looking up answers in another tab or app.`
+    );
+    channels.push("Another browser tab or different application");
+  }
+  if (o.totalHiddenMs >= 120000) {
+    riskScore += 2;
+    reasons.push(
+      `Long total time with the quiz tab hidden (~${Math.round(
+        o.totalHiddenMs / 60000
+      )} minutes). Can match extended search or chat sessions.`
+    );
+    if (!channels.length) {
+      channels.push("Another browser tab or different application");
+    }
+  }
+  if (o.pasteDuringQuiz >= 1) {
+    riskScore += 2;
+    reasons.push(
+      `Paste detected during the quiz (${o.pasteDuringQuiz} time(s)). Commonly consistent with copying from search results, notes, AI chat, or documents—not definite proof.`
+    );
+    channels.push("Clipboard (search, notes, AI chat, email, or document)");
+  }
+  if (o.veryFastAnswerCount >= 8) {
+    riskScore += 2;
+    reasons.push(
+      `Many answers submitted very soon after each question appeared (${o.veryFastAnswerCount} under ~1.5s). Can match prepared or external answers.`
+    );
+    if (!channels.length) {
+      channels.push("Prepared answers or external source");
+    }
+  }
+  const nTimings = o.answerTimingsMs.length;
+  if (nTimings >= 15 && o.medianAnswerMs > 0 && o.medianAnswerMs < 2500) {
+    riskScore += 1;
+    reasons.push(
+      `Median time to answer was very low (${
+        Math.round(o.medianAnswerMs / 100) / 10
+      }s) across ${nTimings} responses.`
+    );
+  }
+  if (passed && riskScore >= 4) {
+    riskScore += 1;
+    reasons.push(
+      "Quiz was marked passed despite several flags—investigate whether knowledge is genuine."
+    );
+  }
+
+  if (o.pasteDuringQuiz >= 1 && o.veryFastAnswerCount >= 5) {
+    channels.push(
+      "Pattern sometimes seen with AI chat or copy-paste workflows (cannot confirm which tool)"
+    );
+  }
+
+  let riskLevel = "low";
+  if (riskScore >= 6) riskLevel = "elevated";
+  else if (riskScore >= 3) riskLevel = "moderate";
+
+  const uniqueChannels = [...new Set(channels)];
+
+  let employmentGuidance = "";
+  if (riskLevel === "low") {
+    employmentGuidance =
+      "Hire / continued employment: Automated signals alone do not suggest strong concern. If interview and references match, this submission would not—by itself—argue against hiring or keeping the person. Use your normal process.";
+  } else if (riskLevel === "moderate") {
+    employmentGuidance =
+      "Hire / continued employment: Consider verifying knowledge another way (verbal quiz, supervised retest, or reference check) before a final offer. For current staff, review with HR and document—do not discipline based only on this screen.";
+  } else {
+    employmentGuidance =
+      "Hire / continued employment: Multiple red-flag patterns. For applicants, consider not extending an offer until knowledge is verified independently. For employees, escalate to HR; do not terminate from this report alone—due process and policy still apply.";
+  }
+
+  return {
+    riskLevel,
+    riskScore,
+    suspectedChannels:
+      uniqueChannels.length > 0
+        ? uniqueChannels
+        : ["No specific channel indicated by these metrics"],
+    reasons,
+    toolDisclaimer:
+      "The browser cannot determine whether someone used ChatGPT, Google, a friend, written notes, or another tool—only behaviors that sometimes go with unauthorized help.",
+    employmentGuidance,
+    legalDisclaimer:
+      "Not legal advice. These are automated heuristics, not proof. Apply company policy and employment law.",
+  };
 }
 
 function buildReviewHints(o) {
@@ -106,13 +198,6 @@ function buildReviewHints(o) {
       code: "very_fast_answers",
       label: "Many answers under ~1.5s after question shown",
       value: o.veryFastAnswerCount,
-    });
-  }
-  if (o.selfReportedTools) {
-    hints.push({
-      code: "self_reported_tools",
-      label: "Trainee disclosed tools or assistance",
-      value: o.selfReportedTools,
     });
   }
   if (hints.length === 0) {
@@ -276,6 +361,10 @@ router.post("/", async (req, res) => {
     }
 
     const integrityReport = sanitizeIntegrityReport(body.integrityReport);
+    integrityReport.managerAssessment = buildManagerIntegrityAssessment(
+      integrityReport,
+      passed
+    );
 
     const row = await insertSubmission({
       name: nameTrimmed,

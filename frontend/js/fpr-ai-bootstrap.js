@@ -107,91 +107,202 @@
     return { score: score, dimHit: dimHit };
   }
 
-  function tryPricingFaqAnswer(userMessage) {
-    var rows = window.__FPR_PRICING_FAQ;
-    if (!rows || !rows.length) return null;
-    var terms = extractFaqTerms(userMessage);
-    if (terms.words.length === 0 && terms.dims.length === 0) return null;
-    var scored = [];
-    var i;
-    for (i = 0; i < rows.length; i++) {
-      var sc = scoreFaqRow(terms, rows[i]);
-      if (sc.score > 0) {
-        scored.push({ row: rows[i], score: sc.score, dimHit: sc.dimHit });
+  function priceIntentMsg(userMessage) {
+    return /how\s+much|price|pricing|cost|quote|rent\s+for|rental\s+price|\$/i.test(
+      String(userMessage || '')
+    );
+  }
+
+  function scoreStaffEntry(terms, userMsgLower, entry) {
+    var hay = (entry.k.join(' ') + ' ' + entry.q + ' ' + entry.a).toLowerCase();
+    var cHay = compactDims(hay);
+    var score = 0;
+    var dimHit = false;
+    var d;
+    for (d = 0; d < terms.dims.length; d++) {
+      var dc = compactDims(terms.dims[d]);
+      if (dc && cHay.indexOf(dc) !== -1) {
+        score += 12;
+        dimHit = true;
       }
     }
-    if (!scored.length) return null;
-    scored.sort(function(a, b) {
+    var w;
+    for (w = 0; w < terms.words.length; w++) {
+      if (tokenMatches(hay, terms.words[w])) {
+        score += 2;
+      }
+    }
+    var i;
+    for (i = 0; i < entry.k.length; i++) {
+      var kw = entry.k[i];
+      if (typeof kw !== 'string') continue;
+      var kl = kw.toLowerCase();
+      if (kl.indexOf(' ') !== -1) {
+        if (userMsgLower.indexOf(kl) !== -1) {
+          score += 6;
+        }
+      } else if (tokenMatches(userMsgLower, kl)) {
+        score += 5;
+      }
+    }
+    return { score: score, dimHit: dimHit };
+  }
+
+  function formatStaffAnswer(entry) {
+    return (
+      '**Training library** (staff Q&A)\n\n**Scenario:** ' +
+      entry.q +
+      '\n**Suggested reply:** ' +
+      entry.a +
+      '\n\n_Confirm with a manager when liability, contracts, or live pricing are in play._'
+    );
+  }
+
+  /** Search official pricing + ~100+ staff training entries before pattern fallback. */
+  function tryUnifiedKnowledgeAnswer(userMessage) {
+    var rows = window.__FPR_PRICING_FAQ;
+    var staff = window.__FPR_STAFF_QNA;
+    if ((!rows || !rows.length) && (!staff || !staff.length)) return null;
+    rows = rows || [];
+    staff = staff || [];
+    var terms = extractFaqTerms(userMessage);
+    if (terms.words.length === 0 && terms.dims.length === 0) return null;
+    var userMsgLower = String(userMessage || '').toLowerCase();
+    var wantPrice = priceIntentMsg(userMessage);
+    var candidates = [];
+    var i;
+    var sc;
+    for (i = 0; i < rows.length; i++) {
+      sc = scoreFaqRow(terms, rows[i]);
+      if (sc.score > 0) {
+        var pScore = sc.score + (wantPrice ? 3 : 0);
+        candidates.push({
+          kind: 'p',
+          score: pScore,
+          dimHit: sc.dimHit,
+          row: rows[i],
+        });
+      }
+    }
+    for (i = 0; i < staff.length; i++) {
+      sc = scoreStaffEntry(terms, userMsgLower, staff[i]);
+      if (sc.score > 0) {
+        candidates.push({
+          kind: 's',
+          score: sc.score,
+          dimHit: sc.dimHit,
+          entry: staff[i],
+        });
+      }
+    }
+    if (!candidates.length) return null;
+    candidates.sort(function(a, b) {
       return b.score - a.score;
     });
-    var best = scored[0].score;
-    var dimHitBest = scored[0].dimHit;
-    var minAccept = dimHitBest ? 5 : 7;
-    if (terms.words.length >= 4 && best >= 6) {
+    var best = candidates[0];
+    if (wantPrice && best.kind === 's') {
+      var alt = null;
+      for (i = 0; i < candidates.length; i++) {
+        if (candidates[i].kind === 'p' && candidates[i].score >= best.score - 4) {
+          if (!alt || candidates[i].score > alt.score) {
+            alt = candidates[i];
+          }
+        }
+      }
+      if (alt) {
+        best = alt;
+      }
+    }
+    var minAccept = best.dimHit ? 5 : 7;
+    if (best.kind === 's') {
+      minAccept = Math.max(minAccept, 6);
+    }
+    if (terms.words.length >= 4 && best.score >= 8) {
       minAccept = Math.min(minAccept, 6);
     }
-    if (best < minAccept) return null;
-    var top = [scored[0]];
-    for (var j = 1; j < scored.length && top.length < 3; j++) {
-      if (scored[j].score >= best - 2 && scored[j].score >= minAccept) {
-        top.push(scored[j]);
+    if (best.score < minAccept) return null;
+    var bestScore = best.score;
+    var top = [best];
+    for (var j = 1; j < candidates.length && top.length < 3; j++) {
+      if (
+        candidates[j].score >= bestScore - 2 &&
+        candidates[j].score >= minAccept
+      ) {
+        top.push(candidates[j]);
       }
     }
     if (top.length === 1) {
-      var row = top[0].row;
-      return (
-        'From the **official pricing training** (' +
-        row.s +
-        '):\n\n**Q:** ' +
-        row.q +
-        '\n**Answer to quote:** **' +
-        row.answer +
-        '**\n\nIf this is not an exact fit, confirm with a manager or the live catalog before promising a price.'
-      );
+      if (top[0].kind === 'p') {
+        var row = top[0].row;
+        return (
+          'From the **official pricing training** (' +
+          row.s +
+          '):\n\n**Q:** ' +
+          row.q +
+          '\n**Answer to quote:** **' +
+          row.answer +
+          '**\n\nIf this is not an exact fit, confirm with a manager or the live catalog before promising a price.'
+        );
+      }
+      return formatStaffAnswer(top[0].entry);
     }
     var parts = [];
     var k;
     for (k = 0; k < top.length; k++) {
-      var rk = top[k].row;
-      parts.push(
-        '• **' + rk.s + '** — ' + rk.q + ' → **' + rk.answer + '**'
-      );
+      if (top[k].kind === 'p') {
+        var rk = top[k].row;
+        parts.push(
+          '• **' + rk.s + '** (pricing) — ' + rk.q + ' → **' + rk.answer + '**'
+        );
+      } else {
+        parts.push(
+          '• (training) **' + top[k].entry.q + '** — ' + top[k].entry.a
+        );
+      }
     }
     return (
-      'Closest matches from **official pricing training**:\n\n' +
+      'Closest **training matches** (pick what fits):\n\n' +
       parts.join('\n\n') +
-      '\n\nConfirm which item the customer means before quoting.'
+      '\n\nConfirm details before quoting or promising policy.'
     );
   }
 
   window.__FPR_PRICING_FAQ = window.__FPR_PRICING_FAQ || null;
-  window.__FPR_PRICING_FAQ_PROMISE = window.__FPR_PRICING_FAQ_PROMISE || null;
+  window.__FPR_STAFF_QNA = window.__FPR_STAFF_QNA || null;
+  window.__FPR_ASSISTANT_KB_PROMISE = window.__FPR_ASSISTANT_KB_PROMISE || null;
 
   window.FPR_PRICING_FAQ_LOAD = function() {
-    if (window.__FPR_PRICING_FAQ && window.__FPR_PRICING_FAQ.length) {
+    if (window.__FPR_ASSISTANT_KB_DONE) {
       return Promise.resolve();
     }
-    if (window.__FPR_PRICING_FAQ_PROMISE) {
-      return window.__FPR_PRICING_FAQ_PROMISE;
+    if (window.__FPR_ASSISTANT_KB_PROMISE) {
+      return window.__FPR_ASSISTANT_KB_PROMISE;
     }
-    window.__FPR_PRICING_FAQ_PROMISE = fetch('/api/employee/pricing-faq', {
-      credentials: 'same-origin',
-    })
+    window.__FPR_ASSISTANT_KB_PROMISE = fetch(
+      '/api/employee/assistant-knowledge',
+      { credentials: 'same-origin' }
+    )
       .then(function(res) {
-        if (!res.ok) return null;
+        if (!res.ok) {
+          throw new Error('assistant-knowledge_http_' + res.status);
+        }
         return res.json();
       })
       .then(function(data) {
-        if (data && data.rows && data.rows.length) {
-          window.__FPR_PRICING_FAQ = data.rows;
-        } else {
-          window.__FPR_PRICING_FAQ = [];
-        }
+        window.__FPR_PRICING_FAQ =
+          data && Array.isArray(data.pricingRows) ? data.pricingRows : [];
+        window.__FPR_STAFF_QNA =
+          data && Array.isArray(data.staffQna) ? data.staffQna : [];
+        window.__FPR_ASSISTANT_KB_DONE = true;
       })
       .catch(function() {
         window.__FPR_PRICING_FAQ = [];
+        window.__FPR_STAFF_QNA = [];
+      })
+      .finally(function() {
+        window.__FPR_ASSISTANT_KB_PROMISE = null;
       });
-    return window.__FPR_PRICING_FAQ_PROMISE;
+    return window.__FPR_ASSISTANT_KB_PROMISE;
   };
 
   window.FPR_ASSISTANT_REPLY = async function(messages) {
@@ -240,7 +351,7 @@
 
   window.FPR_LOCAL_AI = function(userMessage) {
     var msg = (userMessage || '').toLowerCase();
-    var faqHit = tryPricingFaqAnswer(userMessage);
+    var faqHit = tryUnifiedKnowledgeAnswer(userMessage);
     if (faqHit) return faqHit;
 
     var patterns = [

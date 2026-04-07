@@ -104,6 +104,13 @@ async function main() {
       );
     }
 
+    r = await fetchJson("/api/employee/assistant-knowledge");
+    if (r.status !== 401) {
+      return fail(
+        `assistant-knowledge before login expected 401, got ${r.status}`
+      );
+    }
+
     r = await fetchJson("/api/training/pricing-questions");
     if (r.status !== 403 || r.body.error !== "quiz_ack_required") {
       return fail(
@@ -194,6 +201,18 @@ async function main() {
     ) {
       return fail(
         `pricing-faq rows malformed: ${JSON.stringify(r.body).slice(0, 300)}`
+      );
+    }
+
+    r = await fetchJson("/api/employee/assistant-knowledge");
+    if (r.status !== 200 || !Array.isArray(r.body.pricingRows)) {
+      return fail(
+        `assistant-knowledge: ${r.status} ${JSON.stringify(r.body).slice(0, 240)}`
+      );
+    }
+    if (!Array.isArray(r.body.staffQna) || r.body.staffQna.length < 100) {
+      return fail(
+        `assistant-knowledge staffQna expected >= 100, got ${r.body.staffQna && r.body.staffQna.length}`
       );
     }
 
