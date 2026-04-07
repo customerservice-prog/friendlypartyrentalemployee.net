@@ -1,0 +1,3 @@
+# Internal employee training app — do not index.
+User-agent: *
+Disallow: /

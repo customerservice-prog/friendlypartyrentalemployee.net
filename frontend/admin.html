@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
     <title>Quiz Results — Friendly Party Rental</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -206,15 +207,48 @@
       .hidden {
         display: none !important;
       }
+      .admin-app-version {
+        text-align: center;
+        margin-top: 1.25rem;
+        font-size: 0.72rem;
+        color: #94a3b8;
+      }
+      .list-cap-note {
+        margin: 0.85rem 0 0;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .admin-back-training {
+        margin: -0.5rem 0 1.25rem;
+        font-size: 0.85rem;
+      }
+      .admin-back-training a {
+        color: var(--accent);
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .admin-back-training a:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <h1>Employee quiz results</h1>
-      <p class="sub">Friendly Party Rental — admin dashboard</p>
+      <h1>Quiz results (admin)</h1>
+      <p class="sub">
+        Sign in with the admin password from your server configuration
+        (<code style="font-size:0.85em">ADMIN_PASSWORD</code> in
+        <code style="font-size:0.85em">.env</code>). Everyone who saved a quiz
+        through this site appears below—name, score, pass/fail, and missed
+        questions.
+      </p>
+      <p class="admin-back-training">
+        <a href="/">← Staff training hub</a>
+      </p>
 
       <div id="login-section" class="login-panel">
-        <h2>Sign in</h2>
+        <h2>Admin sign-in</h2>
         <label for="password">Admin password</label>
         <input
           id="password"
@@ -231,10 +265,19 @@
           <h2 style="margin: 0; font-size: 1.15rem">All submissions</h2>
           <button type="button" class="btn-out" id="btn-logout">Log out</button>
         </div>
+        <div
+          id="dashboard-error"
+          class="err hidden"
+          style="margin: 0 0 1rem"
+        ></div>
         <div id="table-container"></div>
+        <p id="list-cap-note" class="list-cap-note hidden"></p>
       </div>
+
+      <p class="admin-app-version"><span class="train-app-version"></span></p>
     </div>
 
+    <script src="/js/app-version.js" defer></script>
     <script>
       const loginSection = document.getElementById("login-section");
       const dashboard = document.getElementById("dashboard");
@@ -243,6 +286,8 @@
       const btnLogin = document.getElementById("btn-login");
       const btnLogout = document.getElementById("btn-logout");
       const tableContainer = document.getElementById("table-container");
+      const listCapNote = document.getElementById("list-cap-note");
+      const dashboardError = document.getElementById("dashboard-error");
 
       function fmtDate(iso) {
         if (!iso) return "—";
@@ -251,6 +296,19 @@
           dateStyle: "medium",
           timeStyle: "short",
         });
+      }
+
+      const QUIZ_LABELS = {
+        pricing: "Pricing",
+        products: "Products",
+        policies: "Policies",
+        "customer-service": "Customer service",
+      };
+
+      function formatQuizSlug(slug) {
+        const s = slug == null ? "" : String(slug).trim();
+        if (!s) return "—";
+        return QUIZ_LABELS[s] || s;
       }
 
       function renderTable(rows) {
@@ -263,22 +321,25 @@
         const openId = window.__openDetailId;
         let html =
           "<table><thead><tr>" +
-          "<th>Name</th><th>Email</th><th>Job title</th><th>Score</th><th>%</th><th>Result</th><th>Time</th><th>Submitted</th><th></th>" +
+          "<th>Name</th><th>Email</th><th>Job title</th><th>Quiz</th><th>Score</th><th>%</th><th>Result</th><th>Time</th><th>Submitted</th><th></th>" +
           "</tr></thead><tbody>";
 
         rows.forEach((r) => {
+          const rowId = Number(r.id);
+          if (!Number.isFinite(rowId)) return;
           const missed = Array.isArray(r.missedQuestions)
             ? r.missedQuestions
             : [];
-          const expanded = openId === r.id;
+          const expanded = openId === rowId;
           const badge = r.passed
             ? '<span class="badge badge-pass">Pass</span>'
             : '<span class="badge badge-fail">Fail</span>';
 
-          html += `<tr data-id="${r.id}">
+          html += `<tr data-id="${rowId}">
             <td>${escapeHtml(r.name)}</td>
             <td>${escapeHtml(r.email || "")}</td>
             <td>${escapeHtml(r.jobTitle || "")}</td>
+            <td>${escapeHtml(formatQuizSlug(r.quizSlug || "pricing"))}</td>
             <td>${r.score}/${r.total}</td>
             <td>${r.percent}%</td>
             <td>${badge}</td>
@@ -300,7 +361,7 @@
                 </div>`;
               });
             }
-            html += `<tr class="details-row"><td colspan="9"><div class="details-inner">${inner}</div></td></tr>`;
+            html += `<tr class="details-row"><td colspan="10"><div class="details-inner">${inner}</div></td></tr>`;
           }
         });
 
@@ -324,52 +385,124 @@
       }
 
       async function checkSession() {
-        const res = await fetch("/api/admin/me", { credentials: "same-origin" });
-        const data = await res.json();
-        if (data.authenticated) {
-          loginSection.classList.add("hidden");
-          dashboard.classList.remove("hidden");
-          await loadSubmissions();
+        try {
+          const res = await fetch("/api/admin/me", {
+            credentials: "same-origin",
+          });
+          const data = await res.json().catch(() => ({}));
+          if (data.authenticated) {
+            loginSection.classList.add("hidden");
+            dashboard.classList.remove("hidden");
+            await loadSubmissions();
+          }
+        } catch (_) {
+          /* Network or parse error — leave login panel visible */
         }
       }
 
       async function loadSubmissions() {
-        const res = await fetch("/api/admin/submissions", {
-          credentials: "same-origin",
-        });
-        if (res.status === 401) {
-          loginSection.classList.remove("hidden");
-          dashboard.classList.add("hidden");
-          return;
+        try {
+          const res = await fetch("/api/admin/submissions", {
+            credentials: "same-origin",
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.status === 401) {
+            dashboardError.textContent = "";
+            dashboardError.classList.add("hidden");
+            listCapNote.classList.add("hidden");
+            listCapNote.textContent = "";
+            loginSection.classList.remove("hidden");
+            dashboard.classList.add("hidden");
+            loginError.textContent =
+              data.message || "Session expired — sign in again.";
+            return;
+          }
+          if (!res.ok) {
+            loginError.textContent = "";
+            dashboardError.textContent =
+              data.message || "Could not load submissions.";
+            dashboardError.classList.remove("hidden");
+            listCapNote.classList.add("hidden");
+            listCapNote.textContent = "";
+            return;
+          }
+          loginError.textContent = "";
+          dashboardError.textContent = "";
+          dashboardError.classList.add("hidden");
+          const rows = data.submissions || [];
+          const totalInDb =
+            typeof data.totalInDb === "number" &&
+            Number.isFinite(data.totalInDb)
+              ? data.totalInDb
+              : rows.length;
+          if (!rows.length) {
+            listCapNote.classList.add("hidden");
+            listCapNote.textContent = "";
+          } else if (data.truncated && data.listCap) {
+            listCapNote.textContent =
+              totalInDb.toLocaleString() +
+              " submissions in the database — showing the " +
+              Number(data.listCap).toLocaleString() +
+              " most recent only. Older rows are omitted; use a database export or query for full history.";
+            listCapNote.classList.remove("hidden");
+          } else {
+            listCapNote.textContent =
+              totalInDb === 1
+                ? "1 submission in the database (all shown below)."
+                : totalInDb.toLocaleString() +
+                  " submissions in the database (all shown below).";
+            listCapNote.classList.remove("hidden");
+          }
+          renderTable(rows);
+        } catch (_) {
+          loginError.textContent = "";
+          dashboardError.textContent =
+            "Could not reach the server. Check your connection and try again.";
+          dashboardError.classList.remove("hidden");
+          listCapNote.classList.add("hidden");
+          listCapNote.textContent = "";
+          tableContainer.innerHTML = "";
         }
-        const data = await res.json();
-        renderTable(data.submissions || []);
       }
 
       btnLogin.addEventListener("click", async () => {
         loginError.textContent = "";
-        const password = passwordInput.value;
-        const res = await fetch("/api/admin/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "same-origin",
-          body: JSON.stringify({ password }),
-        });
-        if (res.ok) {
-          passwordInput.value = "";
-          loginSection.classList.add("hidden");
-          dashboard.classList.remove("hidden");
-          await loadSubmissions();
-        } else {
-          loginError.textContent = "Invalid password.";
+        try {
+          const password = passwordInput.value;
+          const res = await fetch("/api/admin/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({ password }),
+          });
+          const loginData = await res.json().catch(() => ({}));
+          if (res.ok) {
+            passwordInput.value = "";
+            dashboardError.textContent = "";
+            dashboardError.classList.add("hidden");
+            loginSection.classList.add("hidden");
+            dashboard.classList.remove("hidden");
+            await loadSubmissions();
+          } else {
+            loginError.textContent =
+              loginData.error === "rate_limited"
+                ? loginData.message ||
+                  "Too many attempts. Wait a few minutes and try again."
+                : loginData.message || "Invalid password.";
+          }
+        } catch (_) {
+          loginError.textContent =
+            "Could not reach the server. Check your connection and try again.";
         }
       });
 
       btnLogout.addEventListener("click", async () => {
-        await fetch("/api/admin/logout", {
-          method: "POST",
-          credentials: "same-origin",
-        });
+        try {
+          await fetch("/api/admin/logout", {
+            method: "POST",
+            credentials: "same-origin",
+          });
+        } catch (_) {}
         window.__openDetailId = null;
         loginSection.classList.remove("hidden");
         dashboard.classList.add("hidden");

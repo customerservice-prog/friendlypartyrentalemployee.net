@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Training quizzes — Friendly Party Rental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/train.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Inter", system-ui, sans-serif;
+        background: linear-gradient(
+          145deg,
+          #0f172a 0%,
+          #1e3a5f 45%,
+          #0c1929 100%
+        );
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="train-topnav">
+      <a class="train-brand" href="/">
+        <img
+          src="/assets/quiz-logo.png"
+          alt=""
+          width="40"
+          height="40"
+          class="train-brand-logo"
+        />
+        <span>Friendly Party Rental · Training</span>
+      </a>
+      <nav class="train-nav-links">
+        <a href="/">Home</a>
+        <a href="/quizzes" aria-current="page">Quizzes</a>
+        <a href="/assistant">AI assistant</a>
+        <a href="/ai-team">AI Team</a>
+        <a href="/admin.html" class="train-nav-admin">Quiz results</a>
+        <button type="button" class="train-signout" id="train-signout">
+          Sign out
+        </button>
+      </nav>
+    </header>
+
+    <main class="train-hub">
+      <h1>Training quizzes</h1>
+      <p class="lead">
+        Pick a module. The <strong>pricing quiz</strong> is server-scored and can be
+        saved to the manager dashboard; the others run in your browser for practice.
+      </p>
+
+      <div class="train-cards">
+        <a class="train-card" href="/quiz-pricing.html">
+          <h2>Pricing knowledge quiz</h2>
+          <p>
+            Official catalog pricing — verified on the server, timed, results can be
+            submitted for records.
+          </p>
+          <span class="badge">50 questions · 20 min · scored</span>
+        </a>
+
+        <a class="train-card" href="/quiz-customer-service">
+          <h2>Customer service quiz</h2>
+          <p>
+            Scripts, contact info, and professional call handling — practice only.
+          </p>
+          <span class="badge">20 questions · 12 min</span>
+        </a>
+
+        <a class="train-card" href="/quiz-policies">
+          <h2>Policies &amp; procedures quiz</h2>
+          <p>Booking, delivery, safety, and company standards — practice only.</p>
+          <span class="badge">20 questions · 12 min</span>
+        </a>
+
+        <a class="train-card" href="/quiz-products">
+          <h2>Products knowledge quiz</h2>
+          <p>
+            Tents, tables, inflatables, concessions, and specialty rentals — practice
+            only.
+          </p>
+          <span class="badge">25 questions · 15 min</span>
+        </a>
+      </div>
+
+      <p class="train-footnote">
+        <a href="/" style="color: inherit">← Back to hub</a>
+      </p>
+    </main>
+
+    <script>
+      (function () {
+        fetch("/api/employee/me", { credentials: "same-origin" })
+          .then((r) => r.json().catch(() => ({})))
+          .then((data) => {
+            if (!data.employeeAuthenticated) {
+              window.location.href =
+                "/welcome?return=" +
+                encodeURIComponent(window.location.pathname + window.location.search);
+            }
+          })
+          .catch(function () {});
+        document.getElementById("train-signout")?.addEventListener(
+          "click",
+          async () => {
+            try {
+              await fetch("/api/employee/logout", {
+                method: "POST",
+                credentials: "same-origin",
+              });
+            } catch (_) {}
+            window.location.href = "/";
+          }
+        );
+      })();
+    </script>
+  </body>
+</html>

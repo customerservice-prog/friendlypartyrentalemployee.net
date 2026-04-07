@@ -1,0 +1,388 @@
+/* Employee training hub — shared chrome */
+.train-topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(15, 23, 42, 0.92);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+.train-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #f5e6a8;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.train-brand:hover {
+  color: #fff;
+}
+.train-brand-logo {
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+}
+.train-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  align-items: center;
+}
+.train-nav-links a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+}
+.train-nav-links a:hover {
+  color: #fff;
+  background: rgba(212, 175, 55, 0.15);
+}
+.train-nav-links a[aria-current="page"] {
+  color: #1a1a2e;
+  background: linear-gradient(180deg, #d4af37 0%, #b8860b 100%);
+}
+.train-nav-links a.train-nav-admin {
+  color: #f5e6a8;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+.train-nav-links a.train-nav-admin:hover {
+  background: rgba(212, 175, 55, 0.22);
+  color: #fff;
+}
+
+.train-signout {
+  margin-left: 0.15rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+.train-signout:hover {
+  background: rgba(212, 175, 55, 0.2);
+  color: #fff;
+}
+
+.train-hub {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+.train-hub h1 {
+  margin: 0 0 0.35rem;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+.train-hub .lead {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 2rem;
+  max-width: 52ch;
+}
+.train-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+.train-card {
+  display: block;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.35rem 1.25rem 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.train-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.28);
+}
+.train-card h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+.train-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+.train-card .badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #b8860b;
+}
+.train-card.muted {
+  opacity: 0.72;
+  pointer-events: none;
+  cursor: default;
+}
+.train-footnote {
+  margin-top: 2rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+}
+.train-version-hint {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.28);
+}
+.train-chat-version-foot {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.25rem 1rem 0.65rem;
+  text-align: center;
+}
+.train-chat-version-foot .train-version-hint {
+  margin-top: 0;
+}
+
+/* Assistant chat */
+.train-chat-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 45%, #0c1929 100%);
+}
+.train-chat-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem 1rem;
+  min-height: 0;
+}
+.train-chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  min-height: 0;
+}
+.train-chat-header {
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1a1a2e;
+  background: linear-gradient(180deg, #fafbff 0%, #fff 100%);
+}
+.train-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 280px;
+  background: #f8fafc;
+}
+.chat-bubble {
+  max-width: 92%;
+  padding: 0.75rem 0.95rem;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.chat-bubble.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+  color: #f1f5f9;
+  border-bottom-right-radius: 4px;
+}
+.chat-bubble.assistant {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #1a1a2e;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+.chat-bubble.system {
+  align-self: center;
+  max-width: 100%;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #78350f;
+  font-size: 0.82rem;
+  text-align: center;
+}
+.train-chat-form {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
+}
+.train-chat-form textarea {
+  flex: 1;
+  min-height: 44px;
+  max-height: 140px;
+  resize: vertical;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  font: inherit;
+  font-size: 0.9rem;
+}
+.train-chat-form textarea:focus {
+  outline: none;
+  border-color: #b8860b;
+}
+.train-chat-form button {
+  align-self: flex-end;
+  padding: 0.65rem 1.15rem;
+  border: none;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(180deg, #d4af37 0%, #b8860b 100%);
+  color: #1a1a2e;
+}
+.train-chat-form button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Login */
+.train-login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 45%, #0c1929 100%);
+}
+.train-login-hero-logo {
+  display: block;
+  width: clamp(112px, 36vw, 168px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin: 0 auto 1.35rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.35);
+}
+.train-login-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem 2rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+.train-login-card h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+.train-login-card p {
+  margin: 0 0 1.25rem;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.train-login-card input[type="password"] {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font: inherit;
+  margin-bottom: 0.75rem;
+}
+.train-login-card button {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  background: linear-gradient(180deg, #d4af37 0%, #b8860b 100%);
+  color: #1a1a2e;
+  cursor: pointer;
+}
+.train-login-card .err {
+  color: #b42318;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  min-height: 1.2em;
+}
+
+/* Quiz integrity notice (shared across training quizzes) */
+.quiz-integrity-notice {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  border: 2px solid rgba(180, 35, 24, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(254, 242, 242, 0.98) 0%,
+    rgba(255, 251, 235, 0.96) 100%
+  );
+}
+.quiz-integrity-heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #7f1d1d;
+  line-height: 1.3;
+}
+.quiz-integrity-text {
+  margin: 0 0 0.75rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #450a0a;
+}
+.quiz-integrity-label {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #1a1a2e;
+  cursor: pointer;
+}
+.quiz-integrity-label input[type="checkbox"] {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: #b8860b;
+}

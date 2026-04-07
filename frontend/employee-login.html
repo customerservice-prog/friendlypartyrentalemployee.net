@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Employee sign-in — Friendly Party Rental</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/train.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="train-login-wrap">
+      <div class="train-login-card">
+        <img
+          class="train-login-hero-logo"
+          src="/assets/quiz-logo.png"
+          alt="Friendly Party Rental"
+          width="512"
+          height="512"
+          decoding="async"
+        />
+        <h1>Employee access</h1>
+        <p>
+          For <strong>Friendly Party Rental</strong> staff only. Enter the team
+          PIN provided by your manager.
+        </p>
+        <div id="err" class="err"></div>
+        <input
+          type="password"
+          id="pin"
+          autocomplete="current-password"
+          placeholder="Team PIN"
+        />
+        <button type="button" id="go">Continue</button>
+        <p style="margin: 1rem 0 0; font-size: 0.8rem; color: #94a3b8">
+          This site is not public. Do not share the PIN.
+          <a href="/" style="color: #b8860b; font-weight: 600">Back to staff entry</a>
+        </p>
+      </div>
+    </div>
+    <script>
+      const err = document.getElementById("err");
+      const pin = document.getElementById("pin");
+      const go = document.getElementById("go");
+      const params = new URLSearchParams(window.location.search);
+      /** Same-origin relative paths only (blocks `//evil.com` and `\\host` tricks). */
+      function safeEmployeeReturn(raw) {
+        const t = raw == null ? "" : String(raw).trim();
+        if (!t || !t.startsWith("/") || t.startsWith("//")) return "/";
+        if (t.includes("\\")) return "/";
+        return t.length > 512 ? "/" : t;
+      }
+      const ret = safeEmployeeReturn(params.get("return"));
+
+      go.addEventListener("click", async () => {
+        err.textContent = "";
+        try {
+          const res = await fetch("/api/employee/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({ pin: pin.value }),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok) {
+            window.location.href = ret;
+            return;
+          }
+          err.textContent =
+            data.error === "rate_limited"
+              ? data.message ||
+                "Too many attempts. Wait a few minutes and try again."
+              : data.error === "sign_in_unavailable"
+                ? data.message ||
+                  "Sign-in is not available yet. Ask your manager."
+                : data.message || "Incorrect PIN. Try again or ask your manager.";
+        } catch (_) {
+          err.textContent =
+            "Could not reach the server. Check your connection and try again.";
+        }
+      });
+      pin.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") go.click();
+      });
+    </script>
+  </body>
+</html>

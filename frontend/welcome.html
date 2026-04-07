@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Staff training access — Friendly Party Rental</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/train.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Inter", system-ui, sans-serif;
+        background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 45%, #0c1929 100%);
+      }
+      .welcome-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        margin-top: 1.1rem;
+      }
+      .train-login-card button.welcome-btn-quiz {
+        background: transparent;
+        color: #1a1a2e;
+        border: 2px solid #b8860b;
+      }
+      .train-login-card button.welcome-btn-quiz:hover {
+        background: rgba(212, 175, 55, 0.12);
+      }
+      .welcome-alt-link {
+        margin: 1.1rem 0 0;
+        font-size: 0.8rem;
+        text-align: center;
+        color: #64748b;
+      }
+      .welcome-alt-link a {
+        color: #b8860b;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div
+        class="train-login-wrap"
+        style="padding: 2rem; color: #e2e8f0; text-align: center"
+      >
+        <p style="max-width: 28rem; margin: 0 auto">
+          JavaScript is required for staff sign-in. Enable JavaScript, then reload
+          this page.
+        </p>
+      </div>
+    </noscript>
+    <div class="train-login-wrap">
+      <div class="train-login-card" style="max-width: 440px">
+        <img
+          class="train-login-hero-logo"
+          src="/assets/quiz-logo.png"
+          alt="Friendly Party Rental"
+          width="512"
+          height="512"
+          decoding="async"
+        />
+        <h1>Staff training</h1>
+        <p>
+          <strong>Friendly Party Rental.</strong> Applicants can take the
+          <strong>pricing knowledge quiz</strong> below with no PIN. The full
+          training hub (all tools and quizzes) uses the team PIN from your
+          manager.
+        </p>
+        <div id="err" class="err"></div>
+        <input
+          type="password"
+          id="pin"
+          autocomplete="current-password"
+          placeholder="Team PIN"
+        />
+        <div class="welcome-actions">
+          <button type="button" id="btn-hub">Open training hub</button>
+          <button type="button" id="btn-quiz" class="welcome-btn-quiz">
+            Start pricing quiz now
+          </button>
+        </div>
+        <p style="margin: 1rem 0 0; font-size: 0.8rem; color: #94a3b8">
+          Internal use only. Do not share the PIN.
+        </p>
+        <p class="welcome-alt-link">
+          <a href="/employee-login.html" id="link-employee-login">Other sign-in options</a>
+          · <a href="/welcome.html" id="link-welcome-permalink">Bookmark this page</a>
+        </p>
+        <p class="welcome-alt-link welcome-manager-note">
+          <a href="/admin.html">Managers: view saved quiz results</a>
+        </p>
+      </div>
+    </div>
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("logout") === "1") {
+          fetch("/api/employee/logout", {
+            method: "POST",
+            credentials: "same-origin",
+          })
+            .catch(function () {})
+            .finally(function () {
+              window.history.replaceState({}, "", window.location.pathname);
+            });
+        }
+        fetch("/api/employee/me", { credentials: "same-origin" })
+          .then((r) => r.json().catch(() => ({})))
+          .then((d) => {
+            if (d.employeeAuthenticated) {
+              window.location.replace("/");
+            }
+          })
+          .catch(function () {});
+
+        const err = document.getElementById("err");
+        const pin = document.getElementById("pin");
+
+        function safeEmployeeReturn(raw) {
+          const t = raw == null ? "" : String(raw).trim();
+          if (!t || !t.startsWith("/") || t.startsWith("//")) return "/";
+          if (t.includes("\\")) return "/";
+          return t.length > 512 ? "/" : t;
+        }
+
+        const returnTo = safeEmployeeReturn(params.get("return"));
+
+        (function syncFooterLinks() {
+          const q = window.location.search || "";
+          var perm = document.getElementById("link-welcome-permalink");
+          /** `.html` paths work with Express redirects and simple static hosts. */
+          if (perm) perm.setAttribute("href", "/welcome.html" + q);
+          var alt = document.getElementById("link-employee-login");
+          if (alt) {
+            alt.setAttribute(
+              "href",
+              returnTo && returnTo !== "/"
+                ? "/employee-login.html?return=" + encodeURIComponent(returnTo)
+                : "/employee-login.html"
+            );
+          }
+        })();
+
+        async function loginThenNavigate(targetHref) {
+          err.textContent = "";
+          try {
+            const res = await fetch("/api/employee/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "same-origin",
+              body: JSON.stringify({ pin: pin.value }),
+            });
+            const data = await res.json().catch(() => ({}));
+            if (res.ok) {
+              window.location.href = targetHref;
+              return;
+            }
+            err.textContent =
+              data.error === "rate_limited"
+                ? data.message ||
+                  "Too many attempts. Wait a few minutes and try again."
+                : data.error === "sign_in_unavailable"
+                  ? data.message ||
+                    "Sign-in is not available yet. Ask your manager."
+                  : data.message ||
+                    "Incorrect PIN. Try again or ask your manager.";
+          } catch (_) {
+            err.textContent =
+              "Could not reach the server. Check your connection and try again.";
+          }
+        }
+
+        document.getElementById("btn-hub").addEventListener("click", () => {
+          loginThenNavigate(returnTo);
+        });
+
+        document.getElementById("btn-quiz").addEventListener("click", () => {
+          /** `.html` works behind this app (redirect → /quiz-pricing) and simple static hosts. */
+          window.location.href = "/quiz-pricing.html";
+        });
+
+        pin.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") document.getElementById("btn-hub").click();
+        });
+      })();
+    </script>
+  </body>
+</html>

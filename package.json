@@ -6,7 +6,13 @@
   "main": "backend/server.js",
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "node --watch backend/server.js"
+    "dev": "node --watch backend/server.js",
+    "check": "node scripts/check-syntax.js",
+    "normalize-quiz-pricing": "node scripts/build-quiz-pricing-html.js",
+    "verify-pricing-data": "node scripts/extract-pricing-quiz.js",
+    "preflight": "npm run check && npm run verify-pricing-data",
+    "test": "npm run test:integration",
+    "test:integration": "node scripts/integration-training-quiz.js"
   },
   "engines": {
     "node": ">=18"
@@ -15,7 +21,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-session": "^1.18.0",
-    "nodemailer": "^6.9.16",
+    "nodemailer": "^8.0.5",
+    "openai": "^4.77.0",
     "pg": "^8.13.0"
   }
 }

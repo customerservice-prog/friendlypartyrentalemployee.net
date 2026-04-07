@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>AI training assistant — Friendly Party Rental</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/train.css" />
+    <style>
+      .chat-bubble strong { font-weight: 700; }
+    </style>
+  </head>
+  <body class="train-chat-page">
+    <header class="train-topnav">
+      <a class="train-brand" href="/">
+        <img src="/assets/quiz-logo.png" alt="" width="40" height="40" class="train-brand-logo" />
+        <span>Training hub</span>
+      </a>
+      <nav class="train-nav-links">
+        <a href="/">Home</a>
+        <a href="/quizzes">Quizzes</a>
+        <a href="/assistant" aria-current="page">AI assistant</a>
+        <a href="/ai-team">AI Team</a>
+        <a href="/admin.html" class="train-nav-admin">Quiz results</a>
+        <button type="button" class="train-signout" id="train-signout">Sign out</button>
+      </nav>
+    </header>
+
+    <div class="train-chat-wrap">
+      <div class="train-chat-panel">
+        <div class="train-chat-header">
+          🤖 AI assistant · Official training information
+        </div>
+        <div class="train-chat-messages" id="msgs"></div>
+        <form class="train-chat-form" id="chat-form">
+          <textarea id="input" rows="2" placeholder="e.g. Customer wants a 20x30 pole tent quote — what do I say?"></textarea>
+          <button type="submit" id="send">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/js/fpr-ai-bootstrap.js"></script>
+    <script>
+      (function () {
+        fetch("/api/employee/me", { credentials: "same-origin" })
+          .then((r) => r.json().catch(() => ({})))
+          .then((data) => {
+            if (!data.employeeAuthenticated) {
+              window.location.href =
+                "/welcome?return=" +
+                encodeURIComponent(window.location.pathname + window.location.search);
+            }
+          })
+          .catch(function () {});
+
+        const msgs = document.getElementById("msgs");
+        const form = document.getElementById("chat-form");
+        const input = document.getElementById("input");
+        const sendBtn = document.getElementById("send");
+        const history = [];
+
+        function addBubble(role, text) {
+          const d = document.createElement("div");
+          d.className = "chat-bubble " + role;
+          const raw = String(text);
+          if (role === "user") {
+            d.textContent = raw;
+          } else {
+            d.innerHTML = raw
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+              .replace(/\n/g, "<br>");
+          }
+          msgs.appendChild(d);
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+
+        addBubble("system", "🤖 AI Assistant ready! Ask about Friendly Party Rental rentals, pricing, booking, and customer scripts — using the same training facts you study here.");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const text = input.value.trim();
+          if (!text) return;
+          input.value = "";
+          addBubble("user", text);
+          history.push({ role: "user", content: text });
+          sendBtn.disabled = true;
+          try {
+            const meRes = await fetch("/api/employee/me", {
+              credentials: "same-origin",
+            });
+            const me = await meRes.json().catch(() => ({}));
+            if (me.assistantPausedForQuiz) {
+              addBubble(
+                "assistant",
+                me.quizAssistantMessage ||
+                  "The training assistant is paused while you have a quiz in progress. Finish or leave the quiz, then try again."
+              );
+              history.push({
+                role: "assistant",
+                content: me.quizAssistantMessage || "(paused)",
+              });
+              return;
+            }
+            const response = window.FPR_LOCAL_AI(text);
+            addBubble("assistant", response);
+            history.push({ role: "assistant", content: response });
+          } finally {
+            sendBtn.disabled = false;
+            input.focus();
+          }
+        });
+
+        // Handle Enter key
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            form.dispatchEvent(new Event("submit"));
+          }
+        });
+
+        document.getElementById("train-signout")?.addEventListener("click", async () => {
+          try {
+            await fetch("/api/employee/logout", {
+              method: "POST",
+              credentials: "same-origin",
+            });
+          } catch (_) {}
+          window.location.href = "/";
+        });
+      })();
+    </script>
+  </body>
+</html>

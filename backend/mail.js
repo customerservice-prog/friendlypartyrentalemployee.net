@@ -2,6 +2,26 @@ const nodemailer = require("nodemailer");
 
 const DEFAULT_TO = "customerservice@friendlypartyrental.com";
 
+function isReasonableSingleEmail(s) {
+  const t = String(s).trim();
+  if (t.length > 254 || t.length < 3) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t);
+}
+
+function resolveResultsEmailTo() {
+  const raw = process.env.RESULTS_EMAIL_TO;
+  if (!raw || String(raw).trim() === "") return DEFAULT_TO;
+  const t = String(raw).trim();
+  if (!isReasonableSingleEmail(t)) {
+    console.warn(
+      "RESULTS_EMAIL_TO is not a valid email address — using default " +
+        DEFAULT_TO
+    );
+    return DEFAULT_TO;
+  }
+  return t;
+}
+
 function isEmailConfigured() {
   return !!(
     process.env.SMTP_HOST &&
@@ -50,16 +70,13 @@ async function sendQuizResultEmail(payload) {
     return { sent: false, reason: "not_configured" };
   }
 
-  const to =
-    process.env.RESULTS_EMAIL_TO &&
-    String(process.env.RESULTS_EMAIL_TO).trim() !== ""
-      ? process.env.RESULTS_EMAIL_TO.trim()
-      : DEFAULT_TO;
+  const to = resolveResultsEmailTo();
 
   const {
     name,
     employeeEmail,
     jobTitle,
+    quizSlug,
     score,
     total,
     percent,
@@ -104,7 +121,10 @@ async function sendQuizResultEmail(payload) {
         name
       )}</p>
       <p style="margin:0 0 6px"><strong>Email:</strong> ${empEmailLine}</p>
-      <p style="margin:0 0 12px"><strong>Job title:</strong> ${jobTitleLine}</p>
+      <p style="margin:0 0 6px"><strong>Job title:</strong> ${jobTitleLine}</p>
+      <p style="margin:0 0 12px"><strong>Quiz:</strong> ${escHtml(
+        String(quizSlug || "pricing")
+      )}</p>
       <p style="margin:0 0 8px"><strong>Score:</strong> ${score} / ${total} (${percent}%)</p>
       <p style="margin:0 0 8px"><strong>Result:</strong> ${
         passed ? "✅ Pass" : "❌ Did not pass"
@@ -131,6 +151,7 @@ async function sendQuizResultEmail(payload) {
     `Employee: ${name}`,
     `Email: ${employeeEmail || "—"}`,
     `Job title: ${jobTitle || "—"}`,
+    `Quiz: ${quizSlug || "pricing"}`,
     `Score: ${score} / ${total} (${percent}%)`,
     `Result: ${passed ? "Pass" : "Did not pass"}`,
     `Time: ${timeTaken}`,
@@ -160,7 +181,7 @@ async function sendQuizResultEmail(payload) {
   });
 
   console.log(`Quiz results email sent to ${to}`);
-  return { sent: true };
+  return { sent: true, to };
 }
 
 module.exports = {

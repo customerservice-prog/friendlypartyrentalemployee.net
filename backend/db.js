@@ -133,6 +133,13 @@ async function initDb() {
   await p.query(`
     ALTER TABLE submissions ADD COLUMN IF NOT EXISTS job_title TEXT NOT NULL DEFAULT '';
   `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS quiz_slug TEXT NOT NULL DEFAULT 'pricing';
+  `);
+  await p.query(`
+    CREATE INDEX IF NOT EXISTS idx_submissions_created_at
+    ON submissions (created_at DESC);
+  `);
 }
 
 async function insertSubmission(payload) {
@@ -141,6 +148,7 @@ async function insertSubmission(payload) {
     name,
     email,
     jobTitle,
+    quizSlug,
     score,
     total,
     percent,
@@ -149,15 +157,21 @@ async function insertSubmission(payload) {
     missedQuestions,
   } = payload;
 
+  const slug = String(quizSlug || "pricing")
+    .trim()
+    .replace(/[^a-z0-9-]/gi, "")
+    .slice(0, 64) || "pricing";
+
   const { rows } = await p.query(
     `INSERT INTO submissions
-      (name, email, job_title, score, total, percent, time_taken, passed, missed_questions)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb)
+      (name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb)
      RETURNING id, created_at`,
     [
       String(name).trim(),
       String(email || "").trim(),
       String(jobTitle || "").trim(),
+      slug,
       Number(score),
       Number(total),
       Number(percent),
@@ -169,18 +183,35 @@ async function insertSubmission(payload) {
   return rows[0];
 }
 
+async function closePool() {
+  if (!pool) return;
+  const p = pool;
+  pool = null;
+  await p.end();
+}
+
+/** Keeps admin dashboard responsive if the table grows very large. */
+const LIST_SUBMISSIONS_MAX = 2000;
+
 async function listSubmissions() {
   const p = getPool();
   const { rows } = await p.query(
-    `SELECT id, name, email, job_title, score, total, percent, time_taken, passed, missed_questions, created_at
+    `SELECT id, name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, created_at,
+            COUNT(*) OVER() AS full_count
      FROM submissions
-     ORDER BY created_at DESC`
+     ORDER BY created_at DESC
+     LIMIT $1`,
+    [LIST_SUBMISSIONS_MAX]
   );
-  return rows.map((r) => ({
+  const totalInDb = rows.length ? Number(rows[0].full_count) : 0;
+  const truncated =
+    rows.length === LIST_SUBMISSIONS_MAX && totalInDb > LIST_SUBMISSIONS_MAX;
+  const submissions = rows.map((r) => ({
     id: r.id,
     name: r.name,
     email: r.email || "",
     jobTitle: r.job_title || "",
+    quizSlug: r.quiz_slug || "pricing",
     score: r.score,
     total: r.total,
     percent: r.percent,
@@ -189,14 +220,22 @@ async function listSubmissions() {
     missedQuestions: r.missed_questions,
     createdAt: r.created_at,
   }));
+  return {
+    submissions,
+    truncated,
+    listCap: LIST_SUBMISSIONS_MAX,
+    totalInDb,
+  };
 }
 
 module.exports = {
   getPool,
+  closePool,
   resolveDatabaseUrl,
   listPresentDatabaseEnvKeys,
   pingDatabase,
   initDb,
   insertSubmission,
   listSubmissions,
+  LIST_SUBMISSIONS_MAX,
 };
