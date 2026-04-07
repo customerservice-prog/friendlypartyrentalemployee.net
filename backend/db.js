@@ -107,6 +107,11 @@ function getPool() {
   return pool;
 }
 
+async function pingDatabase() {
+  const p = getPool();
+  await p.query("SELECT 1 AS ok");
+}
+
 async function initDb() {
   const p = getPool();
   await p.query(`
@@ -178,6 +183,7 @@ module.exports = {
   getPool,
   resolveDatabaseUrl,
   listPresentDatabaseEnvKeys,
+  pingDatabase,
   initDb,
   insertSubmission,
   listSubmissions,
