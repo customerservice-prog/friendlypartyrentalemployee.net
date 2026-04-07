@@ -325,6 +325,37 @@
         line-height: 1.45;
         margin: 0.5rem 0 0;
       }
+      .db-help-box {
+        display: none;
+        margin: 0 0 1.25rem;
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #f8fafc;
+        font-size: 0.88rem;
+        line-height: 1.55;
+        color: var(--text);
+      }
+      .db-help-box.visible {
+        display: block;
+      }
+      .db-help-box h3 {
+        margin: 0 0 0.6rem;
+        font-size: 0.95rem;
+      }
+      .db-help-box ol {
+        margin: 0.35rem 0 0;
+        padding-left: 1.2rem;
+      }
+      .db-help-box li {
+        margin-bottom: 0.35rem;
+      }
+      .db-help-box code {
+        font-size: 0.82em;
+        background: #e8eaf0;
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+      }
     </style>
   </head>
   <body>
@@ -364,6 +395,42 @@
           class="err hidden"
           style="margin: 0 0 1rem"
         ></div>
+        <div id="dashboard-db-help" class="db-help-box" aria-live="polite">
+          <h3>Link PostgreSQL to this web service</h3>
+          <p style="margin: 0 0 0.5rem; color: var(--muted)">
+            Quiz submissions are stored in Postgres. The variable must be on
+            the <strong>same</strong> service that runs this Node app (not only
+            on the database component).
+          </p>
+          <p style="margin: 0 0 0.35rem; font-weight: 600">Render (typical)</p>
+          <ol>
+            <li>
+              Dashboard → your <strong>PostgreSQL</strong> instance → use
+              <strong>Connect</strong> / link to your <strong>Web Service</strong>.
+            </li>
+            <li>
+              On the <strong>Web Service</strong> →
+              <strong>Environment</strong>: confirm
+              <code>DATABASE_URL</code> (or
+              <code>DATABASE_PRIVATE_URL</code>) appears and is non-empty.
+            </li>
+            <li>
+              <strong>Manual copy:</strong> paste the <em>Internal Database
+              URL</em> into the web service as <code>DATABASE_URL</code> if
+              auto-link did not run.
+            </li>
+            <li><strong>Redeploy</strong> or restart the web service, then reload this page.</li>
+          </ol>
+          <p style="margin: 0.75rem 0 0.35rem; font-weight: 600">Railway (typical)</p>
+          <ol>
+            <li>
+              Add a <strong>PostgreSQL</strong> plugin; open the
+              <strong>web</strong> service → Variables → reference
+              <code>DATABASE_URL</code> from the Postgres service.
+            </li>
+            <li><strong>Redeploy</strong>, then reload this page.</li>
+          </ol>
+        </div>
         <div id="table-container"></div>
         <p id="list-cap-note" class="list-cap-note hidden"></p>
       </div>
@@ -382,6 +449,7 @@
       const tableContainer = document.getElementById("table-container");
       const listCapNote = document.getElementById("list-cap-note");
       const dashboardError = document.getElementById("dashboard-error");
+      const dashboardDbHelp = document.getElementById("dashboard-db-help");
 
       function fmtDate(iso) {
         if (!iso) return "—";
@@ -673,6 +741,7 @@
           if (res.status === 401) {
             dashboardError.textContent = "";
             dashboardError.classList.add("hidden");
+            dashboardDbHelp.classList.remove("visible");
             listCapNote.classList.add("hidden");
             listCapNote.textContent = "";
             loginSection.classList.remove("hidden");
@@ -688,11 +757,17 @@
             dashboardError.classList.remove("hidden");
             listCapNote.classList.add("hidden");
             listCapNote.textContent = "";
+            if (data.error === "database_not_configured") {
+              dashboardDbHelp.classList.add("visible");
+            } else {
+              dashboardDbHelp.classList.remove("visible");
+            }
             return;
           }
           loginError.textContent = "";
           dashboardError.textContent = "";
           dashboardError.classList.add("hidden");
+          dashboardDbHelp.classList.remove("visible");
           const rows = data.submissions || [];
           const totalInDb =
             typeof data.totalInDb === "number" &&
@@ -723,6 +798,7 @@
           dashboardError.textContent =
             "Could not reach the server. Check your connection and try again.";
           dashboardError.classList.remove("hidden");
+          dashboardDbHelp.classList.remove("visible");
           listCapNote.classList.add("hidden");
           listCapNote.textContent = "";
           tableContainer.innerHTML = "";
@@ -744,6 +820,7 @@
             passwordInput.value = "";
             dashboardError.textContent = "";
             dashboardError.classList.add("hidden");
+            dashboardDbHelp.classList.remove("visible");
             loginSection.classList.add("hidden");
             dashboard.classList.remove("hidden");
             await loadSubmissions();
