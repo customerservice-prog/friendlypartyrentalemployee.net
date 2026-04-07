@@ -1,0 +1,20 @@
+{
+  "name": "friendly-party-rental-quiz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Employee quiz app for Friendly Party Rental",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "pg": "^8.13.0"
+  }
+}

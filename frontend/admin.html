@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Results — Friendly Party Rental</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --text: #1a1a2e;
+        --muted: #5c5c6f;
+        --border: #e2e4ec;
+        --row-alt: #f6f7fb;
+        --accent: #b8860b;
+        --pass: #0d7a3e;
+        --fail: #b42318;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        background: #fff;
+        color: var(--text);
+        min-height: 100vh;
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 0.25rem;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 1.75rem;
+      }
+      .login-panel {
+        max-width: 380px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 24px rgba(26, 26, 46, 0.06);
+      }
+      .login-panel h2 {
+        margin: 0 0 1rem;
+        font-size: 1.1rem;
+      }
+      label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 500;
+        margin-bottom: 0.35rem;
+      }
+      input[type="password"] {
+        width: 100%;
+        padding: 0.65rem 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font: inherit;
+        margin-bottom: 0.75rem;
+      }
+      .err {
+        color: var(--fail);
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
+        min-height: 1.2em;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        padding: 0.65rem 1.1rem;
+        font-weight: 600;
+      }
+      .btn-gold {
+        background: linear-gradient(180deg, #d4af37 0%, #b8860b 100%);
+        color: #1a1a2e;
+        width: 100%;
+      }
+      .btn-gold:hover {
+        filter: brightness(1.05);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--muted);
+        margin-top: 0.75rem;
+        padding: 0.35rem;
+        font-weight: 500;
+        font-size: 0.875rem;
+      }
+      .dashboard-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+      }
+      .btn-out {
+        background: #f0f1f5;
+        color: var(--text);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+      th {
+        background: #fafbfc;
+        font-weight: 600;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: var(--muted);
+      }
+      tbody tr:nth-child(even) {
+        background: var(--row-alt);
+      }
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.2rem 0.55rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .badge-pass {
+        background: #d1fae0;
+        color: var(--pass);
+      }
+      .badge-fail {
+        background: #fee4e2;
+        color: var(--fail);
+      }
+      .link-btn {
+        background: none;
+        border: none;
+        color: #1d4ed8;
+        padding: 0;
+        font-weight: 600;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .details-row td {
+        background: #fff;
+        border-bottom: 1px solid var(--border);
+        padding: 0;
+      }
+      .details-inner {
+        padding: 1rem 1.25rem 1.25rem;
+        background: #fcfcfd;
+        border-top: 1px dashed var(--border);
+      }
+      .details-inner h4 {
+        margin: 0 0 0.75rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .missed-item {
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.85rem;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.88rem;
+      }
+      .missed-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+      .missed-q {
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+      }
+      .missed-meta {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      .empty {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--muted);
+      }
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Employee quiz results</h1>
+      <p class="sub">Friendly Party Rental — admin dashboard</p>
+
+      <div id="login-section" class="login-panel">
+        <h2>Sign in</h2>
+        <label for="password">Admin password</label>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+        />
+        <div id="login-error" class="err"></div>
+        <button type="button" class="btn-gold" id="btn-login">Log in</button>
+      </div>
+
+      <div id="dashboard" class="hidden">
+        <div class="dashboard-header">
+          <h2 style="margin: 0; font-size: 1.15rem">All submissions</h2>
+          <button type="button" class="btn-out" id="btn-logout">Log out</button>
+        </div>
+        <div id="table-container"></div>
+      </div>
+    </div>
+
+    <script>
+      const loginSection = document.getElementById("login-section");
+      const dashboard = document.getElementById("dashboard");
+      const passwordInput = document.getElementById("password");
+      const loginError = document.getElementById("login-error");
+      const btnLogin = document.getElementById("btn-login");
+      const btnLogout = document.getElementById("btn-logout");
+      const tableContainer = document.getElementById("table-container");
+
+      function fmtDate(iso) {
+        if (!iso) return "—";
+        const d = new Date(iso);
+        return d.toLocaleString(undefined, {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+      }
+
+      function renderTable(rows) {
+        if (!rows.length) {
+          tableContainer.innerHTML =
+            '<p class="empty">No submissions yet.</p>';
+          return;
+        }
+
+        const openId = window.__openDetailId;
+        let html =
+          "<table><thead><tr>" +
+          "<th>Name</th><th>Score</th><th>%</th><th>Result</th><th>Time</th><th>Submitted</th><th></th>" +
+          "</tr></thead><tbody>";
+
+        rows.forEach((r) => {
+          const missed = Array.isArray(r.missedQuestions)
+            ? r.missedQuestions
+            : [];
+          const expanded = openId === r.id;
+          const badge = r.passed
+            ? '<span class="badge badge-pass">Pass</span>'
+            : '<span class="badge badge-fail">Fail</span>';
+
+          html += `<tr data-id="${r.id}">
+            <td>${escapeHtml(r.name)}</td>
+            <td>${r.score}/${r.total}</td>
+            <td>${r.percent}%</td>
+            <td>${badge}</td>
+            <td>${escapeHtml(r.timeTaken)}</td>
+            <td>${fmtDate(r.createdAt)}</td>
+            <td><button type="button" class="link-btn details-toggle" data-id="${r.id}">View details</button></td>
+          </tr>`;
+
+          if (expanded) {
+            let inner = "";
+            if (!missed.length) {
+              inner = "<p style='margin:0;color:var(--muted)'>No missed questions.</p>";
+            } else {
+              inner = "<h4>Missed questions</h4>";
+              missed.forEach((m) => {
+                inner += `<div class="missed-item">
+                  <div class="missed-q">${escapeHtml(m.question || "")}</div>
+                  <div class="missed-meta">Your answer: <strong>${escapeHtml(String(m.yourAnswer ?? ""))}</strong> — Correct: <strong>${escapeHtml(String(m.correctAnswer ?? ""))}</strong></div>
+                </div>`;
+              });
+            }
+            html += `<tr class="details-row"><td colspan="7"><div class="details-inner">${inner}</div></td></tr>`;
+          }
+        });
+
+        html += "</tbody></table>";
+        tableContainer.innerHTML = html;
+
+        tableContainer.querySelectorAll(".details-toggle").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const id = Number(btn.getAttribute("data-id"));
+            window.__openDetailId =
+              window.__openDetailId === id ? null : id;
+            loadSubmissions();
+          });
+        });
+      }
+
+      function escapeHtml(s) {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      async function checkSession() {
+        const res = await fetch("/api/admin/me", { credentials: "same-origin" });
+        const data = await res.json();
+        if (data.authenticated) {
+          loginSection.classList.add("hidden");
+          dashboard.classList.remove("hidden");
+          await loadSubmissions();
+        }
+      }
+
+      async function loadSubmissions() {
+        const res = await fetch("/api/admin/submissions", {
+          credentials: "same-origin",
+        });
+        if (res.status === 401) {
+          loginSection.classList.remove("hidden");
+          dashboard.classList.add("hidden");
+          return;
+        }
+        const data = await res.json();
+        renderTable(data.submissions || []);
+      }
+
+      btnLogin.addEventListener("click", async () => {
+        loginError.textContent = "";
+        const password = passwordInput.value;
+        const res = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "same-origin",
+          body: JSON.stringify({ password }),
+        });
+        if (res.ok) {
+          passwordInput.value = "";
+          loginSection.classList.add("hidden");
+          dashboard.classList.remove("hidden");
+          await loadSubmissions();
+        } else {
+          loginError.textContent = "Invalid password.";
+        }
+      });
+
+      btnLogout.addEventListener("click", async () => {
+        await fetch("/api/admin/logout", {
+          method: "POST",
+          credentials: "same-origin",
+        });
+        window.__openDetailId = null;
+        loginSection.classList.remove("hidden");
+        dashboard.classList.add("hidden");
+      });
+
+      passwordInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") btnLogin.click();
+      });
+
+      checkSession();
+    </script>
+  </body>
+</html>
