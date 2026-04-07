@@ -263,7 +263,7 @@
         const openId = window.__openDetailId;
         let html =
           "<table><thead><tr>" +
-          "<th>Name</th><th>Score</th><th>%</th><th>Result</th><th>Time</th><th>Submitted</th><th></th>" +
+          "<th>Name</th><th>Email</th><th>Job title</th><th>Score</th><th>%</th><th>Result</th><th>Time</th><th>Submitted</th><th></th>" +
           "</tr></thead><tbody>";
 
         rows.forEach((r) => {
@@ -277,6 +277,8 @@
 
           html += `<tr data-id="${r.id}">
             <td>${escapeHtml(r.name)}</td>
+            <td>${escapeHtml(r.email || "")}</td>
+            <td>${escapeHtml(r.jobTitle || "")}</td>
             <td>${r.score}/${r.total}</td>
             <td>${r.percent}%</td>
             <td>${badge}</td>
@@ -298,7 +300,7 @@
                 </div>`;
               });
             }
-            html += `<tr class="details-row"><td colspan="7"><div class="details-inner">${inner}</div></td></tr>`;
+            html += `<tr class="details-row"><td colspan="9"><div class="details-inner">${inner}</div></td></tr>`;
           }
         });
 

@@ -98,7 +98,8 @@
         font-weight: 600;
         margin-bottom: 0.4rem;
       }
-      input[type="text"] {
+      input[type="text"],
+      input[type="email"] {
         width: 100%;
         padding: 0.75rem 0.85rem;
         border: 2px solid #e2e8f0;
@@ -107,7 +108,8 @@
         margin-bottom: 1.15rem;
         transition: border-color 0.15s;
       }
-      input[type="text"]:focus {
+      input[type="text"]:focus,
+      input[type="email"]:focus {
         outline: none;
         border-color: var(--gold-dark);
       }
@@ -533,6 +535,20 @@
           autocomplete="name"
           placeholder="Jane Doe"
         />
+        <label for="emp-email">Work email</label>
+        <input
+          id="emp-email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+        />
+        <label for="emp-job">Job title</label>
+        <input
+          id="emp-job"
+          type="text"
+          autocomplete="organization-title"
+          placeholder="e.g. Event specialist"
+        />
         <button type="button" class="btn btn-gold" id="btn-start">
           Start quiz
         </button>
@@ -667,6 +683,8 @@
       const screenQuiz = $("screen-quiz");
       const screenResults = $("screen-results");
       const empName = $("emp-name");
+      const empEmail = $("emp-email");
+      const empJob = $("emp-job");
       const btnStart = $("btn-start");
       const progressFill = $("progress-fill");
       const qLabel = $("q-label");
@@ -694,6 +712,13 @@
       const missed = [];
       let timerId = null;
       let secondsLeft = TOTAL_SECONDS;
+      let participantEmail = "";
+      let participantJobTitle = "";
+
+      function isValidEmail(s) {
+        const t = String(s).trim();
+        return t.length >= 3 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t);
+      }
 
       function formatClock(secs) {
         const m = Math.floor(secs / 60);
@@ -868,6 +893,8 @@
 
         submitResults({
           name: empName.value.trim(),
+          email: participantEmail,
+          jobTitle: participantJobTitle,
           score,
           total,
           percent,
@@ -886,6 +913,8 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               name: payload.name,
+              email: payload.email,
+              jobTitle: payload.jobTitle,
               score: payload.score,
               total: payload.total,
               percent: payload.percent,
@@ -916,6 +945,16 @@
           empName.focus();
           return;
         }
+        if (!isValidEmail(empEmail.value)) {
+          empEmail.focus();
+          return;
+        }
+        if (!empJob.value.trim()) {
+          empJob.focus();
+          return;
+        }
+        participantEmail = empEmail.value.trim();
+        participantJobTitle = empJob.value.trim();
         idx = 0;
         score = 0;
         missed.length = 0;
@@ -948,6 +987,10 @@
         saveStatus.textContent = "";
         saveStatus.classList.remove("err");
         empName.value = "";
+        empEmail.value = "";
+        empJob.value = "";
+        participantEmail = "";
+        participantJobTitle = "";
       });
     </script>
   </body>

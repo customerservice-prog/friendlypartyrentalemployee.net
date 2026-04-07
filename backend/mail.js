@@ -58,6 +58,8 @@ async function sendQuizResultEmail(payload) {
 
   const {
     name,
+    employeeEmail,
+    jobTitle,
     score,
     total,
     percent,
@@ -66,6 +68,11 @@ async function sendQuizResultEmail(payload) {
     missedQuestions,
     submissionId,
   } = payload;
+
+  const empEmailLine = employeeEmail
+    ? escHtml(String(employeeEmail))
+    : "—";
+  const jobTitleLine = jobTitle ? escHtml(String(jobTitle)) : "—";
 
   const missed = Array.isArray(missedQuestions) ? missedQuestions : [];
   const missedHtml = missed.length
@@ -96,6 +103,8 @@ async function sendQuizResultEmail(payload) {
       <p style="margin:0 0 16px;font-size:15px;line-height:1.5"><strong>Employee:</strong> ${escHtml(
         name
       )}</p>
+      <p style="margin:0 0 6px"><strong>Email:</strong> ${empEmailLine}</p>
+      <p style="margin:0 0 12px"><strong>Job title:</strong> ${jobTitleLine}</p>
       <p style="margin:0 0 8px"><strong>Score:</strong> ${score} / ${total} (${percent}%)</p>
       <p style="margin:0 0 8px"><strong>Result:</strong> ${
         passed ? "✅ Pass" : "❌ Did not pass"
@@ -120,6 +129,8 @@ async function sendQuizResultEmail(payload) {
   const text = [
     `Friendly Party Rental — Employee quiz result`,
     `Employee: ${name}`,
+    `Email: ${employeeEmail || "—"}`,
+    `Job title: ${jobTitle || "—"}`,
     `Score: ${score} / ${total} (${percent}%)`,
     `Result: ${passed ? "Pass" : "Did not pass"}`,
     `Time: ${timeTaken}`,

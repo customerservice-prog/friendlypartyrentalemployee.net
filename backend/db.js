@@ -127,12 +127,20 @@ async function initDb() {
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS email TEXT NOT NULL DEFAULT '';
+  `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS job_title TEXT NOT NULL DEFAULT '';
+  `);
 }
 
 async function insertSubmission(payload) {
   const p = getPool();
   const {
     name,
+    email,
+    jobTitle,
     score,
     total,
     percent,
@@ -143,11 +151,13 @@ async function insertSubmission(payload) {
 
   const { rows } = await p.query(
     `INSERT INTO submissions
-      (name, score, total, percent, time_taken, passed, missed_questions)
-     VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb)
+      (name, email, job_title, score, total, percent, time_taken, passed, missed_questions)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb)
      RETURNING id, created_at`,
     [
       String(name).trim(),
+      String(email || "").trim(),
+      String(jobTitle || "").trim(),
       Number(score),
       Number(total),
       Number(percent),
@@ -162,13 +172,15 @@ async function insertSubmission(payload) {
 async function listSubmissions() {
   const p = getPool();
   const { rows } = await p.query(
-    `SELECT id, name, score, total, percent, time_taken, passed, missed_questions, created_at
+    `SELECT id, name, email, job_title, score, total, percent, time_taken, passed, missed_questions, created_at
      FROM submissions
      ORDER BY created_at DESC`
   );
   return rows.map((r) => ({
     id: r.id,
     name: r.name,
+    email: r.email || "",
+    jobTitle: r.job_title || "",
     score: r.score,
     total: r.total,
     percent: r.percent,

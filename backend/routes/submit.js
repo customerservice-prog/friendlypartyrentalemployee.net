@@ -7,6 +7,12 @@ const {
 
 const router = express.Router();
 
+function isReasonableEmail(s) {
+  const t = String(s).trim();
+  if (t.length > 254 || t.length < 3) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t);
+}
+
 router.post("/", async (req, res) => {
   try {
     const body = req.body || {};
@@ -14,6 +20,25 @@ router.post("/", async (req, res) => {
     if (!name || typeof name !== "string" || !name.trim()) {
       return res.status(400).json({ error: "name is required" });
     }
+
+    const emailRaw = body.email;
+    if (!emailRaw || typeof emailRaw !== "string" || !emailRaw.trim()) {
+      return res.status(400).json({ error: "email is required" });
+    }
+    const email = emailRaw.trim();
+    if (!isReasonableEmail(email)) {
+      return res.status(400).json({ error: "valid email is required" });
+    }
+
+    const jobTitleRaw = body.jobTitle;
+    if (
+      jobTitleRaw == null ||
+      typeof jobTitleRaw !== "string" ||
+      !jobTitleRaw.trim()
+    ) {
+      return res.status(400).json({ error: "job title is required" });
+    }
+    const jobTitle = jobTitleRaw.trim().slice(0, 200);
 
     const score = Number(body.score);
     const total = Number(body.total);
@@ -37,6 +62,8 @@ router.post("/", async (req, res) => {
 
     const row = await insertSubmission({
       name: name.trim(),
+      email,
+      jobTitle,
       score,
       total,
       percent,
@@ -50,6 +77,8 @@ router.post("/", async (req, res) => {
     try {
       const emailResult = await sendQuizResultEmail({
         name: name.trim(),
+        employeeEmail: email,
+        jobTitle,
         score,
         total,
         percent,
