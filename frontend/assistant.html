@@ -50,6 +50,8 @@
               window.location.href =
                 "/welcome.html?return=" +
                 encodeURIComponent(window.location.pathname + window.location.search);
+            } else if (window.FPR_PRICING_FAQ_LOAD) {
+              window.FPR_PRICING_FAQ_LOAD().catch(function () {});
             }
           })
           .catch(function () {});
@@ -78,7 +80,10 @@
           msgs.scrollTop = msgs.scrollHeight;
         }
 
-        addBubble("system", "🤖 AI Assistant ready! Ask about Friendly Party Rental rentals, pricing, booking, and customer scripts — using the same training facts you study here.");
+        addBubble(
+          "system",
+          "🤖 Assistant ready — runs **without** OpenAI. After sign-in it loads **official pricing quiz answers** for item questions; everything else uses built-in training topics and scripts."
+        );
 
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
@@ -105,7 +110,22 @@
               });
               return;
             }
-            const response = window.FPR_LOCAL_AI(text);
+            if (window.FPR_PRICING_FAQ_LOAD) {
+              await window.FPR_PRICING_FAQ_LOAD();
+            }
+            var api = { ok: false };
+            if (me.assistantUsesOpenAI && window.FPR_ASSISTANT_REPLY) {
+              api = await window.FPR_ASSISTANT_REPLY(history);
+            }
+            if (!api.ok && api.status === 403 && api.message) {
+              addBubble("assistant", api.message);
+              history.push({ role: "assistant", content: api.message });
+              return;
+            }
+            var response =
+              api.ok && api.content
+                ? api.content
+                : window.FPR_LOCAL_AI(text);
             addBubble("assistant", response);
             history.push({ role: "assistant", content: response });
           } finally {

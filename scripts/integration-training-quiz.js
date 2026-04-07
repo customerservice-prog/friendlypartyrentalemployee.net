@@ -97,7 +97,14 @@ async function main() {
   try {
     await waitForLive();
 
-    let r = await fetchJson("/api/training/pricing-questions");
+    let     r = await fetchJson("/api/employee/pricing-faq");
+    if (r.status !== 401) {
+      return fail(
+        `pricing-faq before login expected 401, got ${r.status}`
+      );
+    }
+
+    r = await fetchJson("/api/training/pricing-questions");
     if (r.status !== 403 || r.body.error !== "quiz_ack_required") {
       return fail(
         `expected quiz_ack_required before ack (anonymous ok), got ${r.status} ${JSON.stringify(r.body)}`
@@ -166,6 +173,27 @@ async function main() {
     if (r.status !== 200 || r.body.assistantPausedForQuiz !== false) {
       return fail(
         `me unpaused expected: ${r.status} ${JSON.stringify(r.body)}`
+      );
+    }
+    if (typeof r.body.assistantUsesOpenAI !== "boolean") {
+      return fail(
+        `me missing assistantUsesOpenAI: ${JSON.stringify(r.body)}`
+      );
+    }
+
+    r = await fetchJson("/api/employee/pricing-faq");
+    if (r.status !== 200 || !Array.isArray(r.body.rows)) {
+      return fail(
+        `pricing-faq: ${r.status} ${JSON.stringify(r.body).slice(0, 200)}`
+      );
+    }
+    if (
+      !r.body.rows.length ||
+      typeof r.body.rows[0].q !== "string" ||
+      typeof r.body.rows[0].answer !== "string"
+    ) {
+      return fail(
+        `pricing-faq rows malformed: ${JSON.stringify(r.body).slice(0, 300)}`
       );
     }
 

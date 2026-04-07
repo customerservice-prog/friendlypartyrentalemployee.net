@@ -103,6 +103,7 @@
       var modalForm = document.getElementById('modal-form');
       var modalInput = document.getElementById('modal-input');
       var quickBtns = document.getElementById('quick-btns');
+      var modalChatHistory = [];
 
       AGENTS.forEach(function(agent) {
         var btn = document.createElement('button');
@@ -137,6 +138,7 @@
       function openAgent(agent) {
         modalTitle.textContent = agent.avatar + ' ' + agent.name + ' — ' + agent.role;
         modalMsgs.innerHTML = '';
+        modalChatHistory = [];
         quickBtns.innerHTML = agent.quick.map(function(q) {
           return '<button class="quick-btn" type="button">' + escHtml(q) + '</button>';
         }).join('');
@@ -158,6 +160,7 @@
         modalInput.value = '';
         modalInput.style.height = 'auto';
         addMsg('user', text);
+        modalChatHistory.push({ role: 'user', content: text });
         fetch('/api/employee/me', { credentials: 'same-origin' })
           .then(function(r) { return r.json().catch(function() { return {}; }); })
           .then(function(me) {
@@ -165,8 +168,28 @@
               addMsg('assistant', me.quizAssistantMessage || 'The training assistant is paused while you have a quiz in progress. Finish or leave the quiz, then try again.');
               return;
             }
-            var response = window.FPR_LOCAL_AI ? window.FPR_LOCAL_AI(text) : 'AI loading...';
-            addMsg('assistant', response);
+            var loadFaq = window.FPR_PRICING_FAQ_LOAD ? window.FPR_PRICING_FAQ_LOAD() : Promise.resolve();
+            return loadFaq.then(function() {
+              function finishLocal() {
+                var lo = window.FPR_LOCAL_AI ? window.FPR_LOCAL_AI(text) : 'AI loading...';
+                addMsg('assistant', lo);
+                modalChatHistory.push({ role: 'assistant', content: lo });
+              }
+              if (me.assistantUsesOpenAI && window.FPR_ASSISTANT_REPLY) {
+                return window.FPR_ASSISTANT_REPLY(modalChatHistory).then(function(api) {
+                  if (!api.ok && api.status === 403 && api.message) {
+                    addMsg('assistant', api.message);
+                    return;
+                  }
+                  var response = api.ok && api.content
+                    ? api.content
+                    : (window.FPR_LOCAL_AI ? window.FPR_LOCAL_AI(text) : 'AI loading...');
+                  addMsg('assistant', response);
+                  modalChatHistory.push({ role: 'assistant', content: response });
+                });
+              }
+              finishLocal();
+            });
           })
           .catch(function() {
             addMsg('assistant', 'Could not reach the server. Try again.');
@@ -181,6 +204,7 @@
       // Auth check
       fetch('/api/employee/me', {credentials:'same-origin'}).then(function(r){return r.json().catch(function(){return {};});}).then(function(d){
         if (!d.employeeAuthenticated) window.location.href = '/welcome.html?return=' + encodeURIComponent(window.location.pathname + window.location.search);
+        else if (window.FPR_PRICING_FAQ_LOAD) window.FPR_PRICING_FAQ_LOAD().catch(function(){});
       }).catch(function(){});
 
       document.getElementById('train-signout').addEventListener('click', async function() {

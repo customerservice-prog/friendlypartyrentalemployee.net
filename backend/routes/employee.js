@@ -14,8 +14,14 @@ const {
   activeTrainingQuizLock,
   clearTrainingQuizLock,
 } = require("../lib/trainingQuizLock");
+const { loadPricingQuiz } = require("../lib/knowledge");
 
 const router = express.Router();
+
+function openAiConfigured() {
+  const k = process.env.OPENAI_API_KEY;
+  return Boolean(k && String(k).trim());
+}
 
 router.use((_req, res, next) => {
   res.set("Cache-Control", "no-store");
@@ -124,10 +130,39 @@ router.get("/me", (req, res) => {
   res.json({
     employeeAuthenticated: !!req.session.employeeAuthenticated,
     assistantPausedForQuiz: Boolean(quizLock),
+    assistantUsesOpenAI: openAiConfigured(),
     quizAssistantMessage: quizLock
       ? "The training assistant is paused while you have a quiz in progress. Finish or leave the quiz, then try again here."
       : "",
   });
+});
+
+/**
+ * Official pricing quiz Q&A for the in-browser assistant (no OpenAI).
+ * Authenticated employees only.
+ */
+router.get("/pricing-faq", (req, res) => {
+  if (!req.session.employeeAuthenticated) {
+    return res.status(401).json({
+      error: "login_required",
+      message: "Sign in with your employee PIN to load training answers.",
+    });
+  }
+  try {
+    const Q = loadPricingQuiz();
+    const rows = Q.map((row) => ({
+      s: row.s,
+      q: row.q,
+      answer: row.o[row.a],
+    }));
+    res.json({ rows });
+  } catch (e) {
+    console.error("pricing-faq", e);
+    res.status(500).json({
+      error: "load_failed",
+      message: "Training price list could not be loaded. Try again later.",
+    });
+  }
 });
 
 module.exports = router;

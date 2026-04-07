@@ -539,7 +539,7 @@ async function start() {
     const openai = process.env.OPENAI_API_KEY;
     if (!openai || String(openai).trim() === "") {
       console.warn(
-        "OPENAI_API_KEY is not set — the AI training assistant will be unavailable until configured."
+        "OPENAI_API_KEY is not set — /api/chat is disabled; staff still get the in-browser assistant (pricing FAQ + topic replies)."
       );
     }
   }
