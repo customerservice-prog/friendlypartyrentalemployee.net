@@ -3,7 +3,11 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
-const { initDb, resolveDatabaseUrl } = require("./db");
+const {
+  initDb,
+  resolveDatabaseUrl,
+  listPresentDatabaseEnvKeys,
+} = require("./db");
 const submitRouter = require("./routes/submit");
 const adminRouter = require("./routes/admin");
 
@@ -54,8 +58,16 @@ app.get("/admin", (_req, res) => {
 
 async function start() {
   if (!resolveDatabaseUrl()) {
+    const found = listPresentDatabaseEnvKeys();
     console.error(
-      "No database URL found. On Railway: add a PostgreSQL service, then on your web service go to Variables → New Variable → Reference → Postgres → choose DATABASE_URL (or DATABASE_PRIVATE_URL). Redeploy after saving."
+      "No database URL found on this service. The Postgres plugin only injects DATABASE_URL on the *Postgres* service by default — you must *reference* it on your *web* service."
+    );
+    console.error(
+      "Fix: Railway project → open your **Web** service (the one running npm start) → **Variables** → **+ New Variable** → **Add Reference** → select your **PostgreSQL** service → variable **DATABASE_URL** (or **DATABASE_PRIVATE_URL**). Save, then redeploy."
+    );
+    console.error(
+      "Detected DB-related env keys on *this* service (names only):",
+      found.length ? found.join(", ") : "(none — expected until you add a reference)"
     );
     process.exit(1);
   }

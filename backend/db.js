@@ -2,34 +2,83 @@ const { Pool } = require("pg");
 
 let pool = null;
 
+function firstNonEmpty(...vals) {
+  for (const v of vals) {
+    if (v == null) continue;
+    const s = String(v).trim();
+    if (s !== "") return s;
+  }
+  return null;
+}
+
 /**
  * Railway / other hosts sometimes expose connection info under different names,
  * or only on the Postgres service until you add a variable *reference* on the app service.
  */
 function resolveDatabaseUrl() {
   const env = process.env;
-  const direct =
-    env.DATABASE_URL ||
-    env.DATABASE_PRIVATE_URL ||
-    env.POSTGRES_URL ||
-    env.POSTGRES_PRISMA_URL ||
-    env.RAILWAY_DATABASE_URL;
+  const direct = firstNonEmpty(
+    env.DATABASE_URL,
+    env.DATABASE_PRIVATE_URL,
+    env.DATABASE_PUBLIC_URL,
+    env.POSTGRES_URL,
+    env.POSTGRES_PRISMA_URL,
+    env.POSTGRES_URL_NON_POOLING,
+    env.DATABASE_URL_UNPOOLED,
+    env.RAILWAY_DATABASE_URL,
+    env.PGURL
+  );
   if (direct) return direct;
 
-  const host = env.PGHOST || env.POSTGRES_HOST;
-  const database = env.PGDATABASE || env.POSTGRES_DB || env.POSTGRES_DATABASE;
-  const user = env.PGUSER || env.POSTGRES_USER;
-  const password = env.PGPASSWORD ?? env.POSTGRES_PASSWORD;
+  const host = firstNonEmpty(env.PGHOST, env.POSTGRES_HOST);
+  const database = firstNonEmpty(
+    env.PGDATABASE,
+    env.POSTGRES_DB,
+    env.POSTGRES_DATABASE
+  );
+  const user = firstNonEmpty(env.PGUSER, env.POSTGRES_USER);
+  const password = firstNonEmpty(
+    env.PGPASSWORD,
+    env.POSTGRES_PASSWORD
+  );
   const port =
-    env.PGPORT || env.POSTGRES_PORT || (host ? "5432" : undefined);
+    firstNonEmpty(env.PGPORT, env.POSTGRES_PORT) ||
+    (host ? "5432" : undefined);
 
-  if (host && database && user != null && password != null && port) {
+  if (host && database && user && password && port) {
     const u = encodeURIComponent(String(user));
     const p = encodeURIComponent(String(password));
     return `postgresql://${u}:${p}@${host}:${port}/${database}`;
   }
 
   return null;
+}
+
+/** Names only — helps debug Railway without printing secrets. */
+function listPresentDatabaseEnvKeys() {
+  const keys = [
+    "DATABASE_URL",
+    "DATABASE_PRIVATE_URL",
+    "DATABASE_PUBLIC_URL",
+    "POSTGRES_URL",
+    "POSTGRES_PRISMA_URL",
+    "POSTGRES_URL_NON_POOLING",
+    "DATABASE_URL_UNPOOLED",
+    "RAILWAY_DATABASE_URL",
+    "PGURL",
+    "PGHOST",
+    "PGUSER",
+    "PGPASSWORD",
+    "PGDATABASE",
+    "PGPORT",
+    "POSTGRES_HOST",
+    "POSTGRES_USER",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_DB",
+  ];
+  return keys.filter(
+    (k) => process.env[k] != null && String(process.env[k]).trim() !== ""
+  );
 }
 
 function useSsl(databaseUrl) {
@@ -128,6 +177,7 @@ async function listSubmissions() {
 module.exports = {
   getPool,
   resolveDatabaseUrl,
+  listPresentDatabaseEnvKeys,
   initDb,
   insertSubmission,
   listSubmissions,
