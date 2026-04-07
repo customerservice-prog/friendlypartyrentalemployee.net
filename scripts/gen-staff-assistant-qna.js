@@ -3110,6 +3110,138 @@ for (const [k, q, a] of round23) {
   E(k, q, a);
 }
 
+const round24 = [
+  [
+    ["tent sidewall mud line", "mud wicking"],
+    "Mud wicking up tent sidewall fabric.",
+    "**Perimeter** **drainage** **or** **french** **channel** **—** **don't** **promise** **bone-dry** **edge** **in** **heavy** **rain**; **floor** **cover** **ridge**.",
+  ],
+  [
+    ["gutter tent rain"],
+    "Rain gutter between two tents.",
+    "**Engineered** **valley** **—** **only** **shop** **SKU** **+** **install**; **DIY** **tarps** **void** **wind** **rating**.",
+  ],
+  [
+    ["snow load tent"],
+    "How much snow can tent hold?",
+    "**Engineering** **table** **per** **model** **—** **never** **guess** **inches**; **melt/refreeze** **ice** **adds** **load**.",
+  ],
+  [
+    ["frost on vinyl tent"],
+    "Morning frost on clear tent windows.",
+    "**Normal** **condensation** **cycle** **—** **don't** **scrape** **with** **metal**; **vents** **may** **help** **overnight**.",
+  ],
+  [
+    ["condensation drip stage"],
+    "Water dripping on stage from tent roof.",
+    "**Cold** **night** **+** **warm** **body** **heat** **below** **—** **liner** **gap** **or** **dehumid** **plan** **with** **coordinator**.",
+  ],
+  [
+    ["center pole dance floor"],
+    "Center pole in middle of dance floor.",
+    "**Pole** **tent** **layout** **math** **—** **may** **need** **frame** **tent** **or** **smaller** **dance** **ring** **around** **pole** **cover**.",
+  ],
+  [
+    ["subfloor height door threshold"],
+    "Raised subfloor blocks ballroom door.",
+    "**ADA** **threshold** **ramps** **—** **measure** **door** **swing** **before** **build**; **fire** **door** **must** **close**.",
+  ],
+  [
+    ["marquee entrance tent"],
+    "Small entrance marquee before main tent.",
+    "**Connector** **tunnel** **rain** **plan** **—** **puddle** **mat** **+** **lighting** **transition**.",
+  ],
+  [
+    ["revolving door venue"],
+    "Load through hotel revolving door.",
+    "**Crew** **uses** **service** **entrance** **—** **panels** **don't** **fit** **revolver**; **coordinate** **dock** **with** **CS**.",
+  ],
+  [
+    ["service elevator size"],
+    "Will dance floor panels fit service elevator?",
+    "**Diagonal** **and** **weight** **limit** **—** **dry** **run** **measure** **during** **site** **visit** **photo** **with** **tape**.",
+  ],
+  [
+    ["basement load narrow stair"],
+    "Basement ballroom via narrow stairs only.",
+    "**Hand** **carry** **labor** **hours** **—** **quote** **extra** **porter** **time**; **no** **guarantee** **all** **SKUs** **fit**.",
+  ],
+  [
+    ["rooftop terrace weight"],
+    "Rooftop terrace structural limit.",
+    "**Engineer** **letter** **per** **venue** **—** **ballast** **only** **if** **stakes** **forbidden**; **we** **don't** **sign** **structural** **approvals**.",
+  ],
+  [
+    ["courtyard no truck access"],
+    "Courtyard event — trucks can't enter.",
+    "**Hand** **cart** **distance** **from** **street** **—** **time** **buffer** **large**; **customer** **permits** **closures**.",
+  ],
+  [
+    ["barge river event"],
+    "Equipment to riverfront via barge.",
+    "**Marine** **logistics** **vendor** **—** **out** **of** **standard** **truck** **quote** **unless** **brokered**.",
+  ],
+  [
+    ["ferry island wedding"],
+    "Island venue — ferry schedule for strike.",
+    "**Last** **boat** **cutoff** **—** **crews** **may** **need** **overnight** **hold** **or** **two-day** **rent** **in** **contract**.",
+  ],
+  [
+    ["national park permit"],
+    "Event in national park boundary.",
+    "**NPS** **permit** **window** **tiny** **—** **only** **bid** **after** **written** **park** **approval**; **Leave** **No** **Trace** **rules**.",
+  ],
+  [
+    ["wilderness fire ban"],
+    "Open fire ban — propane heat still okay?",
+    "**County** **stage** **level** **ban** **—** **don't** **interpret** **law**; **electric** **heat** **only** **if** **signed** **OK**.",
+  ],
+  [
+    ["lightning hold protocol"],
+    "Corporate picnic lightning hold — deflate inflatables?",
+    "**Manufacturer** **+** **company** **storm** **SOP** **—** **guests** **evac** **to** **cars** **or** **building** **first**.",
+  ],
+  [
+    ["heat illness guest"],
+    "Guest heat exhaustion at outdoor tent.",
+    "**911** **if** **altered** **mental** **status** **—** **shade/water** **while** **waiting**; **our** **staff** **are** **not** **medics**.",
+  ],
+  [
+    ["hypothermia spring event"],
+    "Cold spring rain — guest shivering.",
+    "**Warmer** **rental** **or** **move** **indoors** **fragment** **—** **not** **fault** **debate** **on** **phone**.",
+  ],
+  [
+    ["bee swarm tent peak"],
+    "Bees clustering at tent peak daylight.",
+    "**Keep** **guests** **clear** **—** **professional** **removal** **or** **wait** **till** **they** **move**; **don't** **spray** **pesticide** **on** **our** **vinyl** **without** **shop** **OK**.",
+  ],
+  [
+    ["bird nest tent leg"],
+    "Bird nested in folded leg before deploy.",
+    "**Wildlife** **rules** **may** **forbid** **disturb** **during** **season** **—** **swap** **leg** **or** **delay** **with** **biologist** **advice**.",
+  ],
+  [
+    ["snake under deck"],
+    "Snake sighting under staging.",
+    "**Stop** **work** **near** **—** **animal** **control**; **crew** **doesn't** **capture** **venomous** **species**.",
+  ],
+  [
+    ["flash flood arroyo"],
+    "Desert wash flash flood risk venue.",
+    "**NO** **setup** **in** **active** **channel** **—** **alternate** **pad** **elevation** **map** **mandatory**.",
+  ],
+  [
+    ["tidal beach event"],
+    "Beach tent near tide line.",
+    "**Tide** **chart** **in** **contract** **—** **strike** **before** **surge** **reaches** **ballast**; **salt** **rinse** **gear** **after**.",
+  ],
+];
+
+for (const [k, q, a] of round24) {
+  E(k, q, a);
+}
+
 const header = `/* eslint-disable max-len */
 /**
  * AUTO-GENERATED by scripts/gen-staff-assistant-qna.js — do not edit by hand.
@@ -3119,7 +3251,7 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = `;
 
 const footer = `;
 
-module.exports.STAFF_ASSISTANT_QNA_VERSION = 24;
+module.exports.STAFF_ASSISTANT_QNA_VERSION = 25;
 `;
 
 fs.writeFileSync(outPath, header + JSON.stringify(blocks, null, 2) + footer, "utf8");

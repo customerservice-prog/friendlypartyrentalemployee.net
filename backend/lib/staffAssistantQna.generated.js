@@ -5616,7 +5616,183 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
     ],
     "q": "Ants swarmed cotton candy cart.",
     "a": "**Close** **carts** **overnight** **—** **pest** **is** **site** **issue** **for** **perimeter** **treatment** **—** **not** **instant** **our** **fix**."
+  },
+  {
+    "k": [
+      "tent sidewall mud line",
+      "mud wicking"
+    ],
+    "q": "Mud wicking up tent sidewall fabric.",
+    "a": "**Perimeter** **drainage** **or** **french** **channel** **—** **don't** **promise** **bone-dry** **edge** **in** **heavy** **rain**; **floor** **cover** **ridge**."
+  },
+  {
+    "k": [
+      "gutter tent rain"
+    ],
+    "q": "Rain gutter between two tents.",
+    "a": "**Engineered** **valley** **—** **only** **shop** **SKU** **+** **install**; **DIY** **tarps** **void** **wind** **rating**."
+  },
+  {
+    "k": [
+      "snow load tent"
+    ],
+    "q": "How much snow can tent hold?",
+    "a": "**Engineering** **table** **per** **model** **—** **never** **guess** **inches**; **melt/refreeze** **ice** **adds** **load**."
+  },
+  {
+    "k": [
+      "frost on vinyl tent"
+    ],
+    "q": "Morning frost on clear tent windows.",
+    "a": "**Normal** **condensation** **cycle** **—** **don't** **scrape** **with** **metal**; **vents** **may** **help** **overnight**."
+  },
+  {
+    "k": [
+      "condensation drip stage"
+    ],
+    "q": "Water dripping on stage from tent roof.",
+    "a": "**Cold** **night** **+** **warm** **body** **heat** **below** **—** **liner** **gap** **or** **dehumid** **plan** **with** **coordinator**."
+  },
+  {
+    "k": [
+      "center pole dance floor"
+    ],
+    "q": "Center pole in middle of dance floor.",
+    "a": "**Pole** **tent** **layout** **math** **—** **may** **need** **frame** **tent** **or** **smaller** **dance** **ring** **around** **pole** **cover**."
+  },
+  {
+    "k": [
+      "subfloor height door threshold"
+    ],
+    "q": "Raised subfloor blocks ballroom door.",
+    "a": "**ADA** **threshold** **ramps** **—** **measure** **door** **swing** **before** **build**; **fire** **door** **must** **close**."
+  },
+  {
+    "k": [
+      "marquee entrance tent"
+    ],
+    "q": "Small entrance marquee before main tent.",
+    "a": "**Connector** **tunnel** **rain** **plan** **—** **puddle** **mat** **+** **lighting** **transition**."
+  },
+  {
+    "k": [
+      "revolving door venue"
+    ],
+    "q": "Load through hotel revolving door.",
+    "a": "**Crew** **uses** **service** **entrance** **—** **panels** **don't** **fit** **revolver**; **coordinate** **dock** **with** **CS**."
+  },
+  {
+    "k": [
+      "service elevator size"
+    ],
+    "q": "Will dance floor panels fit service elevator?",
+    "a": "**Diagonal** **and** **weight** **limit** **—** **dry** **run** **measure** **during** **site** **visit** **photo** **with** **tape**."
+  },
+  {
+    "k": [
+      "basement load narrow stair"
+    ],
+    "q": "Basement ballroom via narrow stairs only.",
+    "a": "**Hand** **carry** **labor** **hours** **—** **quote** **extra** **porter** **time**; **no** **guarantee** **all** **SKUs** **fit**."
+  },
+  {
+    "k": [
+      "rooftop terrace weight"
+    ],
+    "q": "Rooftop terrace structural limit.",
+    "a": "**Engineer** **letter** **per** **venue** **—** **ballast** **only** **if** **stakes** **forbidden**; **we** **don't** **sign** **structural** **approvals**."
+  },
+  {
+    "k": [
+      "courtyard no truck access"
+    ],
+    "q": "Courtyard event — trucks can't enter.",
+    "a": "**Hand** **cart** **distance** **from** **street** **—** **time** **buffer** **large**; **customer** **permits** **closures**."
+  },
+  {
+    "k": [
+      "barge river event"
+    ],
+    "q": "Equipment to riverfront via barge.",
+    "a": "**Marine** **logistics** **vendor** **—** **out** **of** **standard** **truck** **quote** **unless** **brokered**."
+  },
+  {
+    "k": [
+      "ferry island wedding"
+    ],
+    "q": "Island venue — ferry schedule for strike.",
+    "a": "**Last** **boat** **cutoff** **—** **crews** **may** **need** **overnight** **hold** **or** **two-day** **rent** **in** **contract**."
+  },
+  {
+    "k": [
+      "national park permit"
+    ],
+    "q": "Event in national park boundary.",
+    "a": "**NPS** **permit** **window** **tiny** **—** **only** **bid** **after** **written** **park** **approval**; **Leave** **No** **Trace** **rules**."
+  },
+  {
+    "k": [
+      "wilderness fire ban"
+    ],
+    "q": "Open fire ban — propane heat still okay?",
+    "a": "**County** **stage** **level** **ban** **—** **don't** **interpret** **law**; **electric** **heat** **only** **if** **signed** **OK**."
+  },
+  {
+    "k": [
+      "lightning hold protocol"
+    ],
+    "q": "Corporate picnic lightning hold — deflate inflatables?",
+    "a": "**Manufacturer** **+** **company** **storm** **SOP** **—** **guests** **evac** **to** **cars** **or** **building** **first**."
+  },
+  {
+    "k": [
+      "heat illness guest"
+    ],
+    "q": "Guest heat exhaustion at outdoor tent.",
+    "a": "**911** **if** **altered** **mental** **status** **—** **shade/water** **while** **waiting**; **our** **staff** **are** **not** **medics**."
+  },
+  {
+    "k": [
+      "hypothermia spring event"
+    ],
+    "q": "Cold spring rain — guest shivering.",
+    "a": "**Warmer** **rental** **or** **move** **indoors** **fragment** **—** **not** **fault** **debate** **on** **phone**."
+  },
+  {
+    "k": [
+      "bee swarm tent peak"
+    ],
+    "q": "Bees clustering at tent peak daylight.",
+    "a": "**Keep** **guests** **clear** **—** **professional** **removal** **or** **wait** **till** **they** **move**; **don't** **spray** **pesticide** **on** **our** **vinyl** **without** **shop** **OK**."
+  },
+  {
+    "k": [
+      "bird nest tent leg"
+    ],
+    "q": "Bird nested in folded leg before deploy.",
+    "a": "**Wildlife** **rules** **may** **forbid** **disturb** **during** **season** **—** **swap** **leg** **or** **delay** **with** **biologist** **advice**."
+  },
+  {
+    "k": [
+      "snake under deck"
+    ],
+    "q": "Snake sighting under staging.",
+    "a": "**Stop** **work** **near** **—** **animal** **control**; **crew** **doesn't** **capture** **venomous** **species**."
+  },
+  {
+    "k": [
+      "flash flood arroyo"
+    ],
+    "q": "Desert wash flash flood risk venue.",
+    "a": "**NO** **setup** **in** **active** **channel** **—** **alternate** **pad** **elevation** **map** **mandatory**."
+  },
+  {
+    "k": [
+      "tidal beach event"
+    ],
+    "q": "Beach tent near tide line.",
+    "a": "**Tide** **chart** **in** **contract** **—** **strike** **before** **surge** **reaches** **ballast**; **salt** **rinse** **gear** **after**."
   }
 ];
 
-module.exports.STAFF_ASSISTANT_QNA_VERSION = 24;
+module.exports.STAFF_ASSISTANT_QNA_VERSION = 25;
