@@ -111,9 +111,27 @@
         transition: border-color 0.15s;
       }
       input[type="text"]:focus,
-      input[type="email"]:focus {
+      input[type="email"]:focus,
+      textarea:focus {
         outline: none;
         border-color: var(--gold-dark);
+      }
+      textarea.integrity-self-report {
+        width: 100%;
+        min-height: 4.5rem;
+        padding: 0.75rem 0.85rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font: inherit;
+        margin-bottom: 0.35rem;
+        resize: vertical;
+        transition: border-color 0.15s;
+      }
+      .integrity-self-report-hint {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin: 0 0 1rem;
+        line-height: 1.4;
       }
       .btn {
         display: inline-flex;
@@ -569,6 +587,21 @@
               termination or other employment action.</span
             >
           </label>
+          <label for="integrity-self-report" style="margin-top: 1rem"
+            >Tools or assistance (optional)</label
+          >
+          <textarea
+            id="integrity-self-report"
+            class="integrity-self-report"
+            maxlength="2000"
+            rows="3"
+            autocomplete="off"
+            placeholder="If you used search, notes, AI, or help from someone else, describe briefly for training records (optional)."
+          ></textarea>
+          <p class="integrity-self-report-hint">
+            This is stored with your results for manager review. Leave blank if
+            you completed the quiz on your own.
+          </p>
         </div>
         <label for="emp-name">Your full name</label>
         <input
@@ -709,6 +742,90 @@
       const saveStatus = $("save-status");
       const btnRestart = $("btn-restart");
       const integrityAck = $("quiz-integrity-ack");
+      const selfReportEl = $("integrity-self-report");
+
+      const integrityState = {
+        tabHiddenCount: 0,
+        totalHiddenMs: 0,
+        _hiddenAt: null,
+        pasteDuringQuiz: 0,
+        answerTimingsMs: [],
+        questionShownAt: 0,
+      };
+      let integrityHooksInstalled = false;
+      const ANSWER_FAST_MS = 1500;
+
+      function resetIntegrityMetrics() {
+        integrityState.tabHiddenCount = 0;
+        integrityState.totalHiddenMs = 0;
+        integrityState._hiddenAt = null;
+        integrityState.pasteDuringQuiz = 0;
+        integrityState.answerTimingsMs = [];
+        integrityState.questionShownAt = 0;
+      }
+
+      function flushIntegrityHiddenMs() {
+        if (integrityState._hiddenAt != null) {
+          integrityState.totalHiddenMs += Date.now() - integrityState._hiddenAt;
+          integrityState._hiddenAt = null;
+        }
+      }
+
+      function onIntegrityVisibility() {
+        if (screenQuiz.classList.contains("hidden")) return;
+        if (document.visibilityState === "hidden") {
+          integrityState.tabHiddenCount++;
+          integrityState._hiddenAt = Date.now();
+        } else if (integrityState._hiddenAt != null) {
+          integrityState.totalHiddenMs += Date.now() - integrityState._hiddenAt;
+          integrityState._hiddenAt = null;
+        }
+      }
+
+      function onIntegrityPaste() {
+        if (!screenQuiz.classList.contains("hidden")) {
+          integrityState.pasteDuringQuiz++;
+        }
+      }
+
+      function ensureIntegrityHooks() {
+        if (integrityHooksInstalled) return;
+        document.addEventListener("visibilitychange", onIntegrityVisibility);
+        document.addEventListener("paste", onIntegrityPaste);
+        integrityHooksInstalled = true;
+      }
+
+      function medianMs(arr) {
+        if (!arr.length) return 0;
+        const s = arr.slice().sort((a, b) => a - b);
+        const mid = Math.floor(s.length / 2);
+        if (s.length % 2 === 1) return s[mid];
+        return Math.round((s[mid - 1] + s[mid]) / 2);
+      }
+
+      function buildIntegrityReportForSubmit() {
+        flushIntegrityHiddenMs();
+        const timings = integrityState.answerTimingsMs;
+        const medianAnswerMs = medianMs(timings);
+        const veryFastAnswerCount = timings.filter(
+          (t) => t < ANSWER_FAST_MS
+        ).length;
+        const selfReportedTools =
+          selfReportEl && typeof selfReportEl.value === "string"
+            ? selfReportEl.value.trim()
+            : "";
+        return {
+          quiz: "pricing",
+          capturedAt: new Date().toISOString(),
+          tabHiddenCount: integrityState.tabHiddenCount,
+          totalHiddenMs: integrityState.totalHiddenMs,
+          pasteDuringQuiz: integrityState.pasteDuringQuiz,
+          veryFastAnswerCount,
+          medianAnswerMs,
+          answerTimingsMs: timings.slice(),
+          selfReportedTools,
+        };
+      }
 
       async function loadPricingQuestionsForAttempt() {
         const ackRes = await fetch("/api/training/quiz-integrity-ack", {
@@ -717,7 +834,7 @@
         });
         if (ackRes.status === 401) {
           window.location.href =
-            "/welcome?return=" +
+            "/welcome.html?return=" +
             encodeURIComponent(
               window.location.pathname + window.location.search
             );
@@ -734,7 +851,7 @@
         });
         if (qRes.status === 401) {
           window.location.href =
-            "/welcome?return=" +
+            "/welcome.html?return=" +
             encodeURIComponent(
               window.location.pathname + window.location.search
             );
@@ -861,6 +978,7 @@
         feedback.className = "feedback";
         feedback.textContent = "";
         nextWrap.classList.add("hidden");
+        integrityState.questionShownAt = Date.now();
 
         item.o.forEach((label, i) => {
           const b = document.createElement("button");
@@ -896,6 +1014,14 @@
 
         const correct = data.correct;
         const correctChoiceIndex = data.correctChoiceIndex;
+        const answerMs = Date.now() - integrityState.questionShownAt;
+        if (
+          answerMs >= 0 &&
+          answerMs <= 600000 &&
+          Number.isFinite(answerMs)
+        ) {
+          integrityState.answerTimingsMs.push(answerMs);
+        }
         buttons.forEach((b, i) => {
           if (i === correctChoiceIndex) b.classList.add("correct");
           else if (i === choiceIndex) b.classList.add("wrong");
@@ -921,6 +1047,7 @@
       }
 
       async function showResults() {
+        flushIntegrityHiddenMs();
         clearInterval(timerId);
         timerId = null;
         screenQuiz.classList.add("hidden");
@@ -1012,6 +1139,7 @@
           passed,
           missedQuestions,
           quizSlug: "pricing",
+          integrityReport: buildIntegrityReportForSubmit(),
         });
       }
 
@@ -1034,6 +1162,7 @@
               passed: payload.passed,
               missedQuestions: payload.missedQuestions,
               quizSlug: payload.quizSlug || "pricing",
+              integrityReport: payload.integrityReport || {},
             }),
           });
           const data = await res.json().catch(() => ({}));
@@ -1114,6 +1243,8 @@
         }
         participantEmail = empEmail.value.trim();
         participantJobTitle = empJob.value.trim();
+        ensureIntegrityHooks();
+        resetIntegrityMetrics();
         idx = 0;
         secondsLeft = TOTAL_SECONDS;
         screenIntro.classList.add("hidden");
@@ -1150,6 +1281,8 @@
         empEmail.value = "";
         empJob.value = "";
         if (integrityAck) integrityAck.checked = false;
+        if (selfReportEl) selfReportEl.value = "";
+        resetIntegrityMetrics();
         Q = null;
         participantEmail = "";
         participantJobTitle = "";

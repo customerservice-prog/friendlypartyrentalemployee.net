@@ -216,7 +216,7 @@
       });
       
       fetch('/api/employee/me',{credentials:'same-origin'}).then(function(r){return r.json().catch(function(){return {};});}).then(function(d){
-        if(!d.employeeAuthenticated)window.location.href='/welcome?return='+encodeURIComponent(window.location.pathname+window.location.search);
+        if(!d.employeeAuthenticated)window.location.href='/welcome.html?return='+encodeURIComponent(window.location.pathname+window.location.search);
       }).catch(function(){});
       
       document.getElementById('train-signout').addEventListener('click', async function(){

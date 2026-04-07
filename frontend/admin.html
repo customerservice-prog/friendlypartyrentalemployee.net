@@ -180,6 +180,9 @@
         font-size: 0.85rem;
         color: var(--muted);
       }
+      .details-inner h4:not(:first-child) {
+        margin-top: 1.35rem;
+      }
       .missed-item {
         margin-bottom: 0.85rem;
         padding-bottom: 0.85rem;
@@ -230,6 +233,40 @@
       }
       .admin-back-training a:hover {
         text-decoration: underline;
+      }
+      .integrity-note {
+        margin: 0 0 0.75rem;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+      .integrity-metrics {
+        width: 100%;
+        font-size: 0.86rem;
+        border-collapse: collapse;
+        margin: 0 0 0.5rem;
+      }
+      .integrity-metrics td {
+        padding: 0.35rem 0.5rem 0.35rem 0;
+        border: none;
+      }
+      .integrity-metrics td:first-child {
+        color: var(--muted);
+        width: 55%;
+      }
+      .integrity-disclosure {
+        white-space: pre-wrap;
+        font-size: 0.86rem;
+        background: #fff;
+        padding: 0.65rem 0.85rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin: 0 0 0.75rem;
+      }
+      .integrity-hints {
+        margin: 0.5rem 0 1rem;
+        padding-left: 1.25rem;
+        font-size: 0.88rem;
       }
     </style>
   </head>
@@ -311,6 +348,112 @@
         return QUIZ_LABELS[s] || s;
       }
 
+      function renderIntegrityReport(ir) {
+        const irObj = ir && typeof ir === "object" ? ir : null;
+        if (!irObj || Object.keys(irObj).length === 0) {
+          return (
+            "<h4>Quiz review signals</h4>" +
+            "<p style='margin:0;color:var(--muted);font-size:0.88rem'>" +
+            "No review signals were stored for this submission.</p>"
+          );
+        }
+        let html = "<h4>Quiz review signals</h4>";
+        html +=
+          "<p class='integrity-note'>Browser-side hints only—these do not prove cheating or AI use. Use them as context when reviewing results.</p>";
+        const hints = Array.isArray(irObj.reviewHints)
+          ? irObj.reviewHints
+          : [];
+        const hintLis = [];
+        hints.forEach((h) => {
+          if (!h || !h.label) return;
+          if (h.code === "self_reported_tools") {
+            hintLis.push("<li>" + escapeHtml(h.label) + "</li>");
+            return;
+          }
+          if (h.code === "no_automated_flags") {
+            hintLis.push("<li>" + escapeHtml(h.label) + "</li>");
+            return;
+          }
+          let suffix = "";
+          if (h.detailMs != null) {
+            suffix =
+              " (~" +
+              escapeHtml(
+                String(Math.round(Number(h.detailMs) / 1000))
+              ) +
+              " s total hidden)";
+          } else if (h.value != null) {
+            suffix =
+              ": <strong>" + escapeHtml(String(h.value)) + "</strong>";
+          }
+          hintLis.push("<li>" + escapeHtml(h.label) + suffix + "</li>");
+        });
+        if (hintLis.length) {
+          html +=
+            "<ul class='integrity-hints'>" + hintLis.join("") + "</ul>";
+        }
+        const selfTxt =
+          typeof irObj.selfReportedTools === "string"
+            ? irObj.selfReportedTools.trim()
+            : "";
+        if (selfTxt) {
+          html +=
+            "<p style='margin:0 0 0.35rem;font-size:0.85rem'><strong>Trainee disclosure</strong></p>" +
+            "<div class='integrity-disclosure'>" +
+            escapeHtml(selfTxt) +
+            "</div>";
+        }
+        const rows = [];
+        if (typeof irObj.tabHiddenCount === "number") {
+          rows.push(
+            "<tr><td>Tab/window hidden (count)</td><td>" +
+              escapeHtml(String(irObj.tabHiddenCount)) +
+              "</td></tr>"
+          );
+        }
+        if (typeof irObj.totalHiddenMs === "number") {
+          rows.push(
+            "<tr><td>Time page was hidden (total)</td><td>~" +
+              escapeHtml(
+                String(Math.round(irObj.totalHiddenMs / 1000))
+              ) +
+              " s</td></tr>"
+          );
+        }
+        if (typeof irObj.pasteDuringQuiz === "number") {
+          rows.push(
+            "<tr><td>Paste events during quiz</td><td>" +
+              escapeHtml(String(irObj.pasteDuringQuiz)) +
+              "</td></tr>"
+          );
+        }
+        if (typeof irObj.veryFastAnswerCount === "number") {
+          rows.push(
+            "<tr><td>Answers under ~1.5 s</td><td>" +
+              escapeHtml(String(irObj.veryFastAnswerCount)) +
+              "</td></tr>"
+          );
+        }
+        if (typeof irObj.medianAnswerMs === "number") {
+          rows.push(
+            "<tr><td>Median time to answer</td><td>" +
+              escapeHtml(
+                String(Math.round(irObj.medianAnswerMs / 100) / 10)
+              ) +
+              " s</td></tr>"
+          );
+        }
+        if (rows.length) {
+          html +=
+            "<p style='margin:0 0 0.35rem;font-size:0.85rem;color:var(--muted)'><strong>Metrics</strong></p>";
+          html +=
+            "<table class='integrity-metrics'><tbody>" +
+            rows.join("") +
+            "</tbody></table>";
+        }
+        return html;
+      }
+
       function renderTable(rows) {
         if (!rows.length) {
           tableContainer.innerHTML =
@@ -349,11 +492,12 @@
           </tr>`;
 
           if (expanded) {
-            let inner = "";
+            let inner = renderIntegrityReport(r.integrityReport);
             if (!missed.length) {
-              inner = "<p style='margin:0;color:var(--muted)'>No missed questions.</p>";
+              inner +=
+                "<h4>Missed questions</h4><p style='margin:0;color:var(--muted)'>No missed questions.</p>";
             } else {
-              inner = "<h4>Missed questions</h4>";
+              inner += "<h4>Missed questions</h4>";
               missed.forEach((m) => {
                 inner += `<div class="missed-item">
                   <div class="missed-q">${escapeHtml(m.question || "")}</div>

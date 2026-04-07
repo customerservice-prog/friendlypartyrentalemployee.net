@@ -140,6 +140,9 @@ async function initDb() {
     CREATE INDEX IF NOT EXISTS idx_submissions_created_at
     ON submissions (created_at DESC);
   `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS integrity_report JSONB NOT NULL DEFAULT '{}'::jsonb;
+  `);
 }
 
 async function insertSubmission(payload) {
@@ -155,6 +158,7 @@ async function insertSubmission(payload) {
     timeTaken,
     passed,
     missedQuestions,
+    integrityReport,
   } = payload;
 
   const slug = String(quizSlug || "pricing")
@@ -162,10 +166,16 @@ async function insertSubmission(payload) {
     .replace(/[^a-z0-9-]/gi, "")
     .slice(0, 64) || "pricing";
 
+  const reportJson = JSON.stringify(
+    integrityReport && typeof integrityReport === "object"
+      ? integrityReport
+      : {}
+  );
+
   const { rows } = await p.query(
     `INSERT INTO submissions
-      (name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb)
+      (name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, integrity_report)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, $11::jsonb)
      RETURNING id, created_at`,
     [
       String(name).trim(),
@@ -178,6 +188,7 @@ async function insertSubmission(payload) {
       String(timeTaken),
       Boolean(passed),
       JSON.stringify(Array.isArray(missedQuestions) ? missedQuestions : []),
+      reportJson,
     ]
   );
   return rows[0];
@@ -196,7 +207,7 @@ const LIST_SUBMISSIONS_MAX = 2000;
 async function listSubmissions() {
   const p = getPool();
   const { rows } = await p.query(
-    `SELECT id, name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, created_at,
+    `SELECT id, name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, integrity_report, created_at,
             COUNT(*) OVER() AS full_count
      FROM submissions
      ORDER BY created_at DESC
@@ -218,6 +229,10 @@ async function listSubmissions() {
     timeTaken: r.time_taken,
     passed: r.passed,
     missedQuestions: r.missed_questions,
+    integrityReport:
+      r.integrity_report && typeof r.integrity_report === "object"
+        ? r.integrity_report
+        : {},
     createdAt: r.created_at,
   }));
   return {

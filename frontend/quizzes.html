@@ -68,7 +68,7 @@
           <span class="badge">50 questions · 20 min · scored</span>
         </a>
 
-        <a class="train-card" href="/quiz-customer-service">
+        <a class="train-card" href="/quiz-customer-service.html">
           <h2>Customer service quiz</h2>
           <p>
             Scripts, contact info, and professional call handling — practice only.
@@ -76,13 +76,13 @@
           <span class="badge">20 questions · 12 min</span>
         </a>
 
-        <a class="train-card" href="/quiz-policies">
+        <a class="train-card" href="/quiz-policies.html">
           <h2>Policies &amp; procedures quiz</h2>
           <p>Booking, delivery, safety, and company standards — practice only.</p>
           <span class="badge">20 questions · 12 min</span>
         </a>
 
-        <a class="train-card" href="/quiz-products">
+        <a class="train-card" href="/quiz-products.html">
           <h2>Products knowledge quiz</h2>
           <p>
             Tents, tables, inflatables, concessions, and specialty rentals — practice
@@ -104,7 +104,7 @@
           .then((data) => {
             if (!data.employeeAuthenticated) {
               window.location.href =
-                "/welcome?return=" +
+                "/welcome.html?return=" +
                 encodeURIComponent(window.location.pathname + window.location.search);
             }
           })

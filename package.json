@@ -11,8 +11,9 @@
     "normalize-quiz-pricing": "node scripts/build-quiz-pricing-html.js",
     "verify-pricing-data": "node scripts/extract-pricing-quiz.js",
     "preflight": "npm run check && npm run verify-pricing-data",
-    "test": "npm run test:integration",
-    "test:integration": "node scripts/integration-training-quiz.js"
+    "test": "npm run test:integration && npm run test:quizzes",
+    "test:integration": "node scripts/integration-training-quiz.js",
+    "test:quizzes": "node scripts/smoke-all-quizzes.js"
   },
   "engines": {
     "node": ">=18"

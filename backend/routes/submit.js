@@ -40,6 +40,91 @@ function sanitizeMissedQuestions(raw) {
     .filter(Boolean);
 }
 
+function clampInt(n, lo, hi) {
+  const x = parseInt(String(n), 10);
+  if (!Number.isFinite(x)) return lo;
+  return Math.min(Math.max(x, lo), hi);
+}
+
+const INTEGRITY_TIMING_MAX = 120;
+
+/** Browser signals + optional self-report; not proof of cheating. */
+function sanitizeIntegrityReport(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    raw = {};
+  }
+  const MAX_STR = 2000;
+  const o = {
+    version: 1,
+    quiz: String(raw.quiz || "").trim().slice(0, 32),
+    capturedAt: String(raw.capturedAt || "").trim().slice(0, 40),
+    tabHiddenCount: clampInt(raw.tabHiddenCount, 0, 50000),
+    totalHiddenMs: clampInt(raw.totalHiddenMs, 0, 7200000),
+    pasteDuringQuiz: clampInt(raw.pasteDuringQuiz, 0, 100000),
+    veryFastAnswerCount: clampInt(raw.veryFastAnswerCount, 0, 5000),
+    medianAnswerMs: clampInt(raw.medianAnswerMs, 0, 600000),
+    selfReportedTools: String(raw.selfReportedTools ?? "")
+      .trim()
+      .slice(0, MAX_STR),
+  };
+  if (Array.isArray(raw.answerTimingsMs)) {
+    o.answerTimingsMs = raw.answerTimingsMs
+      .slice(0, INTEGRITY_TIMING_MAX)
+      .map((n) => clampInt(n, 0, 600000));
+  } else {
+    o.answerTimingsMs = [];
+  }
+  o.reviewHints = buildReviewHints(o);
+  return o;
+}
+
+function buildReviewHints(o) {
+  const hints = [];
+  if (o.tabHiddenCount >= 4) {
+    hints.push({
+      code: "many_tab_hides",
+      label: "Tab or window hidden often during quiz",
+      value: o.tabHiddenCount,
+    });
+  }
+  if (o.totalHiddenMs >= 120000) {
+    hints.push({
+      code: "long_time_hidden",
+      label: "Page hidden for a long total time",
+      detailMs: o.totalHiddenMs,
+    });
+  }
+  if (o.pasteDuringQuiz >= 1) {
+    hints.push({
+      code: "paste_events",
+      label: "Paste events while quiz was active",
+      value: o.pasteDuringQuiz,
+    });
+  }
+  if (o.veryFastAnswerCount >= 8) {
+    hints.push({
+      code: "very_fast_answers",
+      label: "Many answers under ~1.5s after question shown",
+      value: o.veryFastAnswerCount,
+    });
+  }
+  if (o.selfReportedTools) {
+    hints.push({
+      code: "self_reported_tools",
+      label: "Trainee disclosed tools or assistance",
+      value: o.selfReportedTools,
+    });
+  }
+  if (hints.length === 0) {
+    hints.push({
+      code: "no_automated_flags",
+      label: "No automated review flags (not proof of compliance)",
+      value: null,
+    });
+  }
+  return hints;
+}
+
 router.post("/", async (req, res) => {
   try {
     const body = req.body || {};
@@ -190,6 +275,8 @@ router.post("/", async (req, res) => {
       return;
     }
 
+    const integrityReport = sanitizeIntegrityReport(body.integrityReport);
+
     const row = await insertSubmission({
       name: nameTrimmed,
       email,
@@ -201,6 +288,7 @@ router.post("/", async (req, res) => {
       timeTaken,
       passed,
       missedQuestions,
+      integrityReport,
     });
 
     if (slugNorm === "pricing") {
