@@ -3,7 +3,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
-const { initDb } = require("./db");
+const { initDb, resolveDatabaseUrl } = require("./db");
 const submitRouter = require("./routes/submit");
 const adminRouter = require("./routes/admin");
 
@@ -51,8 +51,10 @@ app.get("/admin", (_req, res) => {
 });
 
 async function start() {
-  if (!process.env.DATABASE_URL) {
-    console.error("DATABASE_URL must be set");
+  if (!resolveDatabaseUrl()) {
+    console.error(
+      "No database URL found. On Railway: add a PostgreSQL service, then on your web service go to Variables → New Variable → Reference → Postgres → choose DATABASE_URL (or DATABASE_PRIVATE_URL). Redeploy after saving."
+    );
     process.exit(1);
   }
   if (!process.env.SESSION_SECRET && process.env.NODE_ENV === "production") {

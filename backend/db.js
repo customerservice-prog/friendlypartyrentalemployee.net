@@ -2,6 +2,36 @@ const { Pool } = require("pg");
 
 let pool = null;
 
+/**
+ * Railway / other hosts sometimes expose connection info under different names,
+ * or only on the Postgres service until you add a variable *reference* on the app service.
+ */
+function resolveDatabaseUrl() {
+  const env = process.env;
+  const direct =
+    env.DATABASE_URL ||
+    env.DATABASE_PRIVATE_URL ||
+    env.POSTGRES_URL ||
+    env.POSTGRES_PRISMA_URL ||
+    env.RAILWAY_DATABASE_URL;
+  if (direct) return direct;
+
+  const host = env.PGHOST || env.POSTGRES_HOST;
+  const database = env.PGDATABASE || env.POSTGRES_DB || env.POSTGRES_DATABASE;
+  const user = env.PGUSER || env.POSTGRES_USER;
+  const password = env.PGPASSWORD ?? env.POSTGRES_PASSWORD;
+  const port =
+    env.PGPORT || env.POSTGRES_PORT || (host ? "5432" : undefined);
+
+  if (host && database && user != null && password != null && port) {
+    const u = encodeURIComponent(String(user));
+    const p = encodeURIComponent(String(password));
+    return `postgresql://${u}:${p}@${host}:${port}/${database}`;
+  }
+
+  return null;
+}
+
 function useSsl(databaseUrl) {
   if (process.env.DATABASE_SSL === "false") return false;
   const u = databaseUrl || "";
@@ -10,13 +40,14 @@ function useSsl(databaseUrl) {
 }
 
 function getPool() {
-  if (!process.env.DATABASE_URL) {
+  const connectionString = resolveDatabaseUrl();
+  if (!connectionString) {
     throw new Error("DATABASE_URL is not set");
   }
   if (!pool) {
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: useSsl(process.env.DATABASE_URL)
+      connectionString,
+      ssl: useSsl(connectionString)
         ? { rejectUnauthorized: false }
         : false,
     });
@@ -93,6 +124,7 @@ async function listSubmissions() {
 
 module.exports = {
   getPool,
+  resolveDatabaseUrl,
   initDb,
   insertSubmission,
   listSubmissions,
