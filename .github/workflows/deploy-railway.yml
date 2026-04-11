@@ -1,0 +1,53 @@
+# Deploys the repo to Railway using a project token (uploads this commit’s files).
+#
+# Setup:
+# 1. Railway → your project → Settings → Tokens → create a project token.
+# 2. GitHub → repo → Settings → Secrets and variables → Actions → New secret:
+#    - RAILWAY_TOKEN = that token
+# 3. If the project has more than one service, add:
+#    - RAILWAY_SERVICE = exact service name (from Railway dashboard)
+#
+# If you already use Railway’s “Deploy from GitHub” on this repo, either disable
+# auto-deploy there to avoid double builds, or delete this workflow and fix the
+# integration (repo + branch main) in the Railway service settings.
+
+name: Deploy to Railway
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: railway-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Railway deploy (railway up)
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          set -e
+          if [ -z "${RAILWAY_TOKEN}" ]; then
+            echo "Missing GitHub secret RAILWAY_TOKEN. Add a Railway project token (see workflow file comment)."
+            exit 1
+          fi
+          MSG="gh-${{ github.sha }}"
+          if [ -n "${{ secrets.RAILWAY_SERVICE }}" ]; then
+            railway up --detach --ci --service "${{ secrets.RAILWAY_SERVICE }}" -m "${MSG}"
+          else
+            railway up --detach --ci -m "${MSG}"
+          fi

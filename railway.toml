@@ -3,8 +3,24 @@
 #
 # Variables (dashboard): DATABASE_URL, SESSION_SECRET, NODE_ENV=production,
 # ADMIN_PASSWORD (manager /admin), EMPLOYEE_ACCESS_PIN, optional OPENAI_* / SMTP_*.
+#
+# If GitHub pushes do not trigger a deploy, check the service "Watch paths" in the
+# dashboard — this file overrides them and includes frontend + backend.
+
+[build]
+watchPatterns = [
+  "backend/**",
+  "frontend/**",
+  "data/**",
+  "scripts/**",
+  "package.json",
+  "package-lock.json",
+  "railway.toml",
+  "Procfile",
+]
 
 [deploy]
+startCommand = "npm start"
 # /api/live always 200 (no DB). Use /api/health manually to verify Postgres.
 healthcheckPath = "/api/live"
 healthcheckTimeout = 300
