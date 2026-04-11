@@ -372,6 +372,58 @@
         <a href="/">← Staff training hub</a>
       </p>
 
+      <div id="prelogin-db-help" class="db-help-box hidden" aria-live="polite">
+        <h3>PostgreSQL is not connected to this app yet</h3>
+        <p style="margin: 0 0 0.5rem; color: var(--muted)">
+          Quiz saves and this admin page need <code>DATABASE_URL</code> (or an
+          equivalent connection string) on the <strong>same</strong> service that
+          runs this Node app. Fix that in your host, then reload this page.
+        </p>
+        <p style="margin: 0 0 0.35rem; font-weight: 600">Railway (step by step)</p>
+        <ol>
+          <li>
+            In your project, add or select a <strong>PostgreSQL</strong> resource
+            if you do not have one yet.
+          </li>
+          <li>
+            Open the <strong>web / Node service</strong> that deploys
+            <em>this</em> site — not the database card by itself.
+          </li>
+          <li>
+            Go to <strong>Variables</strong> → <strong>+ New Variable</strong> →
+            <strong>New Variable Reference</strong> (or “Reference”).
+ </li>
+          <li>
+            Choose the <strong>Postgres</strong> service, then the variable
+            <code>DATABASE_URL</code>. (If you only see
+            <code>DATABASE_PRIVATE_URL</code>, reference that instead — the app
+            accepts both.)
+          </li>
+          <li>
+            Save, then <strong>Redeploy</strong> the web service and wait until
+            the deploy finishes. Reload this page.
+          </li>
+          <li>
+            Optional: on the project graph, connect <strong>Postgres → Web</strong>;
+            Railway sometimes creates the reference automatically.
+          </li>
+        </ol>
+        <p style="margin: 0.75rem 0 0; font-size: 0.88rem; color: var(--muted)">
+          Docs:
+          <a
+            href="https://docs.railway.com/guides/database"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Railway databases</a
+          >
+          · Check readiness with
+          <a href="/api/health" target="_blank" rel="noopener noreferrer"
+            >/api/health</a
+          >
+          (should return <code>ok: true</code> when Postgres is reachable).
+        </p>
+      </div>
+
       <div id="login-section" class="login-panel">
         <h2>Admin sign-in</h2>
         <label for="password">Admin password</label>
@@ -424,11 +476,22 @@
           <p style="margin: 0.75rem 0 0.35rem; font-weight: 600">Railway (typical)</p>
           <ol>
             <li>
-              Add a <strong>PostgreSQL</strong> plugin; open the
-              <strong>web</strong> service → Variables → reference
-              <code>DATABASE_URL</code> from the Postgres service.
+              Add or select <strong>PostgreSQL</strong>. Open your
+              <strong>web / Node</strong> service → <strong>Variables</strong>.
+ </li>
+            <li>
+              <strong>+ New Variable</strong> → <strong>Variable Reference</strong>
+              → Postgres → <code>DATABASE_URL</code> (or
+              <code>DATABASE_PRIVATE_URL</code>).
             </li>
-            <li><strong>Redeploy</strong>, then reload this page.</li>
+            <li>
+              <strong>Redeploy</strong> the web service, wait for it to go live,
+              then reload this page. Confirm
+              <a href="/api/health" target="_blank" rel="noopener noreferrer"
+                >/api/health</a
+              >
+              returns OK.
+            </li>
           </ol>
         </div>
         <div id="table-container"></div>
@@ -450,6 +513,24 @@
       const listCapNote = document.getElementById("list-cap-note");
       const dashboardError = document.getElementById("dashboard-error");
       const dashboardDbHelp = document.getElementById("dashboard-db-help");
+      const preloginDbHelp = document.getElementById("prelogin-db-help");
+
+      async function refreshSetupHints() {
+        try {
+          const r = await fetch("/api/setup-status", { credentials: "same-origin" });
+          const data = await r.json().catch(() => ({}));
+          if (data.databaseConfigured) {
+            preloginDbHelp.classList.add("hidden");
+            preloginDbHelp.classList.remove("visible");
+          } else {
+            preloginDbHelp.classList.remove("hidden");
+            preloginDbHelp.classList.add("visible");
+          }
+        } catch (_) {
+          preloginDbHelp.classList.add("hidden");
+          preloginDbHelp.classList.remove("visible");
+        }
+      }
 
       function fmtDate(iso) {
         if (!iso) return "—";
@@ -465,6 +546,7 @@
         products: "Products",
         policies: "Policies",
         "customer-service": "Customer service",
+        "quote-calls": "Quote & call",
       };
 
       function formatQuizSlug(slug) {
@@ -853,6 +935,7 @@
         if (e.key === "Enter") btnLogin.click();
       });
 
+      refreshSetupHints();
       checkSession();
     </script>
   </body>

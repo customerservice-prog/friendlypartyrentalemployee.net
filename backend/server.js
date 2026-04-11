@@ -86,6 +86,18 @@ app.head("/api/live", (_req, res) => {
   res.status(200).end();
 });
 
+/** Public: lets training UIs show setup hints without leaking secrets. */
+app.get("/api/setup-status", (_req, res) => {
+  res.set("Cache-Control", "no-store");
+  const configured = Boolean(resolveDatabaseUrl());
+  const keys = listPresentDatabaseEnvKeys();
+  res.json({
+    databaseConfigured: configured,
+    databaseEnvHintsPresent: keys.length > 0,
+    databaseEnvKeyCount: keys.length,
+  });
+});
+
 function readPort() {
   const raw = process.env.PORT;
   if (raw === undefined || raw === null || String(raw).trim() === "") {

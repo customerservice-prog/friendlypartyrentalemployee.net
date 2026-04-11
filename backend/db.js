@@ -26,7 +26,9 @@ function resolveDatabaseUrl() {
     env.POSTGRES_URL_NON_POOLING,
     env.DATABASE_URL_UNPOOLED,
     env.RAILWAY_DATABASE_URL,
-    env.PGURL
+    env.PGURL,
+    env.DB_URL,
+    env.DATABASE_CONNECTION_URI
   );
   if (direct) return direct;
 
@@ -66,6 +68,8 @@ function listPresentDatabaseEnvKeys() {
     "DATABASE_URL_UNPOOLED",
     "RAILWAY_DATABASE_URL",
     "PGURL",
+    "DB_URL",
+    "DATABASE_CONNECTION_URI",
     "PGHOST",
     "PGUSER",
     "PGPASSWORD",
