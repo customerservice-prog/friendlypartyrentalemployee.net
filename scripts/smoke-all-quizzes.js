@@ -87,7 +87,36 @@ const QUIZ_PAGES = [
   ["/quiz-policies.html", "Policies & Procedures Quiz"],
   ["/quiz-customer-service.html", "Customer Service Quiz"],
   ["/quiz-quote-calls.html", "Quote &amp; call skills quiz"],
+  ["/hiring-test-virtual-assistant.html", "hire-app-form"],
   ["/quizzes.html", "Training quizzes"],
+];
+
+const HIRING_ANSWER_KEYS = [
+  "q1",
+  "q2",
+  "q3",
+  "q4",
+  "q5",
+  "q6",
+  "q7",
+  "q8",
+  "q9",
+  "q10",
+  "q11",
+  "q12",
+  "q13",
+  "q14",
+  "q15",
+  "rpA",
+  "rpB",
+  "rpC",
+  "rpD",
+  "rpE",
+  "q16",
+  "q17",
+  "q18",
+  "q19",
+  "q20",
 ];
 
 async function main() {
@@ -141,6 +170,28 @@ async function main() {
     if (r.body.questions.length !== n) {
       return fail(
         `pricing question count ${r.body.questions.length} !== data file ${n}`
+      );
+    }
+
+    const hireAnswers = {};
+    for (const k of HIRING_ANSWER_KEYS) {
+      hireAnswers[k] =
+        "Smoke test answer — long enough for scoring heuristics. ".repeat(3);
+    }
+    r = await fetchJson("/api/hiring-test/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "Smoke Hiring",
+        email: "smoke-hiring@example.com",
+        phone: "",
+        jobTitle: "VA applicant",
+        answers: hireAnswers,
+      }),
+    });
+    if (r.status !== 503 || r.body.error !== "database_not_configured") {
+      return fail(
+        `hiring-test submit without DB: expected 503 database_not_configured, got ${r.status} ${JSON.stringify(r.body).slice(0, 200)}`
       );
     }
 

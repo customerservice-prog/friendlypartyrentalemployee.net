@@ -91,7 +91,14 @@ router.get("/submissions", async (req, res) => {
     });
   }
   try {
-    const payload = await listSubmissions();
+    const quiz = String(req.query.quiz || "").trim();
+    const sort = String(req.query.sort || "").trim();
+    const quizSlug =
+      quiz.replace(/[^a-z0-9-]/gi, "").slice(0, 64) || null;
+    const payload = await listSubmissions({
+      quizSlug: quizSlug || null,
+      sort: sort === "ai_rating" ? "ai_rating" : "recent",
+    });
     return res.json(payload);
   } catch (err) {
     console.error("admin submissions error", err);

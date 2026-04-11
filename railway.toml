@@ -2,7 +2,8 @@
 # https://docs.railway.com/guides/config-as-code
 #
 # Variables (dashboard): DATABASE_URL, SESSION_SECRET, NODE_ENV=production,
-# ADMIN_PASSWORD (manager /admin), EMPLOYEE_ACCESS_PIN, optional OPENAI_* / SMTP_*.
+# ADMIN_PASSWORD (manager /admin), EMPLOYEE_ACCESS_PIN, optional SMTP_*.
+# VA hiring test scoring is rule-based in-app (no OpenAI / API keys).
 #
 # If GitHub pushes do not trigger a deploy, check the service "Watch paths" in the
 # dashboard — this file overrides them and includes frontend + backend.

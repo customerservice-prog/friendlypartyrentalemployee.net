@@ -21,6 +21,7 @@ const {
   pingDatabase,
 } = require("./db");
 const submitRouter = require("./routes/submit");
+const { router: hiringTestRouter } = require("./routes/hiringTest");
 const adminRouter = require("./routes/admin");
 const employeeRouter = require("./routes/employee");
 const {
@@ -399,6 +400,7 @@ app.use(
   requireEmployeeUnlessApplicantPricingSubmit,
   submitRouter
 );
+app.use("/api/hiring-test", hiringTestRouter);
 app.use("/api/admin", adminRouter);
 
 function pathStartsWithApi(req) {

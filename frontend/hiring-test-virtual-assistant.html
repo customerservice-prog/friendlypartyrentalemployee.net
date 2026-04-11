@@ -104,6 +104,98 @@
         font-size: 0.9rem;
         color: #475569;
       }
+      #hire-app-form .hire-field {
+        margin: 0.85rem 0 1.35rem;
+      }
+      #hire-app-form .hire-field-label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 0.35rem;
+      }
+      #hire-app-form .hire-textarea {
+        width: 100%;
+        min-height: 5.5rem;
+        padding: 0.65rem 0.75rem;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 10px;
+        font: inherit;
+        font-size: 0.92rem;
+        line-height: 1.45;
+        resize: vertical;
+        box-sizing: border-box;
+      }
+      #hire-app-form .hire-textarea:focus {
+        outline: none;
+        border-color: #1e3a5f;
+        box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.15);
+      }
+      .hire-submit-panel {
+        margin-top: 2rem;
+        padding: 1.35rem 1.25rem 1.5rem;
+        background: #f8fafc;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 14px;
+      }
+      .hire-submit-panel h2 {
+        margin-top: 0;
+        font-size: 1.05rem;
+        border: none;
+        padding: 0;
+        color: #1a1a2e;
+      }
+      .hire-submit-panel .hire-grid {
+        display: grid;
+        gap: 0.85rem;
+        margin-top: 1rem;
+      }
+      @media (min-width: 560px) {
+        .hire-submit-panel .hire-grid--2 {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .hire-submit-panel input[type="text"],
+      .hire-submit-panel input[type="email"],
+      .hire-submit-panel input[type="tel"] {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 10px;
+        font: inherit;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+      }
+      .hire-submit-btn {
+        margin-top: 1.1rem;
+        width: 100%;
+        padding: 0.95rem 1.25rem;
+        border: none;
+        border-radius: 12px;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        background: linear-gradient(135deg, #1e3a5f, #0f172a);
+        color: #fff;
+      }
+      .hire-submit-btn:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+      .hire-status {
+        margin: 0.85rem 0 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        min-height: 1.5em;
+      }
+      .hire-status.ok {
+        color: #0d7a3e;
+        font-weight: 600;
+      }
+      .hire-status.err {
+        color: #b42318;
+      }
     </style>
   </head>
   <body>
@@ -120,6 +212,7 @@
 
     <div class="hire-doc-wrap">
       <article class="hire-doc" id="hiring-test">
+        <form id="hire-app-form" action="#" method="post" autocomplete="on">
         <h1>🏆 FRIENDLY PARTY RENTAL — VIRTUAL ASSISTANT HIRING TEST</h1>
         <h2 style="border: none; margin-top: 0; padding: 0; color: #1a1a2e; font-size: 1rem">The Anti-Cheat Qualification Exam for New Hire Phone &amp; Customer Service VAs</h2>
 
@@ -134,25 +227,25 @@
         <h2>📋 SECTION 1: COMPANY KNOWLEDGE (25 points)</h2>
         <p class="muted"><em>Answer each question in your own words. The hiring manager scores your responses against official company information.</em></p>
 
-        <p><strong>Q1.</strong> What is the name of our company, and what city are we physically based in? (Not just "Syracuse" — what specific town?)</p>
+        <p data-hire-q="q1"><strong>Q1.</strong> What is the name of our company, and what city are we physically based in? (Not just "Syracuse" — what specific town?)</p>
 
-        <p><strong>Q2.</strong> What is our main phone number that customers should call for pricing, availability, or bookings?</p>
+        <p data-hire-q="q2"><strong>Q2.</strong> What is our main phone number that customers should call for pricing, availability, or bookings?</p>
 
-        <p><strong>Q3.</strong> What is our customer service email address?</p>
+        <p data-hire-q="q3"><strong>Q3.</strong> What is our customer service email address?</p>
 
-        <p><strong>Q4.</strong> What is our street address?</p>
+        <p data-hire-q="q4"><strong>Q4.</strong> What is our street address?</p>
 
-        <p><strong>Q5.</strong> Name at least 8 different rental categories we offer. (Must name real ones from the website — not guesses.)</p>
+        <p data-hire-q="q5"><strong>Q5.</strong> Name at least 8 different rental categories we offer. (Must name real ones from the website — not guesses.)</p>
 
-        <p><strong>Q6.</strong> If a customer wants to book online, what specific tool/feature do they use on our website?</p>
+        <p data-hire-q="q6"><strong>Q6.</strong> If a customer wants to book online, what specific tool/feature do they use on our website?</p>
 
-        <p><strong>Q7.</strong> If a customer cancels their order, do they get their deposit back? What DO they get?</p>
+        <p data-hire-q="q7"><strong>Q7.</strong> If a customer cancels their order, do they get their deposit back? What DO they get?</p>
 
-        <p><strong>Q8.</strong> Does setup time count toward the customer's rental period?</p>
+        <p data-hire-q="q8"><strong>Q8.</strong> Does setup time count toward the customer's rental period?</p>
 
-        <p><strong>Q9.</strong> Do bounce houses need to stay plugged in during the event?</p>
+        <p data-hire-q="q9"><strong>Q9.</strong> Do bounce houses need to stay plugged in during the event?</p>
 
-        <p><strong>Q10.</strong> If a customer wants to set up at a park, what are TWO things they need to be aware of?</p>
+        <p data-hire-q="q10"><strong>Q10.</strong> If a customer wants to set up at a park, what are TWO things they need to be aware of?</p>
         
 
         <hr />
@@ -160,15 +253,15 @@
         <h2>📋 SECTION 2: POLICY &amp; PROCEDURES JUDGMENT (25 points)</h2>
         <p class="muted"><em>These test whether the candidate can APPLY knowledge, not just recite it. AI gives textbook answers — we need real situational thinking.</em></p>
 
-        <p><strong>Q11.</strong> A customer calls and says: "I booked a tent for my daughter's graduation party but now she moved it a week earlier. Can I change the date?" What do you say and do?</p>
+        <p data-hire-q="q11"><strong>Q11.</strong> A customer calls and says: "I booked a tent for my daughter's graduation party but now she moved it a week earlier. Can I change the date?" What do you say and do?</p>
 
-        <p><strong>Q12.</strong> A customer is angry on the phone and says: "Your driver was 2 hours late and ruined my party setup — I want a full refund." How do you handle this?</p>
+        <p data-hire-q="q12"><strong>Q12.</strong> A customer is angry on the phone and says: "Your driver was 2 hours late and ruined my party setup — I want a full refund." How do you handle this?</p>
 
-        <p><strong>Q13.</strong> A customer asks: "How much does it cost to rent a bounce house?" What is the correct response?</p>
+        <p data-hire-q="q13"><strong>Q13.</strong> A customer asks: "How much does it cost to rent a bounce house?" What is the correct response?</p>
 
-        <p><strong>Q14.</strong> A customer calls asking if we can set up a water slide at their backyard party tomorrow morning. What do you need to find out from them before confirming?</p>
+        <p data-hire-q="q14"><strong>Q14.</strong> A customer calls asking if we can set up a water slide at their backyard party tomorrow morning. What do you need to find out from them before confirming?</p>
 
-        <p><strong>Q15.</strong> What are the THREE core promises/guarantees Friendly Party Rental makes to every customer?</p>
+        <p data-hire-q="q15"><strong>Q15.</strong> What are the THREE core promises/guarantees Friendly Party Rental makes to every customer?</p>
         
 
         <hr />
@@ -176,33 +269,33 @@
         <h2>📋 SECTION 3: PHONE ROLE-PLAY SCENARIOS — LIVE OR RECORDED (25 points)</h2>
         <p class="muted"><em>This section CANNOT be cheated. The candidate must perform it verbally. They are scored on tone, warmth, accuracy, and professionalism.</em></p>
 
-        <p><strong>Instructions:</strong> Respond out loud or record your answer for each scenario. The hiring manager scores each role-play from 1–5 using an internal rubric (tone, warmth, accuracy, and professionalism).</p>
+        <p><strong>Instructions:</strong> Type exactly what you would say on the phone (or record separately if the hiring manager asked for audio). The automated scorer and hiring manager evaluate tone, warmth, accuracy, and professionalism.</p>
 
         <h3>Role-Play A — The Friendly Greeting (5 pts)</h3>
-        <p><strong>Scenario:</strong> Ring ring. You pick up. It's a customer calling for the first time.</p>
+        <p data-hire-q="rpA"><strong>Scenario:</strong> Ring ring. You pick up. It's a customer calling for the first time.</p>
 
         <h3>Role-Play B — The Confused Customer (5 pts)</h3>
-        <p><strong>Scenario:</strong> Customer says: "Hi, I saw your website and I'm not sure what I need — I'm having about 50 people at a backyard BBQ in July. What would you suggest?"</p>
+        <p data-hire-q="rpB"><strong>Scenario:</strong> Customer says: "Hi, I saw your website and I'm not sure what I need — I'm having about 50 people at a backyard BBQ in July. What would you suggest?"</p>
 
         <h3>Role-Play C — The Upset Customer (5 pts)</h3>
-        <p><strong>Scenario:</strong> Customer says: "I've been waiting 3 hours for my tables and chairs. My party starts in an hour. Where is your driver?"</p>
+        <p data-hire-q="rpC"><strong>Scenario:</strong> Customer says: "I've been waiting 3 hours for my tables and chairs. My party starts in an hour. Where is your driver?"</p>
 
         <h3>Role-Play D — The Price Shopper (5 pts)</h3>
-        <p><strong>Scenario:</strong> Customer says: "I'm getting quotes from 3 different companies. Why should I choose you guys? And can you beat [competitor name]'s price?"</p>
+        <p data-hire-q="rpD"><strong>Scenario:</strong> Customer says: "I'm getting quotes from 3 different companies. Why should I choose you guys? And can you beat [competitor name]'s price?"</p>
 
         <h3>Role-Play E — Booking Walkthrough (5 pts)</h3>
-        <p><strong>Scenario:</strong> Customer says: "I want to book but I'm not great with computers. Can you walk me through how your booking works?"</p>
+        <p data-hire-q="rpE"><strong>Scenario:</strong> Customer says: "I want to book but I'm not great with computers. Can you walk me through how your booking works?"</p>
 
         <hr />
 
         <h2>📋 SECTION 4: CRITICAL THINKING &amp; JUDGMENT CALLS (15 points)</h2>
         <p class="muted"><em>These are open-ended. There is NO single perfect answer — we're looking for REASONING and COMMON SENSE. AI gives generic textbook answers that lack the warmth and specificity of someone who actually thinks.</em></p>
 
-        <p><strong>Q16.</strong> A customer leaves a 1-star Google review saying: "The tables were dirty and they were 45 minutes late." You are the VA. Write a response to that review as if you are responding on behalf of Friendly Party Rental. (Minimum 3 sentences.)</p>
+        <p data-hire-q="q16"><strong>Q16.</strong> A customer leaves a 1-star Google review saying: "The tables were dirty and they were 45 minutes late." You are the VA. Write a response to that review as if you are responding on behalf of Friendly Party Rental. (Minimum 3 sentences.)</p>
 
-        <p><strong>Q17.</strong> It's a Saturday morning, 7:00 AM. The phone rings. A customer says they need a bounce house delivered TODAY for a birthday party at noon. It's not booked. What do you do?</p>
+        <p data-hire-q="q17"><strong>Q17.</strong> It's a Saturday morning, 7:00 AM. The phone rings. A customer says they need a bounce house delivered TODAY for a birthday party at noon. It's not booked. What do you do?</p>
 
-        <p><strong>Q18.</strong> In your own words, explain why it matters that all equipment is cleaned and inspected before every rental, and how you would communicate that value to a customer who seems hesitant about renting.</p>
+        <p data-hire-q="q18"><strong>Q18.</strong> In your own words, explain why it matters that all equipment is cleaned and inspected before every rental, and how you would communicate that value to a customer who seems hesitant about renting.</p>
         
 
         <hr />
@@ -210,9 +303,9 @@
         <h2>📋 SECTION 5: ANTI-CHEAT VERIFICATION QUESTIONS (10 points)</h2>
         <p class="muted"><em>These questions are intentionally impossible to answer correctly with AI unless the person has been trained by us specifically. They test for INTERNAL knowledge.</em></p>
 
-        <p><strong>Q19.</strong> [HIRING MANAGER: Fill in a real internal policy or detail specific to your operation that is NOT on the website — e.g., "What is our policy when a customer wants to add items after they've already signed the contract?" or "What is our process when a driver calls in sick the morning of a delivery?" or "What do you say when a customer asks for a quote over the phone but we don't give quotes that way?" — Insert your answer here before giving the test.]</p>
+        <p data-hire-q="q19"><strong>Q19.</strong> [HIRING MANAGER: Fill in a real internal policy or detail specific to your operation that is NOT on the website — e.g., "What is our policy when a customer wants to add items after they've already signed the contract?" or "What is our process when a driver calls in sick the morning of a delivery?" or "What do you say when a customer asks for a quote over the phone but we don't give quotes that way?" — Insert your answer here before giving the test.]</p>
 
-        <p><strong>Q20.</strong> After everything you've learned about Friendly Party Rental, describe in 3–4 sentences what the company's brand personality is and how that should show up in every phone call you make.</p>
+        <p data-hire-q="q20"><strong>Q20.</strong> After everything you've learned about Friendly Party Rental, describe in 3–4 sentences what the company's brand personality is and how that should show up in every phone call you make.</p>
         
 
         <hr />
@@ -270,6 +363,35 @@
 
         <hr />
 
+        <div class="hire-submit-panel">
+          <h2>Submit your completed test</h2>
+          <p class="muted" style="margin-top: 0.35rem">
+            Fill in every answer box above, then add your contact details. Your submission is scored automatically on this server (0–100, rule-based — no API keys or cloud AI); highest scores appear first in the admin list.
+          </p>
+          <div class="hire-grid hire-grid--2">
+            <div class="hire-field" style="margin-top: 0">
+              <label class="hire-field-label" for="hire-applicant-name">Full name</label>
+              <input type="text" id="hire-applicant-name" name="applicantName" required autocomplete="name" maxlength="200" placeholder="First and last name" />
+            </div>
+            <div class="hire-field" style="margin-top: 0">
+              <label class="hire-field-label" for="hire-applicant-email">Email</label>
+              <input type="email" id="hire-applicant-email" name="applicantEmail" required autocomplete="email" maxlength="254" placeholder="you@example.com" />
+            </div>
+            <div class="hire-field" style="margin-top: 0">
+              <label class="hire-field-label" for="hire-applicant-phone">Phone (optional)</label>
+              <input type="tel" id="hire-applicant-phone" name="applicantPhone" autocomplete="tel" maxlength="40" placeholder="Best number to reach you" />
+            </div>
+            <div class="hire-field" style="margin-top: 0">
+              <label class="hire-field-label" for="hire-applicant-title">Role / title (optional)</label>
+              <input type="text" id="hire-applicant-title" name="applicantTitle" maxlength="120" placeholder="e.g. Customer service VA" />
+            </div>
+          </div>
+          <button type="submit" class="hire-submit-btn" id="hire-submit-btn">Submit application</button>
+          <p id="hire-status" class="hire-status" role="status"></p>
+        </div>
+
+        <hr />
+
         <p class="muted" style="font-size: 0.88rem; margin-bottom: 0">
           <em>This test was created specifically for Friendly Party Rental based in Minoa, NY. It is not a generic test and cannot be passed by someone who has not genuinely studied our business, policies, and brand.</em>
         </p>
@@ -279,7 +401,129 @@
             Role-play and open-ended sections are scored on how you sound and reason in real time — not only on book knowledge. The hiring manager applies the official rubric and company standards when grading.
           </p>
         </div>
+        </form>
       </article>
     </div>
+    <script>
+      (function () {
+        var form = document.getElementById("hire-app-form");
+        if (!form) return;
+
+        document.querySelectorAll("[data-hire-q]").forEach(function (el) {
+          var key = el.getAttribute("data-hire-q");
+          if (!key) return;
+          var wrap = document.createElement("div");
+          wrap.className = "hire-field";
+          var lab = document.createElement("label");
+          lab.className = "hire-field-label";
+          lab.setAttribute("for", "hire-field-" + key);
+          lab.textContent = "Your answer";
+          var ta = document.createElement("textarea");
+          ta.id = "hire-field-" + key;
+          ta.name = key;
+          ta.className = "hire-textarea";
+          ta.rows = 4;
+          ta.maxLength = 6000;
+          ta.required = true;
+          ta.placeholder = "Type your answer…";
+          wrap.appendChild(lab);
+          wrap.appendChild(ta);
+          el.parentNode.insertBefore(wrap, el.nextSibling);
+        });
+
+        var btn = document.getElementById("hire-submit-btn");
+        var statusEl = document.getElementById("hire-status");
+
+        form.addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          if (!form.reportValidity()) return;
+
+          var answers = {};
+          var missing = false;
+          [
+            "q1","q2","q3","q4","q5","q6","q7","q8","q9","q10",
+            "q11","q12","q13","q14","q15",
+            "rpA","rpB","rpC","rpD","rpE",
+            "q16","q17","q18","q19","q20",
+          ].forEach(function (k) {
+            var ta = form.querySelector("textarea[name=\"" + k + "\"]");
+            var v = ta && ta.value ? String(ta.value).trim() : "";
+            if (!v) missing = true;
+            answers[k] = v;
+          });
+          if (missing) {
+            statusEl.className = "hire-status err";
+            statusEl.textContent = "Please complete every answer box before submitting.";
+            return;
+          }
+
+          var nameEl = document.getElementById("hire-applicant-name");
+          var emailEl = document.getElementById("hire-applicant-email");
+          var phoneEl = document.getElementById("hire-applicant-phone");
+          var titleEl = document.getElementById("hire-applicant-title");
+
+          btn.disabled = true;
+          statusEl.className = "hire-status";
+          statusEl.textContent = "Submitting…";
+
+          fetch("/api/hiring-test/submit", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: nameEl.value.trim(),
+              email: emailEl.value.trim(),
+              phone: phoneEl.value.trim(),
+              jobTitle: titleEl.value.trim() || "VA applicant",
+              answers: answers,
+            }),
+          })
+            .then(function (res) {
+              return res.json().then(function (data) {
+                return { res: res, data: data };
+              });
+            })
+            .then(function (o) {
+              if (o.res.ok && o.data.ok) {
+                statusEl.className = "hire-status ok";
+                var msg =
+                  "Application received. Thank you, " +
+                  (nameEl.value.trim() || "applicant") +
+                  ".";
+                if (typeof o.data.aiRating === "number") {
+                  msg +=
+                    " Automated score: " +
+                    o.data.aiRating +
+                    "/100 (rule-based on this server). The hiring manager will review your full answers.";
+                } else {
+                  msg += " Your answers were saved for review.";
+                }
+                statusEl.textContent = msg;
+                form.querySelectorAll("textarea").forEach(function (t) {
+                  t.disabled = true;
+                });
+                nameEl.disabled = true;
+                emailEl.disabled = true;
+                phoneEl.disabled = true;
+                titleEl.disabled = true;
+                btn.disabled = true;
+                btn.textContent = "Submitted";
+                return;
+              }
+              statusEl.className = "hire-status err";
+              statusEl.textContent =
+                (o.data && o.data.message) ||
+                "Could not submit. Check your connection and try again.";
+              btn.disabled = false;
+            })
+            .catch(function () {
+              statusEl.className = "hire-status err";
+              statusEl.textContent =
+                "Could not reach the server. Check your connection and try again.";
+              btn.disabled = false;
+            });
+        });
+      })();
+    </script>
   </body>
 </html>

@@ -156,6 +156,15 @@ async function initDb() {
   await p.query(`
     ALTER TABLE submissions ADD COLUMN IF NOT EXISTS integrity_report JSONB NOT NULL DEFAULT '{}'::jsonb;
   `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS ai_rating INTEGER;
+  `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS ai_feedback TEXT;
+  `);
+  await p.query(`
+    ALTER TABLE submissions ADD COLUMN IF NOT EXISTS hiring_answers JSONB NOT NULL DEFAULT '{}'::jsonb;
+  `);
 }
 
 async function insertSubmission(payload) {
@@ -172,6 +181,9 @@ async function insertSubmission(payload) {
     passed,
     missedQuestions,
     integrityReport,
+    aiRating,
+    aiFeedback,
+    hiringAnswers,
   } = payload;
 
   const slug = String(quizSlug || "pricing")
@@ -185,10 +197,25 @@ async function insertSubmission(payload) {
       : {}
   );
 
+  let aiRatingVal = null;
+  if (aiRating != null && aiRating !== "") {
+    const n = Number(aiRating);
+    if (Number.isFinite(n)) aiRatingVal = Math.round(n);
+  }
+  const aiFb =
+    aiFeedback != null && String(aiFeedback).trim()
+      ? String(aiFeedback).trim().slice(0, 12000)
+      : null;
+  const hireJson = JSON.stringify(
+    hiringAnswers && typeof hiringAnswers === "object" && !Array.isArray(hiringAnswers)
+      ? hiringAnswers
+      : {}
+  );
+
   const { rows } = await p.query(
     `INSERT INTO submissions
-      (name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, integrity_report)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, $11::jsonb)
+      (name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, integrity_report, ai_rating, ai_feedback, hiring_answers)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, $11::jsonb, $12, $13, $14::jsonb)
      RETURNING id, created_at`,
     [
       String(name).trim(),
@@ -202,6 +229,9 @@ async function insertSubmission(payload) {
       Boolean(passed),
       JSON.stringify(Array.isArray(missedQuestions) ? missedQuestions : []),
       reportJson,
+      aiRatingVal,
+      aiFb,
+      hireJson,
     ]
   );
   return rows[0];
@@ -217,15 +247,38 @@ async function closePool() {
 /** Keeps admin dashboard responsive if the table grows very large. */
 const LIST_SUBMISSIONS_MAX = 2000;
 
-async function listSubmissions() {
+/**
+ * @param {{ quizSlug?: string | null, sort?: "recent" | "ai_rating" }} [options]
+ */
+async function listSubmissions(options = {}) {
   const p = getPool();
+  const rawSlug = options.quizSlug != null ? String(options.quizSlug).trim() : "";
+  const quizSlug = rawSlug ? rawSlug.replace(/[^a-z0-9-]/gi, "").slice(0, 64) : "";
+  const sortAi = options.sort === "ai_rating";
+
+  const conds = [];
+  const vals = [];
+  let n = 1;
+  if (quizSlug) {
+    conds.push(`quiz_slug = $${n++}`);
+    vals.push(quizSlug);
+  }
+  const where = conds.length ? `WHERE ${conds.join(" AND ")}` : "";
+  const orderBy = sortAi
+    ? `ai_rating DESC NULLS LAST, created_at DESC`
+    : `created_at DESC`;
+  vals.push(LIST_SUBMISSIONS_MAX);
+  const limitPh = `$${n}`;
+
   const { rows } = await p.query(
-    `SELECT id, name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, integrity_report, created_at,
+    `SELECT id, name, email, job_title, quiz_slug, score, total, percent, time_taken, passed, missed_questions, integrity_report,
+            ai_rating, ai_feedback, hiring_answers, created_at,
             COUNT(*) OVER() AS full_count
      FROM submissions
-     ORDER BY created_at DESC
-     LIMIT $1`,
-    [LIST_SUBMISSIONS_MAX]
+     ${where}
+     ORDER BY ${orderBy}
+     LIMIT ${limitPh}`,
+    vals
   );
   const totalInDb = rows.length ? Number(rows[0].full_count) : 0;
   const truncated =
@@ -245,6 +298,12 @@ async function listSubmissions() {
     integrityReport:
       r.integrity_report && typeof r.integrity_report === "object"
         ? r.integrity_report
+        : {},
+    aiRating: r.ai_rating != null ? Number(r.ai_rating) : null,
+    aiFeedback: r.ai_feedback != null ? String(r.ai_feedback) : null,
+    hiringAnswers:
+      r.hiring_answers && typeof r.hiring_answers === "object"
+        ? r.hiring_answers
         : {},
     createdAt: r.created_at,
   }));
