@@ -4,8 +4,12 @@
  */
 const { spawn } = require("child_process");
 const path = require("path");
+const fs = require("fs");
 
 const root = path.join(__dirname, "..");
+const quoteCallsQuiz = JSON.parse(
+  fs.readFileSync(path.join(root, "data", "quote-calls-quiz.json"), "utf8")
+);
 const PORT = String(38000 + Math.floor(Math.random() * 1500));
 const base = `http://127.0.0.1:${PORT}`;
 const PIN = "3707";
@@ -340,6 +344,77 @@ async function main() {
       return fail(
         `quiz-activity without slug expected 400, got ${r.status} ${JSON.stringify(r.body)}`
       );
+    }
+
+    r = await fetchJson("/api/training/staff-quiz-reset", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: "quote-calls" }),
+    });
+    if (r.status !== 200 || !r.body.ok) {
+      return fail(
+        `staff-quiz-reset: ${r.status} ${JSON.stringify(r.body)}`
+      );
+    }
+
+    r = await fetchJson(
+      "/api/training/staff-quiz-questions?slug=quote-calls"
+    );
+    if (
+      r.status !== 200 ||
+      !Array.isArray(r.body.questions) ||
+      r.body.questions.length !== quoteCallsQuiz.length
+    ) {
+      return fail(
+        `staff-quiz-questions quote-calls: ${r.status} ${JSON.stringify(r.body).slice(0, 240)}`
+      );
+    }
+    for (const row of r.body.questions) {
+      if (!row || typeof row !== "object" || "a" in row) {
+        return fail(
+          `staff quiz question leaked answer key: ${JSON.stringify(row).slice(0, 120)}`
+        );
+      }
+    }
+
+    for (let i = 0; i < quoteCallsQuiz.length; i++) {
+      r = await fetchJson("/api/training/staff-quiz-verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          slug: "quote-calls",
+          index: i,
+          choiceIndex: quoteCallsQuiz[i].a,
+        }),
+      });
+      if (r.status !== 200 || r.body.correct !== true) {
+        return fail(
+          `staff-quiz-verify quote-calls i=${i}: ${r.status} ${JSON.stringify(r.body).slice(0, 200)}`
+        );
+      }
+    }
+
+    r = await fetchJson("/api/training/staff-quiz-summary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug: "quote-calls" }),
+    });
+    if (r.status !== 200) {
+      return fail(
+        `staff-quiz-summary: ${r.status} ${JSON.stringify(r.body).slice(0, 240)}`
+      );
+    }
+    if (
+      r.body.score !== quoteCallsQuiz.length ||
+      !Array.isArray(r.body.missedQuestions) ||
+      r.body.missedQuestions.length !== 0
+    ) {
+      return fail(
+        `staff-quiz-summary perfect run: ${JSON.stringify(r.body).slice(0, 300)}`
+      );
+    }
+    if (JSON.stringify(r.body).includes("correctAnswer")) {
+      return fail("staff-quiz-summary JSON must not include correctAnswer");
     }
 
     console.log("OK: integration-training-quiz (all assertions passed)");

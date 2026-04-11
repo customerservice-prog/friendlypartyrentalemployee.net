@@ -291,6 +291,7 @@ const htmlDirectPaths = new Map([
   ["/quiz-policies.html", "quiz-policies.html"],
   ["/quiz-customer-service.html", "quiz-customer-service.html"],
   ["/quiz-quote-calls.html", "quiz-quote-calls.html"],
+  ["/hiring-test-virtual-assistant.html", "hiring-test-virtual-assistant.html"],
 ]);
 for (const [urlPath, basename] of htmlDirectPaths) {
   app.get(urlPath, (_req, res) => sendTrainPage(res, basename));
@@ -344,6 +345,10 @@ app.get("/quiz-customer-service", (_req, res) => {
 
 app.get("/quiz-quote-calls", (_req, res) => {
   sendTrainPage(res, "quiz-quote-calls.html");
+});
+
+app.get("/hiring-test-virtual-assistant", (_req, res) => {
+  sendTrainPage(res, "hiring-test-virtual-assistant.html");
 });
 
 /**

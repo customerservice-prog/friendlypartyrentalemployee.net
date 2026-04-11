@@ -1,0 +1,222 @@
+[
+  {
+    "s": "Booking",
+    "q": "Where can customers book rentals online?",
+    "o": [
+      "friendlypartyrental.com/catalog",
+      "friendlypartyrental.com/order-by-date",
+      "friendlypartyrental.com/book",
+      "friendlypartyrental.com/reserve"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Delivery",
+    "q": "What does the delivery team do at the event location?",
+    "o": [
+      "Drop equipment at curb only",
+      "Deliver, set up all items, and return for pickup",
+      "Deliver only, customer sets up",
+      "Customers pick up from warehouse"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Delivery",
+    "q": "When is same-day drop-off and pickup available?",
+    "o": [
+      "Every day",
+      "Never",
+      "Weekdays only",
+      "Weekends"
+    ],
+    "a": 3
+  },
+  {
+    "s": "Safety",
+    "q": "When is all rental equipment cleaned and inspected?",
+    "o": [
+      "Monthly",
+      "Before every single rental",
+      "Annually",
+      "Only when visibly dirty"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Safety",
+    "q": "Which rental category has \"Safety First\" as its #1 priority?",
+    "o": [
+      "Tent rentals",
+      "Table rentals",
+      "Bounce houses and inflatables",
+      "Linen rentals"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Pricing",
+    "q": "What discount code can customers use at checkout?",
+    "o": [
+      "FRIENDLY10",
+      "PARTY20",
+      "SAVE20",
+      "RENTAL15"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Contact",
+    "q": "What is the customer service email address?",
+    "o": [
+      "orders@friendlypartyrental.com",
+      "customerservice@friendlypartyrental.com",
+      "contact@friendlypartyrental.com",
+      "help@friendlypartyrental.com"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Company",
+    "q": "What type of business is Friendly Party Rental?",
+    "o": [
+      "National franchise",
+      "Local, family-owned business",
+      "Corporate chain",
+      "Nonprofit"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Company",
+    "q": "What is Friendly Party Rental's Google star rating?",
+    "o": [
+      "3.9 stars",
+      "4.2 stars",
+      "4.5 stars",
+      "4.7 stars"
+    ],
+    "a": 3
+  },
+  {
+    "s": "Location",
+    "q": "What is Friendly Party Rental's home base city?",
+    "o": [
+      "Syracuse",
+      "Rome",
+      "Minoa",
+      "Utica"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Delivery",
+    "q": "What is Friendly Party Rental's delivery promise to customers?",
+    "o": [
+      "We deliver sometime in the morning",
+      "We show up when we say we will",
+      "We deliver within a 4-hour window",
+      "Delivery time cannot be guaranteed"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Policies",
+    "q": "What does a customer need to hold rental items?",
+    "o": [
+      "Full payment in advance",
+      "A signed contract only",
+      "A deposit",
+      "Just a phone call"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Events",
+    "q": "What types of events does Friendly Party Rental serve?",
+    "o": [
+      "Only corporate events",
+      "Only children's parties",
+      "Weddings, birthdays, graduations, outdoor events, corporate events",
+      "Only outdoor events"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Products",
+    "q": "What heating option works best for fall/winter tent events?",
+    "o": [
+      "Only electric heaters",
+      "Propane heaters",
+      "We do not offer heating",
+      "Air conditioning only"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Products",
+    "q": "What yard games does Friendly Party Rental rent?",
+    "o": [
+      "Only board games",
+      "Cornhole, Giant Jenga, ladder toss, bocce ball",
+      "Video games",
+      "Only cornhole"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Contact",
+    "q": "If a customer has a problem with their order, what should you advise?",
+    "o": [
+      "Post on social media",
+      "Call 315-884-1498 or email customerservice@friendlypartyrental.com",
+      "Wait 2 weeks",
+      "Nothing we can do"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Products",
+    "q": "What entertainment equipment does Friendly Party Rental offer?",
+    "o": [
+      "Only bounce houses",
+      "Photo booth, foam machine, inflatable movie screen",
+      "Only yard games",
+      "Only dance floors"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Company",
+    "q": "What is FPR's core value regarding equipment quality?",
+    "o": [
+      "Cheapest prices",
+      "Fastest delivery",
+      "Professionally cleaned, inspected, event-ready equipment",
+      "Most items available"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Booking",
+    "q": "What information is needed to create a rental order?",
+    "o": [
+      "Just the customer name",
+      "Name, event date, location, and items needed",
+      "Only items",
+      "Credit card first"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Products",
+    "q": "What beverage/food service items does FPR rent?",
+    "o": [
+      "Only coffee urns",
+      "Coffee urns, chafing dishes, beverage dispensers",
+      "Only coolers",
+      "Nothing in this category"
+    ],
+    "a": 1
+  }
+]

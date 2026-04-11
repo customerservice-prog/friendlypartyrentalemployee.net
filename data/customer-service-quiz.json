@@ -1,0 +1,222 @@
+[
+  {
+    "s": "Customer Service",
+    "q": "A customer calls asking about pricing for a 20x30 tent. What is the BEST response?",
+    "o": [
+      "Quote from memory",
+      "Tell them to check the website",
+      "Ask for event date and location to provide an accurate quote",
+      "Say you do not know"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Contact Info",
+    "q": "What is the main phone number for Friendly Party Rental?",
+    "o": [
+      "315-884-1499",
+      "315-844-1498",
+      "315-884-1498",
+      "315-884-1488"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Contact Info",
+    "q": "What is the customer service email?",
+    "o": [
+      "info@friendlypartyrental.com",
+      "customerservice@friendlypartyrental.com",
+      "support@friendlypartyrental.com",
+      "hello@friendlypartyrental.com"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Contact Info",
+    "q": "Where is Friendly Party Rental located?",
+    "o": [
+      "330 Costello Parkway, Syracuse NY",
+      "330 Costello Parkway, Minoa NY 13116",
+      "220 Costello Drive, Minoa NY",
+      "330 Castle Parkway, Minoa NY"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Customer Service",
+    "q": "A customer is upset because their rental was delivered late. What do you say first?",
+    "o": [
+      "Blame traffic",
+      "Apologize sincerely and assure them you will make it right",
+      "Say it was not your fault",
+      "Offer a full refund immediately"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Delivery",
+    "q": "A customer asks \"Do you do same-day delivery?\" — correct answer?",
+    "o": [
+      "No, need 3 days notice",
+      "Yes, same-day drop-off and pickup available on weekends",
+      "Same-day every day",
+      "We never do same-day"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Customer Service",
+    "q": "What is the proper greeting for a customer call?",
+    "o": [
+      "\"Yeah, what do you need?\"",
+      "\"Friendly Party Rental, hold please\"",
+      "\"Thank you for calling Friendly Party Rental! How can I help you today?\"",
+      "\"Hello, who is this?\""
+    ],
+    "a": 2
+  },
+  {
+    "s": "Discounts",
+    "q": "Which discount code is currently available for customers?",
+    "o": [
+      "PARTY10",
+      "SAVE15",
+      "DISCOUNT20",
+      "SAVE20"
+    ],
+    "a": 3
+  },
+  {
+    "s": "Booking",
+    "q": "What is the BEST way to explain how to book a rental?",
+    "o": [
+      "Just tell them to figure it out",
+      "Book at friendlypartyrental.com/order-by-date or call 315-884-1498",
+      "Come in person only",
+      "Too busy to help"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Customer Service",
+    "q": "A customer says \"I heard your equipment is dirty.\" What do you say?",
+    "o": [
+      "Argue with them",
+      "Agree and say you will try",
+      "All equipment is professionally cleaned and inspected before every rental",
+      "Ignore the comment"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Service Area",
+    "q": "Which areas does Friendly Party Rental serve?",
+    "o": [
+      "Only Syracuse city limits",
+      "Only Minoa, NY",
+      "Syracuse and surrounding CNY including Minoa, Cicero, Manlius, Camillus, DeWitt, Liverpool",
+      "Only Albany area"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Customer Service",
+    "q": "A customer wants a quote. What information do you need?",
+    "o": [
+      "Credit card number",
+      "Name, event date, event location, and items needed",
+      "Nothing — just ballpark it",
+      "Tell them to email instead"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Customer Service",
+    "q": "How should you close a customer service call?",
+    "o": [
+      "\"Goodbye.\"",
+      "\"Call back later.\"",
+      "\"Is there anything else I can help with today? We look forward to making your event special!\"",
+      "\"That is all.\""
+    ],
+    "a": 2
+  },
+  {
+    "s": "Products",
+    "q": "Which chair type is most popular for wedding ceremonies?",
+    "o": [
+      "Metal folding chairs",
+      "Plastic stacking chairs",
+      "White folding chairs",
+      "Director chairs"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Customer Service",
+    "q": "A customer cannot afford full price. What can you offer?",
+    "o": [
+      "Tell them to look elsewhere",
+      "Mention SAVE20 discount code and check package deals",
+      "Cut price in half",
+      "Tell them nothing can be done"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Policies",
+    "q": "What is included with all tent rentals?",
+    "o": [
+      "Tent only",
+      "Professional setup AND takedown",
+      "Tent and stakes only",
+      "Customer handles setup"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Safety",
+    "q": "What is Friendly Party Rental's #1 priority for bounce house rentals?",
+    "o": [
+      "Speed of delivery",
+      "Low pricing",
+      "Safety — all inflatables inspected before every rental",
+      "Variety of colors"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Products",
+    "q": "What concession machines does Friendly Party Rental rent?",
+    "o": [
+      "Only popcorn machines",
+      "Popcorn, cotton candy, snow cone, hot dog, nacho machines",
+      "Only cotton candy and snow cone",
+      "Only commercial kitchen"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Company",
+    "q": "What is Friendly Party Rental's Google star rating?",
+    "o": [
+      "3.9 stars",
+      "4.2 stars",
+      "4.5 stars",
+      "4.7 stars"
+    ],
+    "a": 3
+  },
+  {
+    "s": "Policies",
+    "q": "When a customer wants to cancel, what is the correct procedure?",
+    "o": [
+      "Cancel with no follow-up",
+      "Direct them to 315-884-1498 or customerservice@friendlypartyrental.com",
+      "Argue about deposit",
+      "Immediately give full refund"
+    ],
+    "a": 1
+  }
+]

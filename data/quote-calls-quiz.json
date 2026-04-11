@@ -1,0 +1,182 @@
+[
+  {
+    "s": "Call examples",
+    "q": "The coaching sample (Sample A — what to avoid) is mainly for:",
+    "o": [
+      "Learning which mistakes to watch for on real calls",
+      "Proving a coworker was wrong",
+      "Recording customer credit cards"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Call examples",
+    "q": "The model sample (Sample B — how to answer), when available, is best used to:",
+    "o": [
+      "Memorize one script word-for-word every time",
+      "Compare tone, structure, and thoroughness with Sample A",
+      "Replace all pricing training"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Quote workflow",
+    "q": "Before you give a firm price for rental items, the safest approach is:",
+    "o": [
+      "Verify against current catalog or office-confirmed pricing",
+      "Quote from memory if you are pretty sure",
+      "Round down so the customer likes you"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Quote workflow",
+    "q": "Which set of details should you usually collect before building a quote?",
+    "o": [
+      "Name, event date, location, and items or package needs",
+      "Only the customer's first name",
+      "Nothing until they pay a deposit"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Quote workflow",
+    "q": "If you are unsure of a price while the customer is on the phone, you should:",
+    "o": [
+      "Say you will verify and follow up, or check with the office while they wait if appropriate",
+      "Make up a number so you do not lose the sale",
+      "Tell them to guess"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Quote workflow",
+    "q": "A customer asks for a quick “ballpark.” The best practice is still to:",
+    "o": [
+      "Gather key details and use official pricing sources — not random numbers",
+      "Throw out a rough number without notes",
+      "Refuse to help until they book"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Compared to Sample A",
+    "q": "If Sample A showed rushing or skipping details, the fix aligned with Sample B is:",
+    "o": [
+      "Slow down, ask clarifying questions, and record what you learn",
+      "End the call faster",
+      "Avoid writing anything down"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Compared to Sample B",
+    "q": "The model approach usually includes a professional greeting such as:",
+    "o": [
+      "“Thank you for calling Friendly Party Rental — how can I help you today?”",
+      "“Yeah, what do you need?”",
+      "“Hold on.”"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Compared to Sample B",
+    "q": "Ending a quote call professionally often includes:",
+    "o": [
+      "Confirming next steps (callback, written quote, booking link, etc.)",
+      "Hanging up as soon as you say a price",
+      "Assuming they understood without checking"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Site & logistics",
+    "q": "Why ask about delivery address and setup surface (grass, pavement, etc.)?",
+    "o": [
+      "They affect delivery, setup, safety, and accurate quoting",
+      "They never matter for tents or inflatables",
+      "Only for weddings"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Policies",
+    "q": "Deposit, cancellation, or payment terms should come from:",
+    "o": [
+      "Official company policy and written terms — not improvised rules",
+      "Whatever sounds fair in the moment",
+      "The lowest competitor you can name"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Quote workflow",
+    "q": "You may need a written quote or email follow-up when:",
+    "o": [
+      "The order is complex or the customer wants something in writing",
+      "Never — verbal quotes are always enough",
+      "Only for orders under $100"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Quote workflow",
+    "q": "For inflatables, surface and space questions matter because:",
+    "o": [
+      "Safety and setup requirements depend on them",
+      "They are optional small talk",
+      "Only the color of the unit matters"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Professional tone",
+    "q": "Compared with a rushed or dismissive call, Sample B’s style emphasizes:",
+    "o": [
+      "Listening, patience, and clear next steps",
+      "Talking over the customer",
+      "Avoiding follow-up"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Contact",
+    "q": "Main customer phone number for Friendly Party Rental is:",
+    "o": [
+      "315-884-1499",
+      "315-884-1498",
+      "315-844-1498"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Contact",
+    "q": "Customer service email for follow-up on quotes:",
+    "o": [
+      "customerservice@friendlypartyrental.com",
+      "support@randomrentals.com",
+      "info@friendlypartyrental.com"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Quote workflow",
+    "q": "Callback number and spelling of name/venue should be:",
+    "o": [
+      "Confirmed when needed so you can reach them with the quote",
+      "Skipped to save time",
+      "Only collected after they pay"
+    ],
+    "a": 0
+  },
+  {
+    "s": "Booking",
+    "q": "A good way to explain booking after quoting:",
+    "o": [
+      "Direct them to friendlypartyrental.com/order-by-date or 315-884-1498 as appropriate",
+      "Tell them to figure it out online alone",
+      "Say booking is not available"
+    ],
+    "a": 0
+  }
+]

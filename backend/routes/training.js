@@ -13,6 +13,12 @@ const {
   clearPricingVerifyWindow,
 } = require("../middleware/pricingVerifyRateLimit");
 const { clearSubmitRateWindow } = require("../middleware/submitRateLimit");
+const {
+  loadStaffQuiz,
+  stripStaffAnswers,
+  isStaffQuizSlug,
+  normalizeStaffQuizSlug,
+} = require("../lib/staffQuizzes");
 
 function noStore(_req, res, next) {
   res.set("Cache-Control", "no-store");
@@ -63,13 +69,8 @@ function verifyPayload(rows, i, c) {
   const item = rows[i];
   const correctIdx = item.a;
   const correct = c === correctIdx;
-  const yourAnswer = c === -1 ? "(no answer)" : String(item.o[c] ?? "");
-  const correctAnswer = String(item.o[correctIdx]);
   return {
     correct,
-    yourAnswer,
-    correctAnswer,
-    correctChoiceIndex: correctIdx,
   };
 }
 
@@ -222,6 +223,11 @@ trainingPublicRouter.post("/pricing-summary", (req, res) => {
     const percent = Math.round((score / total) * 100);
     const passed = percent >= PRICING_PASS_PERCENT;
 
+    const missedQuestionsPublic = missedQuestions.map((m) => ({
+      question: m.question,
+      yourAnswer: m.yourAnswer,
+    }));
+
     req.session.pricingLastSummary = {
       score,
       total,
@@ -238,7 +244,7 @@ trainingPublicRouter.post("/pricing-summary", (req, res) => {
       total,
       percent,
       passed,
-      missedQuestions,
+      missedQuestions: missedQuestionsPublic,
     });
   } catch (e) {
     console.error("training pricing-summary", e);
@@ -253,6 +259,193 @@ trainingPublicRouter.post("/pricing-summary", (req, res) => {
 const trainingStaffRouter = express.Router();
 trainingStaffRouter.use(noStore);
 trainingStaffRouter.post("/quiz-activity", postQuizActivityFull);
+
+function staffQuizBucket(req, slug) {
+  req.session.staffQuizSessions = req.session.staffQuizSessions || {};
+  if (!req.session.staffQuizSessions[slug]) {
+    req.session.staffQuizSessions[slug] = { verified: {} };
+  }
+  return req.session.staffQuizSessions[slug];
+}
+
+trainingStaffRouter.get("/staff-quiz-questions", (req, res) => {
+  const slug = normalizeStaffQuizSlug(req.query.slug);
+  if (!isStaffQuizSlug(slug)) {
+    return res.status(400).json({
+      error: "bad_slug",
+      message: "Unknown quiz.",
+    });
+  }
+  try {
+    const rows = loadStaffQuiz(slug);
+    res.json({
+      questions: stripStaffAnswers(rows),
+      passPercent: PRICING_PASS_PERCENT,
+    });
+  } catch (e) {
+    console.error("training staff-quiz-questions", slug, e);
+    res.status(500).json({
+      error: "failed_to_load_questions",
+      message: "Quiz could not be loaded. Try again or ask your manager.",
+    });
+  }
+});
+
+trainingStaffRouter.post("/staff-quiz-reset", (req, res) => {
+  const slug = normalizeStaffQuizSlug((req.body || {}).slug);
+  if (!isStaffQuizSlug(slug)) {
+    return res.status(400).json({
+      error: "bad_slug",
+      message: "Unknown quiz.",
+    });
+  }
+  const bucket = staffQuizBucket(req, slug);
+  bucket.verified = {};
+  req.session.staffQuizLastSummary = req.session.staffQuizLastSummary || {};
+  delete req.session.staffQuizLastSummary[slug];
+  clearTrainingQuizLock(req);
+  clearPricingVerifyWindow(req.sessionID);
+  res.json({ ok: true });
+});
+
+trainingStaffRouter.post(
+  "/staff-quiz-verify",
+  pricingVerifyRateLimit,
+  (req, res) => {
+    const slug = normalizeStaffQuizSlug((req.body || {}).slug);
+    if (!isStaffQuizSlug(slug)) {
+      return res.status(400).json({
+        error: "bad_slug",
+        message: "Unknown quiz.",
+      });
+    }
+    try {
+      const rows = loadStaffQuiz(slug);
+      const n = rows.length;
+      const body = req.body || {};
+      const i = Number(body.index);
+      let c = body.choiceIndex;
+      if (c === null || c === undefined) c = -1;
+      c = Number(c);
+
+      if (!Number.isInteger(i) || i < 0 || i >= n) {
+        return res.status(400).json({
+          error: "bad_index",
+          message: "Invalid question. Refresh and start the quiz again.",
+        });
+      }
+      if (
+        c !== -1 &&
+        (!Number.isInteger(c) || c < 0 || c >= rows[i].o.length)
+      ) {
+        return res.status(400).json({
+          error: "bad_choice",
+          message: "Invalid answer selection. Refresh and try again.",
+        });
+      }
+
+      const bucket = staffQuizBucket(req, slug);
+      const verified = bucket.verified;
+      const prev = verified[i];
+      if (prev !== undefined) {
+        if (prev !== c) {
+          return res.status(409).json({ error: "answer_locked" });
+        }
+        touchTrainingQuizLock(req, slug);
+        return res.json(verifyPayload(rows, i, c));
+      }
+      verified[i] = c;
+      touchTrainingQuizLock(req, slug);
+      return res.json(verifyPayload(rows, i, c));
+    } catch (e) {
+      console.error("training staff-quiz-verify", slug, e);
+      res.status(500).json({
+        error: "verify_failed",
+        message: "Could not record your answer. Try again in a moment.",
+      });
+    }
+  }
+);
+
+trainingStaffRouter.post("/staff-quiz-summary", (req, res) => {
+  const slug = normalizeStaffQuizSlug((req.body || {}).slug);
+  if (!isStaffQuizSlug(slug)) {
+    return res.status(400).json({
+      error: "bad_slug",
+      message: "Unknown quiz.",
+    });
+  }
+  try {
+    const rows = loadStaffQuiz(slug);
+    const n = rows.length;
+    const bucket = staffQuizBucket(req, slug);
+    const v = bucket.verified;
+
+    let score = 0;
+    const missedQuestions = [];
+    for (let i = 0; i < n; i++) {
+      const c = v[i];
+      if (!Number.isInteger(c)) {
+        return res.status(400).json({
+          error: "incomplete",
+          answered: Object.keys(v).length,
+          expected: n,
+          message:
+            "Not all questions were answered on the server. Finish every question or refresh and start over.",
+        });
+      }
+      const item = rows[i];
+      if (c !== -1 && (c < 0 || c >= item.o.length)) {
+        return res.status(400).json({ error: "bad_session" });
+      }
+      const correctIdx = item.a;
+      if (c === correctIdx) score++;
+      else {
+        missedQuestions.push({
+          question: item.q,
+          yourAnswer:
+            c === -1 ? "(no answer)" : String(item.o[c] ?? ""),
+          correctAnswer: String(item.o[correctIdx]),
+        });
+      }
+    }
+
+    const total = n;
+    const percent = Math.round((score / total) * 100);
+    const passed = percent >= PRICING_PASS_PERCENT;
+
+    const missedQuestionsPublic = missedQuestions.map((m) => ({
+      question: m.question,
+      yourAnswer: m.yourAnswer,
+    }));
+
+    req.session.staffQuizLastSummary = req.session.staffQuizLastSummary || {};
+    req.session.staffQuizLastSummary[slug] = {
+      score,
+      total,
+      percent,
+      passed,
+      missedQuestions,
+      at: Date.now(),
+    };
+
+    clearTrainingQuizLock(req);
+
+    return res.json({
+      score,
+      total,
+      percent,
+      passed,
+      missedQuestions: missedQuestionsPublic,
+    });
+  } catch (e) {
+    console.error("training staff-quiz-summary", slug, e);
+    res.status(500).json({
+      error: "summary_failed",
+      message: "Could not calculate your score. Try again in a moment.",
+    });
+  }
+});
 
 module.exports = {
   trainingPublicRouter,

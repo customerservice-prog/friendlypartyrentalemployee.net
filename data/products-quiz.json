@@ -1,0 +1,277 @@
+[
+  {
+    "s": "Tents",
+    "q": "What is the largest pole tent offered by Friendly Party Rental?",
+    "o": [
+      "20x40",
+      "30x40",
+      "30x60",
+      "40x60"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Tents",
+    "q": "Besides pole tents, what other tent types does FPR offer?",
+    "o": [
+      "Yurts",
+      "Frame tents and pop-up canopies",
+      "Military tents",
+      "Geodesic domes"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Tables",
+    "q": "What is a common round table size for seating guests?",
+    "o": [
+      "4ft round",
+      "5ft round",
+      "6ft round",
+      "3ft round"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Tables",
+    "q": "What table type is popular for cocktail-style events?",
+    "o": [
+      "Folding card table",
+      "High top cocktail table",
+      "Low coffee table",
+      "Picnic table"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Chairs",
+    "q": "Which chair type is most popular for wedding ceremonies?",
+    "o": [
+      "Metal folding chairs",
+      "Plastic stacking chairs",
+      "White folding chairs",
+      "Director chairs"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Chairs",
+    "q": "What is a \"throne chair\" typically used for at events?",
+    "o": [
+      "Office seating",
+      "VIP/special guest seating",
+      "Outdoor casual seating",
+      "Children"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Linens",
+    "q": "What linen options are available for tables?",
+    "o": [
+      "Only white tablecloths",
+      "White, black, and colored tablecloths, runners, chair covers",
+      "Only plastic covers",
+      "Only fitted tablecloths"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Bounce Houses",
+    "q": "What safety check happens before every inflatable rental?",
+    "o": [
+      "Visual check only",
+      "Professional inspection",
+      "Customer checks it",
+      "No check needed"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Bounce Houses",
+    "q": "Which inflatable is best for older kids wanting more activity?",
+    "o": [
+      "Standard bounce house",
+      "Obstacle course or combo unit",
+      "Foam machine",
+      "Movie screen"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Concessions",
+    "q": "Which concession machine is most popular at summer events?",
+    "o": [
+      "Hot dog steamer",
+      "Nacho machine",
+      "Snow cone machine",
+      "Coffee urn"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Concessions",
+    "q": "Best concession for a fall festival?",
+    "o": [
+      "Snow cone machine",
+      "Foam machine",
+      "Popcorn machine or hot dog steamer",
+      "Photo booth"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Dance Floor",
+    "q": "Which dance floor adds the most visual impact at a wedding reception?",
+    "o": [
+      "Standard portable floor",
+      "LED dance floor",
+      "Wooden stage",
+      "Outdoor grass"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Lighting",
+    "q": "What type of lighting highlights tent walls or columns at weddings?",
+    "o": [
+      "String lights",
+      "Uplighting",
+      "Spotlights",
+      "Flashlights"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Generators",
+    "q": "When would you recommend a generator to a customer?",
+    "o": [
+      "Every outdoor event",
+      "When the venue has no power access",
+      "Only for concerts",
+      "Never"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Heating",
+    "q": "What heating option works best for outdoor tent events in cool weather?",
+    "o": [
+      "Electric space heaters",
+      "Box fans",
+      "Propane heaters",
+      "Air conditioning"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Photo Booth",
+    "q": "What is a photo booth rental best used for?",
+    "o": [
+      "Business meetings",
+      "Events where guests want fun, shareable memories",
+      "Construction sites",
+      "Sports events only"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Yard Games",
+    "q": "Which yard game uses beanbags thrown at a wooden board with holes?",
+    "o": [
+      "Bocce ball",
+      "Giant Jenga",
+      "Cornhole",
+      "Ladder toss"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Yard Games",
+    "q": "What yard game involves stacking wooden blocks without toppling the tower?",
+    "o": [
+      "Cornhole",
+      "Giant Jenga",
+      "Bocce ball",
+      "Ladder toss"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Movie Screen",
+    "q": "What is an inflatable movie screen ideal for?",
+    "o": [
+      "Indoor corporate presentations",
+      "Outdoor movie nights, backyard parties, community events",
+      "Office lobbies",
+      "Children only"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Foam Machine",
+    "q": "A foam machine is most appropriate for which event type?",
+    "o": [
+      "Corporate board meeting",
+      "Formal wedding reception",
+      "Fun party for kids or young adults",
+      "Funeral reception"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Packages",
+    "q": "What would typically be in a \"full event\" package deal?",
+    "o": [
+      "Only tents",
+      "Only tables and chairs",
+      "Tables + chairs + tent + linens combined",
+      "Bounce houses + tables"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Beverage",
+    "q": "What item keeps food warm at catered events?",
+    "o": [
+      "Snow cone machine",
+      "Chafing dishes",
+      "Cotton candy machine",
+      "Generator"
+    ],
+    "a": 1
+  },
+  {
+    "s": "Tents",
+    "q": "What tent size comfortably accommodates approximately 50 seated guests?",
+    "o": [
+      "10x10",
+      "20x20",
+      "20x40 or 30x40",
+      "10x30"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Tables",
+    "q": "A 6ft rectangular table typically seats how many people?",
+    "o": [
+      "2-4 people",
+      "4-6 people",
+      "6-8 people",
+      "10-12 people"
+    ],
+    "a": 2
+  },
+  {
+    "s": "Chairs",
+    "q": "What chair style features a cross-back design popular at upscale events?",
+    "o": [
+      "Metal folding",
+      "Throne chair",
+      "Chiavari chair",
+      "Plastic stacking"
+    ],
+    "a": 2
+  }
+]

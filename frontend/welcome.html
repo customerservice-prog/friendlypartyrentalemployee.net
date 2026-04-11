@@ -31,6 +31,14 @@
       .train-login-card button.welcome-btn-quiz:hover {
         background: rgba(212, 175, 55, 0.12);
       }
+      .train-login-card button.welcome-btn-hire {
+        background: transparent;
+        color: #1a1a2e;
+        border: 2px solid #64748b;
+      }
+      .train-login-card button.welcome-btn-hire:hover {
+        background: rgba(100, 116, 139, 0.12);
+      }
       .welcome-alt-link {
         margin: 1.1rem 0 0;
         font-size: 0.8rem;
@@ -67,7 +75,8 @@
         />
         <h1>Staff training</h1>
         <p>
-          <strong>Friendly Party Rental.</strong> Applicants can take the
+          <strong>Friendly Party Rental.</strong> Applicants can open the
+          <strong>Virtual Assistant hiring test</strong> or the
           <strong>pricing knowledge quiz</strong> below with no PIN. The full
           training hub (all tools and quizzes) uses the team PIN from your
           manager.
@@ -81,6 +90,9 @@
         />
         <div class="welcome-actions">
           <button type="button" id="btn-hub">Open training hub</button>
+          <button type="button" id="btn-hire-test" class="welcome-btn-hire">
+            Virtual Assistant hiring test (no PIN)
+          </button>
           <button type="button" id="btn-quiz" class="welcome-btn-quiz">
             Start pricing quiz now
           </button>
@@ -178,6 +190,10 @@
 
         document.getElementById("btn-hub").addEventListener("click", () => {
           loginThenNavigate(returnTo);
+        });
+
+        document.getElementById("btn-hire-test").addEventListener("click", () => {
+          window.location.href = "/hiring-test-virtual-assistant.html";
         });
 
         document.getElementById("btn-quiz").addEventListener("click", () => {

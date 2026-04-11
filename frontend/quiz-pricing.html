@@ -973,7 +973,6 @@
         }
 
         const correct = data.correct;
-        const correctChoiceIndex = data.correctChoiceIndex;
         const answerMs = Date.now() - integrityState.questionShownAt;
         if (
           answerMs >= 0 &&
@@ -983,8 +982,8 @@
           integrityState.answerTimingsMs.push(answerMs);
         }
         buttons.forEach((b, i) => {
-          if (i === correctChoiceIndex) b.classList.add("correct");
-          else if (i === choiceIndex) b.classList.add("wrong");
+          if (correct && i === choiceIndex) b.classList.add("correct");
+          else if (!correct && i === choiceIndex) b.classList.add("wrong");
           else b.classList.add("dim");
         });
 
@@ -995,7 +994,7 @@
         } else {
           feedback.classList.add("bad");
           feedback.textContent =
-            "Not quite. The correct answer is: " + data.correctAnswer;
+            "Not quite — review the training materials and try again another time.";
         }
 
         nextWrap.classList.remove("hidden");
@@ -1078,10 +1077,7 @@
               '<div class="review-q"></div><div class="review-meta"></div>';
             d.querySelector(".review-q").textContent = m.question;
             d.querySelector(".review-meta").textContent =
-              "Your answer: " +
-              m.yourAnswer +
-              " · Correct: " +
-              m.correctAnswer;
+              "Your answer: " + m.yourAnswer;
             reviewList.appendChild(d);
           });
         } else {
