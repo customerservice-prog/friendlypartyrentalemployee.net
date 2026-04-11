@@ -6,6 +6,9 @@
 #
 # If GitHub pushes do not trigger a deploy, check the service "Watch paths" in the
 # dashboard — this file overrides them and includes frontend + backend.
+#
+# Deploys: use Railway → Service → Connect GitHub only. Do not add a second
+# GitHub Action that runs `railway up` — it duplicates deploys and often fails on tokens.
 
 [build]
 watchPatterns = [
