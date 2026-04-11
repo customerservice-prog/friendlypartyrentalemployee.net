@@ -250,18 +250,35 @@ const LIST_SUBMISSIONS_MAX = 2000;
 /**
  * @param {{ quizSlug?: string | null, sort?: "recent" | "ai_rating" }} [options]
  */
+function sanitizeQuizSlugPart(s) {
+  return String(s || "")
+    .trim()
+    .replace(/[^a-z0-9-]/gi, "")
+    .slice(0, 64);
+}
+
 async function listSubmissions(options = {}) {
   const p = getPool();
-  const rawSlug = options.quizSlug != null ? String(options.quizSlug).trim() : "";
-  const quizSlug = rawSlug ? rawSlug.replace(/[^a-z0-9-]/gi, "").slice(0, 64) : "";
   const sortAi = options.sort === "ai_rating";
+
+  let slugList = [];
+  if (Array.isArray(options.quizSlugs) && options.quizSlugs.length) {
+    slugList = options.quizSlugs.map(sanitizeQuizSlugPart).filter(Boolean);
+  } else {
+    const rawSlug = options.quizSlug != null ? String(options.quizSlug).trim() : "";
+    const one = rawSlug ? sanitizeQuizSlugPart(rawSlug) : "";
+    if (one) slugList = [one];
+  }
 
   const conds = [];
   const vals = [];
   let n = 1;
-  if (quizSlug) {
+  if (slugList.length === 1) {
     conds.push(`quiz_slug = $${n++}`);
-    vals.push(quizSlug);
+    vals.push(slugList[0]);
+  } else if (slugList.length > 1) {
+    conds.push(`quiz_slug = ANY($${n++}::text[])`);
+    vals.push(slugList);
   }
   const where = conds.length ? `WHERE ${conds.join(" AND ")}` : "";
   const orderBy = sortAi

@@ -75,10 +75,10 @@
         />
         <h1>Staff training</h1>
         <p>
-          <strong>Friendly Party Rental.</strong> Applicants can open the
-          <strong>Virtual Assistant hiring test</strong> or the
-          <strong>pricing knowledge quiz</strong> below with no PIN. The full
-          training hub (all tools and quizzes) uses the team PIN from your
+          <strong>Friendly Party Rental.</strong> Applicants can open a
+          <strong>hiring test</strong> (Virtual Assistant, delivery driver, or field
+          crew) or the <strong>pricing knowledge quiz</strong> below with no PIN. The
+          full training hub (all tools and quizzes) uses the team PIN from your
           manager.
         </p>
         <div id="err" class="err"></div>
@@ -92,6 +92,12 @@
           <button type="button" id="btn-hub">Open training hub</button>
           <button type="button" id="btn-hire-test" class="welcome-btn-hire">
             Virtual Assistant hiring test (no PIN)
+          </button>
+          <button type="button" id="btn-hire-driver" class="welcome-btn-hire">
+            Driver hiring test (no PIN)
+          </button>
+          <button type="button" id="btn-hire-crew" class="welcome-btn-hire">
+            Field crew hiring test — tents &amp; installs (no PIN)
           </button>
           <button type="button" id="btn-quiz" class="welcome-btn-quiz">
             Start pricing quiz now
@@ -194,6 +200,14 @@
 
         document.getElementById("btn-hire-test").addEventListener("click", () => {
           window.location.href = "/hiring-test-virtual-assistant.html";
+        });
+
+        document.getElementById("btn-hire-driver").addEventListener("click", () => {
+          window.location.href = "/hiring-test-driver.html";
+        });
+
+        document.getElementById("btn-hire-crew").addEventListener("click", () => {
+          window.location.href = "/hiring-test-crew.html";
         });
 
         document.getElementById("btn-quiz").addEventListener("click", () => {

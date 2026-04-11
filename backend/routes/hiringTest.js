@@ -1,6 +1,11 @@
 const express = require("express");
 const { insertSubmission } = require("../db");
-const { scoreHiringLocal } = require("../lib/hiringTestScoreLocal");
+const {
+  ANSWER_KEYS,
+  TRACKS,
+  normalizeTrack,
+  LABELS_VA,
+} = require("../lib/hiringTestTracks");
 const {
   consumeHiringSubmitSlotOr429,
 } = require("../middleware/hiringSubmitRateLimit");
@@ -12,63 +17,7 @@ router.use((_req, res, next) => {
   next();
 });
 
-const HIRING_SLUG = "hiring-virtual-assistant";
-
-const ANSWER_KEYS = [
-  "q1",
-  "q2",
-  "q3",
-  "q4",
-  "q5",
-  "q6",
-  "q7",
-  "q8",
-  "q9",
-  "q10",
-  "q11",
-  "q12",
-  "q13",
-  "q14",
-  "q15",
-  "rpA",
-  "rpB",
-  "rpC",
-  "rpD",
-  "rpE",
-  "q16",
-  "q17",
-  "q18",
-  "q19",
-  "q20",
-];
-
-const LABELS = {
-  q1: "Q1 — Company name & physical town",
-  q2: "Q2 — Main customer phone",
-  q3: "Q3 — Customer service email",
-  q4: "Q4 — Street address",
-  q5: "Q5 — Eight rental categories",
-  q6: "Q6 — Online booking tool",
-  q7: "Q7 — Deposit / cancellation",
-  q8: "Q8 — Setup time vs rental period",
-  q9: "Q9 — Bounce houses plugged in",
-  q10: "Q10 — Park setup awareness",
-  q11: "Q11 — Date change scenario",
-  q12: "Q12 — Angry customer / late driver",
-  q13: "Q13 — Bounce house price question",
-  q14: "Q14 — Water slide tomorrow",
-  q15: "Q15 — Three core promises",
-  rpA: "Role-play A — Friendly greeting (what you would say)",
-  rpB: "Role-play B — Confused customer / 50 people BBQ",
-  rpC: "Role-play C — Upset customer / late delivery",
-  rpD: "Role-play D — Price shopper / competitor",
-  rpE: "Role-play E — Booking walkthrough",
-  q16: "Q16 — 1-star Google review response",
-  q17: "Q17 — Same-day bounce house Saturday7am",
-  q18: "Q18 — Cleaned equipment / hesitant customer",
-  q19: "Q19 — Internal / anti-cheat question",
-  q20: "Q20 — Brand personality",
-};
+const HIRING_SLUG = TRACKS["virtual-assistant"].quizSlug;
 
 const FIELD_MAX = 6000;
 
@@ -105,7 +54,10 @@ router.post("/submit", async (req, res) => {
   const name = String(body.name || "").trim().slice(0, 200);
   const email = String(body.email || "").trim().slice(0, 254);
   const phone = String(body.phone || "").trim().slice(0, 40);
-  const jobTitle = String(body.jobTitle || "VA applicant").trim().slice(0, 120);
+  const trackKey = normalizeTrack(body.track);
+  const track = TRACKS[trackKey];
+  const defaultTitle = track.defaultJobTitle;
+  const jobTitle = String(body.jobTitle || defaultTitle).trim().slice(0, 120);
 
   if (!name || name.length < 2) {
     return res.status(400).json({
@@ -132,7 +84,7 @@ router.post("/submit", async (req, res) => {
     return;
   }
 
-  const scored = scoreHiringLocal(answers);
+  const scored = track.score(answers);
   const aiRating = scored.rating;
   const aiSummary = scored.summary;
 
@@ -151,7 +103,7 @@ router.post("/submit", async (req, res) => {
       name,
       email,
       jobTitle,
-      quizSlug: HIRING_SLUG,
+      quizSlug: track.quizSlug,
       score,
       total,
       percent,
@@ -161,6 +113,7 @@ router.post("/submit", async (req, res) => {
       integrityReport: {
         version: 1,
         hiringTest: true,
+        hiringTrack: trackKey,
         keysAnswered: ANSWER_KEYS.length,
       },
       aiRating,
@@ -176,6 +129,8 @@ router.post("/submit", async (req, res) => {
       aiSummary,
       scoringAvailable: true,
       scoringMethod: "local_rules",
+      hiringTrack: trackKey,
+      quizSlug: track.quizSlug,
     });
   } catch (err) {
     console.error("hiring submit db", err);
@@ -196,4 +151,4 @@ router.post("/submit", async (req, res) => {
   }
 });
 
-module.exports = { router, HIRING_SLUG, ANSWER_KEYS, LABELS };
+module.exports = { router, HIRING_SLUG, ANSWER_KEYS, LABELS: LABELS_VA };

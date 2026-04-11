@@ -356,6 +356,41 @@
         padding: 0.1em 0.35em;
         border-radius: 4px;
       }
+      .admin-hiring-guide {
+        margin: 0 0 1.25rem;
+        padding: 0.85rem 1rem 1rem;
+        border: 1px solid #fcd34d;
+        border-radius: 10px;
+        background: #fffbeb;
+        font-size: 0.88rem;
+        line-height: 1.55;
+        color: var(--text);
+      }
+      .admin-hiring-guide summary {
+        cursor: pointer;
+        font-weight: 700;
+        color: #92400e;
+      }
+      .admin-hiring-guide .admin-hiring-guide__body {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px dashed #fcd34d;
+      }
+      .admin-hiring-guide table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.82rem;
+        margin: 0.5rem 0;
+      }
+      .admin-hiring-guide th,
+      .admin-hiring-guide td {
+        border: 1px solid var(--border);
+        padding: 0.35rem 0.5rem;
+        text-align: left;
+      }
+      .admin-hiring-guide th {
+        background: #fef3c7;
+      }
     </style>
   </head>
   <body>
@@ -448,10 +483,80 @@
             All quizzes (newest first)
           </button>
           ·
-          <button type="button" class="link-btn" id="btn-view-hiring">
-            VA hiring (auto score, highest first)
+          <button type="button" class="link-btn" id="btn-view-hiring-all">
+            All hiring (auto score)
           </button>
+          ·
+          <button type="button" class="link-btn" id="btn-view-hiring-va">VA</button>
+          ·
+          <button type="button" class="link-btn" id="btn-view-hiring-driver">Driver</button>
+          ·
+          <button type="button" class="link-btn" id="btn-view-hiring-crew">Crew</button>
         </p>
+        <details class="admin-hiring-guide">
+          <summary>Hiring tests — manager guide (not shown to applicants)</summary>
+          <div class="admin-hiring-guide__body">
+            <p style="margin: 0 0 0.65rem; color: var(--muted)">
+              Applicants only see questions and the submit form. Use the hiring views above to sort by automated score (rule-based, not cloud AI). Open a row for full answers and the auto-score summary.
+            </p>
+            <p style="margin: 0 0 0.75rem; font-size: 0.88rem; color: var(--muted)">
+              <strong>Tracks:</strong> Virtual Assistant (phone/service), Delivery driver (route, load, dispatch), Field crew (tents, stakes, weather, utilities). Each saves under its own quiz type in the database.
+            </p>
+            <p style="margin: 0 0 0.5rem; font-weight: 600">How the test is designed</p>
+            <p style="margin: 0 0 0.75rem">
+              The assessment mixes company knowledge, judgment scenarios, typed “what you’d say” role-plays, and open-ended items so generic or copy-pasted answers are easier to spot. Flag robotic answers or clear policy violations when you review.
+            </p>
+            <p style="margin: 0 0 0.5rem; font-weight: 600">Passing &amp; disqualifiers (your judgment)</p>
+            <ul style="margin: 0 0 0.75rem; padding-left: 1.2rem">
+                           <li><strong>Target pass:</strong> 80% or higher on the original 100-point rubric.</li>
+              <li><strong>Role-plays:</strong> If you use a 1–5 rubric per scenario, any role-play below 3/5 can be treated as a disqualifier regardless of overall score.</li>
+              <li><strong>Conditional band:</strong> 70–79 — owner review.</li>
+              <li><strong>Automatic disqualifiers to watch for:</strong> role-play scores below your bar; obviously AI-generated answers; wrong basics on Q1–Q10; unauthorized refund or policy promises; missing clarifying questions in scenarios B and D.</li>
+            </ul>
+            <p style="margin: 0 0 0.5rem; font-weight: 600">Section weights (reference)</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Section</th>
+                  <th>Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1 — Company knowledge</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>2 — Policy &amp; procedures</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>3 — Phone scenarios</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>4 — Critical thinking</td>
+                  <td>15</td>
+                </tr>
+                <tr>
+                  <td>5 — Final / supplemental</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td><strong>100</strong></td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin: 0 0 0.5rem; font-weight: 600">Q19 — internal / supplemental question</p>
+            <p style="margin: 0">
+              Before sending a candidate the public link, decide if you will give them a <strong>written</strong> one-off question (e.g. internal policy, driver call-off process, how you handle phone quotes). If yes, send it by email or message; they answer in Q19. If not, they may answer “Not applicable.” The public test page does not expose this instruction set.
+            </p>
+            <p style="margin: 0.75rem 0 0; font-size: 0.82rem; color: var(--muted)">
+              <strong>Auto score (0–100):</strong> Rule-based on the server (company facts, answer length, key phrases). It helps rank candidates; your read of tone and judgment is still decisive.
+            </p>
+          </div>
+        </details>
         <div
           id="dashboard-error"
           class="err hidden"
@@ -558,6 +663,8 @@
         "customer-service": "Customer service",
         "quote-calls": "Quote & call",
         "hiring-virtual-assistant": "VA hiring test",
+        "hiring-driver": "Driver hiring test",
+        "hiring-crew": "Field crew hiring test",
       };
 
       const HIRING_DETAIL_KEYS = [
@@ -612,9 +719,82 @@
         q16: "Q16 — Review response",
         q17: "Q17 — Same-day bounce",
         q18: "Q18 — Clean equipment",
-        q19: "Q19 — Internal verification",
+        q19: "Q19 — Supplemental / internal",
         q20: "Q20 — Brand personality",
       };
+
+      const HIRING_LABELS_DRIVER = {
+        q1: "Q1 — Company & town",
+        q2: "Q2 — Main phone",
+        q3: "Q3 — Email",
+        q4: "Q4 — Address",
+        q5: "Q5 — Pre-trip & cargo",
+        q6: "Q6 — Delay / reroute contact",
+        q7: "Q7 — Securing load",
+        q8: "Q8 — Customer absent",
+        q9: "Q9 — Item damage",
+        q10: "Q10 — Street parking safety",
+        q11: "Q11 — Construction delay",
+        q12: "Q12 — Refund demand",
+        q13: "Q13 — Wrong items",
+        q14: "Q14 — Heavy cart / slope",
+        q15: "Q15 — Safety priorities",
+        rpA: "Role-play A — Dispatch",
+        rpB: "Role-play B — Customer near truck",
+        rpC: "Role-play C — Near miss",
+        rpD: "Role-play D — Blocked access",
+        rpE: "Role-play E — Damaged strap",
+        q16: "Q16 — Incident note",
+        q17: "Q17 — Heat precautions",
+        q18: "Q18 — Professional appearance",
+        q19: "Q19 — Supplemental / internal",
+        q20: "Q20 — Brand on the job",
+      };
+
+      const HIRING_LABELS_CREW = {
+        q1: "Q1 — Company & town",
+        q2: "Q2 — Main phone",
+        q3: "Q3 — Email",
+        q4: "Q4 — Address",
+        q5: "Q5 — Staking / weighting",
+        q6: "Q6 — 811 / dig safe",
+        q7: "Q7 — Wind during install",
+        q8: "Q8 — Team lift",
+        q9: "Q9 — Sloped / uneven site",
+        q10: "Q10 — Leaving the site",
+        q11: "Q11 — Rush vs safe",
+        q12: "Q12 — Crowd near work",
+        q13: "Q13 — Overhead power",
+        q14: "Q14 — Missing hardware",
+        q15: "Q15 — Talk to lead",
+        rpA: "Role-play A — Tool run",
+        rpB: "Role-play B — Homeowner help",
+        rpC: "Role-play C — Siding rub",
+        rpD: "Role-play D — Neighbor",
+        rpE: "Role-play E — Weather",
+        q16: "Q16 — Fabric snag docs",
+        q17: "Q17 — Mud / soft ground",
+        q18: "Q18 — Organized truck gear",
+        q19: "Q19 — Supplemental / internal",
+        q20: "Q20 — Brand in the field",
+      };
+
+      function hiringAnswerLabel(quizSlug, key) {
+        const s = quizSlug == null ? "" : String(quizSlug).trim();
+        const map =
+          s === "hiring-driver"
+            ? HIRING_LABELS_DRIVER
+            : s === "hiring-crew"
+              ? HIRING_LABELS_CREW
+              : HIRING_DETAIL_LABELS;
+        return map[key] || HIRING_DETAIL_LABELS[key] || key;
+      }
+
+      const HIRING_QUIZ_SLUGS = new Set([
+        "hiring-virtual-assistant",
+        "hiring-driver",
+        "hiring-crew",
+      ]);
 
       window.__adminSubmissionsView = window.__adminSubmissionsView || "all";
 
@@ -793,7 +973,7 @@
         return html;
       }
 
-      function renderHiringAnswersBlock(ha) {
+      function renderHiringAnswersBlock(ha, quizSlug) {
         if (!ha || typeof ha !== "object") return "";
         const hasText = HIRING_DETAIL_KEYS.some(function (k) {
           const v = ha[k];
@@ -812,7 +992,7 @@
         HIRING_DETAIL_KEYS.forEach((k) => {
           const v = ha[k];
           if (v == null || String(v).trim() === "") return;
-          const lab = HIRING_DETAIL_LABELS[k] || k;
+          const lab = hiringAnswerLabel(quizSlug, k);
           html += `<div class="missed-item">
             <div class="missed-q">${escapeHtml(lab)}</div>
             <div class="missed-meta" style="white-space:pre-wrap">${escapeHtml(String(v))}</div>
@@ -871,9 +1051,10 @@
                 escapeHtml(String(r.aiFeedback)) +
                 "</div>";
             }
-            inner += renderHiringAnswersBlock(r.hiringAnswers);
-            const isHiring =
-              String(r.quizSlug || "").trim() === "hiring-virtual-assistant";
+            inner += renderHiringAnswersBlock(r.hiringAnswers, r.quizSlug);
+            const isHiring = HIRING_QUIZ_SLUGS.has(
+              String(r.quizSlug || "").trim()
+            );
             if (!isHiring) {
               if (!missed.length) {
                 inner +=
@@ -931,9 +1112,15 @@
         try {
           const view = window.__adminSubmissionsView || "all";
           let url = "/api/admin/submissions";
-          if (view === "hiring") {
+          if (view === "hiring-all") {
             url +=
-              "?quiz=hiring-virtual-assistant&sort=ai_rating";
+              "?quiz=hiring-virtual-assistant,hiring-driver,hiring-crew&sort=ai_rating";
+          } else if (view === "hiring-va") {
+            url += "?quiz=hiring-virtual-assistant&sort=ai_rating";
+          } else if (view === "hiring-driver") {
+            url += "?quiz=hiring-driver&sort=ai_rating";
+          } else if (view === "hiring-crew") {
+            url += "?quiz=hiring-crew&sort=ai_rating";
           }
           const res = await fetch(url, {
             credentials: "same-origin",
@@ -1043,8 +1230,23 @@
         window.__openDetailId = null;
         loadSubmissions();
       });
-      document.getElementById("btn-view-hiring").addEventListener("click", () => {
-        window.__adminSubmissionsView = "hiring";
+      document.getElementById("btn-view-hiring-all").addEventListener("click", () => {
+        window.__adminSubmissionsView = "hiring-all";
+        window.__openDetailId = null;
+        loadSubmissions();
+      });
+      document.getElementById("btn-view-hiring-va").addEventListener("click", () => {
+        window.__adminSubmissionsView = "hiring-va";
+        window.__openDetailId = null;
+        loadSubmissions();
+      });
+      document.getElementById("btn-view-hiring-driver").addEventListener("click", () => {
+        window.__adminSubmissionsView = "hiring-driver";
+        window.__openDetailId = null;
+        loadSubmissions();
+      });
+      document.getElementById("btn-view-hiring-crew").addEventListener("click", () => {
+        window.__adminSubmissionsView = "hiring-crew";
         window.__openDetailId = null;
         loadSubmissions();
       });

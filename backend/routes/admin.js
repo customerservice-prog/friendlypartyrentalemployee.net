@@ -93,10 +93,19 @@ router.get("/submissions", async (req, res) => {
   try {
     const quiz = String(req.query.quiz || "").trim();
     const sort = String(req.query.sort || "").trim();
-    const quizSlug =
-      quiz.replace(/[^a-z0-9-]/gi, "").slice(0, 64) || null;
+    const quizSlugs = quiz
+      ? quiz
+          .split(",")
+          .map((p) =>
+            String(p || "")
+              .trim()
+              .replace(/[^a-z0-9-]/gi, "")
+              .slice(0, 64)
+          )
+          .filter(Boolean)
+      : [];
     const payload = await listSubmissions({
-      quizSlug: quizSlug || null,
+      quizSlugs: quizSlugs.length ? quizSlugs : null,
       sort: sort === "ai_rating" ? "ai_rating" : "recent",
     });
     return res.json(payload);

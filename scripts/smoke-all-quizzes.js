@@ -88,6 +88,8 @@ const QUIZ_PAGES = [
   ["/quiz-customer-service.html", "Customer Service Quiz"],
   ["/quiz-quote-calls.html", "Quote &amp; call skills quiz"],
   ["/hiring-test-virtual-assistant.html", "hire-app-form"],
+  ["/hiring-test-driver.html", "hire-app-form"],
+  ["/hiring-test-crew.html", "hire-app-form"],
   ["/quizzes.html", "Training quizzes"],
 ];
 
@@ -178,21 +180,40 @@ async function main() {
       hireAnswers[k] =
         "Smoke test answer — long enough for scoring heuristics. ".repeat(3);
     }
-    r = await fetchJson("/api/hiring-test/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: "Smoke Hiring",
-        email: "smoke-hiring@example.com",
-        phone: "",
+    for (const hireCase of [
+      {
+        email: "smoke-hiring-va@example.com",
         jobTitle: "VA applicant",
-        answers: hireAnswers,
-      }),
-    });
-    if (r.status !== 503 || r.body.error !== "database_not_configured") {
-      return fail(
-        `hiring-test submit without DB: expected 503 database_not_configured, got ${r.status} ${JSON.stringify(r.body).slice(0, 200)}`
-      );
+        track: "virtual-assistant",
+      },
+      {
+        email: "smoke-hiring-driver@example.com",
+        jobTitle: "Driver applicant",
+        track: "driver",
+      },
+      {
+        email: "smoke-hiring-crew@example.com",
+        jobTitle: "Field crew applicant",
+        track: "crew",
+      },
+    ]) {
+      r = await fetchJson("/api/hiring-test/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          track: hireCase.track,
+          name: "Smoke Hiring",
+          email: hireCase.email,
+          phone: "",
+          jobTitle: hireCase.jobTitle,
+          answers: hireAnswers,
+        }),
+      });
+      if (r.status !== 503 || r.body.error !== "database_not_configured") {
+        return fail(
+          `hiring-test submit (${hireCase.track}) without DB: expected 503 database_not_configured, got ${r.status} ${JSON.stringify(r.body).slice(0, 200)}`
+        );
+      }
     }
 
     r = await fetchJson("/api/employee/login", {
