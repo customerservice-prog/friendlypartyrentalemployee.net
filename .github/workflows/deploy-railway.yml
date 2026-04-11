@@ -1,15 +1,16 @@
-# Deploys the repo to Railway using a project token (uploads this commit’s files).
+# Deploys this repo to Railway via `railway up` (uploads the checked-out commit).
 #
-# Setup:
-# 1. Railway → your project → Settings → Tokens → create a project token.
-# 2. GitHub → repo → Settings → Secrets and variables → Actions → New secret:
-#    - RAILWAY_TOKEN = that token
-# 3. If the project has more than one service, add:
-#    - RAILWAY_SERVICE = exact service name (from Railway dashboard)
+# Required GitHub secret:
+#   RAILWAY_TOKEN
+#     Railway → your PROJECT (not account) → Settings → Tokens → New Project Token
+#     Paste the full token into GitHub → repo → Settings → Secrets → Actions.
 #
-# If you already use Railway’s “Deploy from GitHub” on this repo, either disable
-# auto-deploy there to avoid double builds, or delete this workflow and fix the
-# integration (repo + branch main) in the Railway service settings.
+# Optional (use if `railway up` says project/service is ambiguous):
+#   RAILWAY_PROJECT_ID  — Project settings → General → Project ID
+#   RAILWAY_SERVICE     — Exact service name from the Railway canvas (e.g. "friendlypartyrentalemployee")
+#
+# If this workflow keeps failing, use Railway’s built-in “Deploy from GitHub” on the
+# web service instead, and disable this workflow or remove this file.
 
 name: Deploy to Railway
 
@@ -25,29 +26,42 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: Railway deploy (railway up)
+      - name: Deploy to Railway (CLI via npx)
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+          RAILWAY_SERVICE: ${{ secrets.RAILWAY_SERVICE }}
         run: |
-          set -e
-          if [ -z "${RAILWAY_TOKEN}" ]; then
-            echo "Missing GitHub secret RAILWAY_TOKEN. Add a Railway project token (see workflow file comment)."
+          set -euo pipefail
+          if [ -z "${RAILWAY_TOKEN:-}" ]; then
+            echo "::error::Missing Actions secret RAILWAY_TOKEN."
+            echo "Create a Project Token: Railway dashboard → open the project → Settings → Tokens."
+            echo "GitHub: repo → Settings → Secrets and variables → Actions → New repository secret → RAILWAY_TOKEN"
             exit 1
           fi
-          MSG="gh-${{ github.sha }}"
-          if [ -n "${{ secrets.RAILWAY_SERVICE }}" ]; then
-            railway up --detach --ci --service "${{ secrets.RAILWAY_SERVICE }}" -m "${MSG}"
-          else
-            railway up --detach --ci -m "${MSG}"
+
+          # Avoid relying on global npm bin PATH across steps (use npx every time).
+          CLI_VER="4.36.1"
+          echo "Using @railway/cli@${CLI_VER}"
+          npx --yes "@railway/cli@${CLI_VER}" --version
+
+          MSG="gh-${GITHUB_SHA}"
+          ARGS=(up --detach --ci -m "${MSG}")
+
+          if [ -n "${RAILWAY_PROJECT_ID:-}" ]; then
+            ARGS+=(--project "${RAILWAY_PROJECT_ID}")
           fi
+          if [ -n "${RAILWAY_SERVICE:-}" ]; then
+            ARGS+=(--service "${RAILWAY_SERVICE}")
+          fi
+
+          echo "Running: railway ${ARGS[*]}"
+          npx --yes "@railway/cli@${CLI_VER}" "${ARGS[@]}"
