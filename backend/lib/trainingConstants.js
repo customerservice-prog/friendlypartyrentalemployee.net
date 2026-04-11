@@ -7,7 +7,7 @@ module.exports = {
   /** After POST /quiz-integrity-ack, GET /pricing-questions is allowed for this long. */
   QUIZ_INTEGRITY_ACK_TTL_MS: 4 * 60 * 60 * 1000,
   /**
-   * While a quiz lock is fresh, POST /api/chat and browser assistants stay paused.
+   * While a quiz lock is fresh, POST /api/chat (stub) and browser assistants stay paused.
    * Priced longer than the longest timed quiz; pricing verify refreshes `at` each answer.
    */
   TRAINING_QUIZ_CHAT_LOCK_TTL_MS: 26 * 60 * 1000,

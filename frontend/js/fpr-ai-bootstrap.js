@@ -1,5 +1,5 @@
 
-// FPR Training Hub — local assistant (no API key): pricing-FAQ retrieval + keyword topics.
+// FPR Training Hub — local assistant: pricing-FAQ + staff Q&A grounded in www.friendlypartyrental.com (Friendly Party Rental only — not general web topics).
 // Loads /api/employee/pricing-faq once (signed-in employees) for quiz-accurate quotes.
 (function() {
   'use strict';
@@ -113,6 +113,56 @@
     );
   }
 
+  /** Guest count / seating — not the same as “how much does it rent for.” */
+  function capacityPlanningIntentMsg(userMessage) {
+    if (priceIntentMsg(userMessage)) return false;
+    var s = String(userMessage || '').toLowerCase();
+    var asksCapacity =
+      /how\s+many|people\s+fit|guest|capacity|head\s*count|fit\s+under|seating|seat\s+under|hold\s+under|under\s+a|under\s+the/i.test(
+        s
+      );
+    var hasTentWords = /tent|canopy|pole|frame|pop-?up|ez\s*up/i.test(s);
+    var hasDims = allDimsIn(userMessage).length > 0;
+    return asksCapacity && (hasTentWords || hasDims);
+  }
+
+  function buildCapacityPlanningReply(userMessage) {
+    var dims = allDimsIn(userMessage);
+    var has = function (a, b) {
+      return (
+        dims.indexOf(a + 'x' + b) !== -1 ||
+        new RegExp(
+          a + '\\s*[x×]\\s*' + b,
+          'i'
+        ).test(userMessage || '')
+      );
+    };
+    var intro =
+      '**Seating capacity depends on layout** — table sizes, dance floor, buffet lines, aisles, and poles all change counts. Use this as **training guidance** from **www.friendlypartyrental.com** and internal layout materials, **not a promise on the phone**.\n\n';
+    var body;
+    if (has(20, 20)) {
+      body =
+        'For a **20×20** tent, training often compares footprint to a **20×40**: study materials cite **~50 guests seated** for some **20×40** layouts, and a **20×20** is **half that floor space**, so a **rough planning range** is often around **~25 seated** with similar table styles. **Subtract space** for a **dance floor**, **buffet**, or **wide aisles**—those shrink seated counts. **Cocktail/standing** or **ceremony rows** fit different counts.';
+    } else if (has(20, 30)) {
+      body =
+        'A **20×30** sits **between** a **20×20** and **20×40** footprint — **counts still depend on layout**. Clarify **seated dinner vs ceremony vs cocktail**, then use **company layout guides** or a **lead** for math. Name the **exact size (20×30)** when estimating. **Do not guarantee** a head count on the phone without those details — use the **public catalog** at **friendlypartyrental.com** for what we offer; use the shop for **layout math**.';
+    } else if (has(20, 40) || has(30, 40)) {
+      body =
+        'For **20×40** and **30×40** tents, training examples often use **~50 seated guests** as a **ballpark** for certain layouts — **always** confirm head table, buffet, and dance floor with a layout lead.';
+    } else if (has(10, 10) || has(10, 20)) {
+      body =
+        'Small **10×10** / **10×20** canopies are usually **vendor shade** or **entry** pieces — guest counts are **not** the same as large pole/frame tents; confirm intended use.';
+    } else {
+      body =
+        'Clarify **seated dinner vs ceremony vs cocktail**, then use company **layout guides** or a lead for math. Name the **exact tent size** (e.g. 20×30, 30×60) for a tighter estimate.';
+    }
+    return (
+      intro +
+      body +
+      '\n\n**315-884-1498** for layout-sensitive events.'
+    );
+  }
+
   function scoreStaffEntry(terms, userMsgLower, entry) {
     var hay = (entry.k.join(' ') + ' ' + entry.q + ' ' + entry.a).toLowerCase();
     var cHay = compactDims(hay);
@@ -160,6 +210,10 @@
 
   /** Search official pricing + ~100+ staff training entries before pattern fallback. */
   function tryUnifiedKnowledgeAnswer(userMessage) {
+    /** Capacity / “how many fit” runs even when the FAQ bundle has not loaded (e.g. not signed in). */
+    if (capacityPlanningIntentMsg(userMessage)) {
+      return buildCapacityPlanningReply(userMessage);
+    }
     var rows = window.__FPR_PRICING_FAQ;
     var staff = window.__FPR_STAFF_QNA;
     if ((!rows || !rows.length) && (!staff || !staff.length)) return null;
@@ -313,86 +367,8 @@
     return tryUnifiedKnowledgeAnswer(userMessage);
   };
 
-  /** Client-side cap so a stuck OpenAI call does not freeze the UI (server may wait longer). */
-  var CHAT_FETCH_MS = 65000;
-
-  window.FPR_ASSISTANT_REPLY = async function(messages) {
-    var signal = null;
-    var to = null;
-    if (typeof AbortSignal !== 'undefined' && AbortSignal.timeout) {
-      signal = AbortSignal.timeout(CHAT_FETCH_MS);
-    } else {
-      var ctl = new AbortController();
-      to = setTimeout(function() {
-        ctl.abort();
-      }, CHAT_FETCH_MS);
-      signal = ctl.signal;
-    }
-    try {
-      var res = await fetch('/api/chat', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: messages }),
-        signal: signal,
-      });
-      if (to) clearTimeout(to);
-      var data = await res.json().catch(function() {
-        return {};
-      });
-      if (res.status === 403) {
-        return {
-          ok: false,
-          content: null,
-          status: 403,
-          message:
-            data.message ||
-            'The training assistant is paused while you have a quiz in progress.',
-        };
-      }
-      if (
-        res.ok &&
-        data.message &&
-        typeof data.message.content === 'string'
-      ) {
-        var c = data.message.content.trim();
-        return {
-          ok: true,
-          content: c || '(No response)',
-          status: res.status,
-        };
-      }
-      return {
-        ok: false,
-        content: null,
-        status: res.status,
-        message: data.message || '',
-      };
-    } catch (err) {
-      if (to) clearTimeout(to);
-      var aborted =
-        err &&
-        (err.name === 'AbortError' ||
-          err.name === 'TimeoutError' ||
-          String(err.message || '').indexOf('aborted') !== -1);
-      return {
-        ok: false,
-        content: null,
-        status: 0,
-        message: aborted
-          ? 'Assistant request timed out.'
-          : '',
-        error: aborted ? 'timeout' : 'network',
-      };
-    }
-  };
-
-  window.FPR_LOCAL_AI = function(userMessage) {
-    var msg = (userMessage || '').toLowerCase();
-    var faqHit = tryUnifiedKnowledgeAnswer(userMessage);
-    if (faqHit) return faqHit;
-
-    var patterns = [
+  /** Keyword shortcuts (greetings, contact, scripts). Instant; no network. */
+  var FPR_KEYWORD_PATTERNS = [
       {t:['phone','315','call us','contact number'],r:'Our phone is **315-884-1498**. Email: customerservice@friendlypartyrental.com. Address: 330 Costello Parkway, Minoa, NY 13116.'},
       {t:['address','location','where are you','costello','minoa'],r:'We are at **330 Costello Parkway, Minoa, NY 13116**. Serving Syracuse and surrounding Central New York.'},
       {t:['email','customerservice'],r:'Email: **customerservice@friendlypartyrental.com** · Phone: 315-884-1498'},
@@ -422,12 +398,12 @@
       {t:['book','reserve','reservation','order online','hold date'],r:'Booking: **friendlypartyrental.com/order-by-date** or call **315-884-1498**. Walk them through dates + items; double-check availability.'},
       {t:['price','pricing','cost','how much','quote','estimate'],r:'For **quiz-accurate list prices**, use this assistant while signed in (it matches the official pricing training) or quote from your study materials.\n\nIf unsure: “Let me confirm that figure with our price list / manager before I lock it in.” **315-884-1498**'},
       {t:['deposit','down payment','pay upfront'],r:'Deposit/payment rules vary by order — **do not invent terms**. Say: “I’ll confirm the deposit schedule for your items and date with our office.” Escalate to **315-884-1498** or a manager.'},
-      {t:['cancel','cancellation','refund','rain check'],r:'Cancellation and refund policy — **quote only what training/manager provides**. Default script: “I want to get the policy exactly right for your contract—I'll confirm with our office.” **315-884-1498**'},
-      {t:['damage','broken','missing','stolen','not working'],r:'Stay calm and empathetic. **Do not admit fault or promise insurance outcomes.** “I'm sorry that happened—I'm going to document this and have our team follow up.” Escalate per company procedure.'},
+      {t:['cancel','cancellation','refund','rain check'],r:'Cancellation and refund policy — **quote only what training/manager provides**. Default script: “I want to get the policy exactly right for your contract—I will confirm with our office.” **315-884-1498**'},
+      {t:['damage','broken','missing','stolen','not working'],r:'Stay calm and empathetic. **Do not admit fault or promise insurance outcomes.** “I\'m sorry that happened—I\'m going to document this and have our team follow up.” Escalate per company procedure.'},
       {t:['complaint','angry','upset','terrible','unacceptable','speak to manager'],r:'Listen first. “I’m really sorry you’re dealing with this—I’m here to help.” Gather facts (order #, date, items). **Do not argue or guarantee refunds.** Offer manager callback / **315-884-1498**.'},
       {t:['competitor','someone else cheaper','other company'],r:'Stay professional. Highlight **clean equipment, on-time delivery, full setup**, and Google reputation—never bash competitors. Offer manager/owner follow-up on large deals.'},
       {t:['insurance','liability','permit','certificate'],r:'Permits, COI, and liability questions are **not** guesswork. “I’ll have our coordinator confirm what we can provide for your venue.” Route to **315-884-1498** / manager.'},
-      {t:['how many people','guest count','capacity','head count'],r:'Capacity depends on tent size, layout, and tables—use company layout guides or ask a lead for layout math. **315-884-1498** for planning help.'},
+      {t:['how many people','guest count','capacity','head count'],r:'**Seating depends on layout** (tables, dance floor, buffet, aisles, poles)—training guidance from **friendlypartyrental.com**, **not a promise on the phone**. Clarify **seated dinner vs ceremony vs cocktail**; use layout guides or a lead. **315-884-1498** for layout-sensitive events.'},
       {t:['wedding','reception','bride'],r:'Weddings: tents, white chairs, linens, dance floor, uplighting, photo booth. Offer coordinator-style tone; confirm dates early.\n\n**315-884-1498**'},
       {
         t: [
@@ -448,22 +424,50 @@
       {t:['service area','syracuse','cicero','manlius','camillus','dewitt','liverpool','cny','central new york'],r:'Serving **Syracuse and Central NY**: Minoa, Cicero, Manlius, Camillus, DeWitt, Liverpool, and more. Confirm unusual distances with dispatch.'},
       {t:['clean','sanitize','inspected','safe','covid'],r:'Equipment is **professionally cleaned and inspected before every rental**. Safety (especially inflatables) is priority #1.'},
       {t:['review','rating','google','stars','bbb'],r:'Strong Google reputation (training cites **4.7★ / 78 reviews**—verify live star count if the customer asks for “right now”). Highlight on-time delivery + clean gear.'},
-      {t:['hello','hi','hey','good morning','good afternoon'],r:'Hello! I’m the **Friendly Party Rental** training helper. Ask about rentals, **pricing (I can match quiz answers when you’re signed in)**, booking scripts, or delivery—**315-884-1498** for the live team.'},
+      {t:['hello','hi','hey','good morning','good afternoon'],r:'Hello! Ask me about **www.friendlypartyrental.com** — rentals, pricing, bookings, delivery, and phone scripts. **315-884-1498** for the live team.'},
       {t:['what do you rent','what do you offer','catalog','inventory list','full list'],r:'**Catalog overview:**\n⛺ Tents & canopies\n🪑 Tables & chairs\n🛋️ Linens\n🎪 Bounce houses & slides\n🍿 Concessions & add-ons\n💃 Dance floors, yard games, photo booth, foam, movie screen\n💡 Lighting, climate, generators\n\n**Browse:** friendlypartyrental.com · **315-884-1498**'},
+      {t:['rain','raining','weather','storm','wind','forecast'],r:'**Weather / rain plans:** Never guarantee Mother Nature. Script: “We’ll note your date and discuss backup options with our coordinator.” For tents, ask about **sidewalls**, **weights vs stakes**, and **venue rules**. Escalate large outdoor jobs to **315-884-1498**.'},
+      {t:['stake','staking','asphalt','concrete','weights','ballast'],r:'**Surface & anchoring:** Grass may allow **staking**; **asphalt/concrete/pavers** often need **weights or engineered ballast**—crew decides on site. Do **not** promise staking through pavement. **315-884-1498** / dispatch.'},
+      {t:['permit','town permit','park permit','zoning'],r:'**Permits & town rules:** Customer or venue often secures permits—**don’t invent** who files or deadlines. “I’ll have our coordinator confirm what we need for your town/venue.” **315-884-1498**.'},
+      {t:['extra day','another day','extend rental','longer rental'],r:'**Extra days:** Extensions may be available—quote **per added day** from the price list or office. Log the request; **don’t** extend verbally without inventory confirmation.'},
+      {t:['loading dock','elevator','stairs','no elevator'],r:'**Tight venues:** Note **stairs, elevator, dock hours, and carry distance**—labor time affects feasibility and cost. Flag for **dispatch / lead** before promising.'},
+      {t:['school','church','park','venue coordinator'],r:'**Institutional venues:** Ask for **venue contact**, **load-in rules**, **power specs**, and **COI deadlines**. Align delivery windows with **facility coordinator**—**315-884-1498** for paperwork-heavy jobs.'},
     ];
+
+  function matchKeywordPatternReply(userMessage) {
+    var msg = (userMessage || '').toLowerCase();
     var i;
-    for (i = 0; i < patterns.length; i++) {
-      if (patternMatches(msg, patterns[i].t)) {
-        return patterns[i].r;
+    for (i = 0; i < FPR_KEYWORD_PATTERNS.length; i++) {
+      if (patternMatches(msg, FPR_KEYWORD_PATTERNS[i].t)) {
+        return FPR_KEYWORD_PATTERNS[i].r;
       }
     }
+    return null;
+  }
+
+  function fprDefaultFallbackReply() {
     return (
-      "I’m the **Friendly Party Rental** training assistant (runs **entirely in your browser**—no cloud AI).\n\n" +
-      '**Tips:**\n' +
-      '• Sign in so I can load **official pricing quiz answers** for item questions.\n' +
-      '• Name the item and size (e.g. “20x30 pole tent”, “white resin chair”).\n' +
-      '• For policies, deposits, or complaints, use manager-approved language and **315-884-1498**.\n\n' +
-      '📞 **315-884-1498** · customerservice@friendlypartyrental.com'
+      "I'm trained on **Friendly Party Rental** and **www.friendlypartyrental.com** — **our rentals and business only**, not general topics.\n\n" +
+      "**Try asking:**\n" +
+      "• Item + size + date (e.g. “20×30 pole tent for June 14”).\n" +
+      "• **Quote intake:** guest count, venue address, surface (grass/asphalt), power, time window.\n" +
+      "• **Delivery & setup** expectations, **rush** or **same-day** (confirm with shop).\n" +
+      "• **Weather / rain backup**, **stakes vs weights**, **permits**, or **COI** for a venue.\n" +
+      "• Scripts for **complaints**, **deposits**, or **policy** wording.\n\n" +
+      "**Public site:** https://www.friendlypartyrental.com/ · **315-884-1498** · customerservice@friendlypartyrental.com"
     );
+  }
+
+  /** Returns a string for instant UI, or null (caller may use cloud AI next). */
+  window.FPR_TRY_FAST_LOCAL_REPLY = function(userMessage) {
+    return matchKeywordPatternReply(userMessage);
+  };
+
+  window.FPR_LOCAL_AI = function(userMessage) {
+    var faqHit = tryUnifiedKnowledgeAnswer(userMessage);
+    if (faqHit) return faqHit;
+    var kw = matchKeywordPatternReply(userMessage);
+    if (kw) return kw;
+    return fprDefaultFallbackReply();
   };
 })();

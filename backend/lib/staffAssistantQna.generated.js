@@ -117,16 +117,16 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
       "assistant down"
     ],
     "q": "The AI training assistant is not answering for me.",
-    "a": "Checklist: (1) **Sign in** with your employee PIN on the hub. (2) If a **quiz is open**, finish or leave it — chat is **paused during quizzes**. (3) Ask with **specific words** (item + size + date) so the offline library can match. (4) For list prices, stay signed in so **pricing + staff Q&A** loads. (5) Live cloud AI depends on server setup — if it fails you still get **offline answers**. Call **315-884-1498** for live operations help."
+    "a": "Checklist: (1) **Sign in** with your employee PIN on the hub. (2) If a **quiz is open**, finish or leave it — chat is **paused during quizzes**. (3) Ask with **specific words** (item + size + date) so the training library can match. (4) For list prices, stay signed in so **pricing + staff Q&A** loads. (5) Questions should be about **Friendly Party Rental** and **www.friendlypartyrental.com** only. Call **315-884-1498** for live operations help."
   },
   {
     "k": [
-      "openai",
-      "chatgpt",
-      "cloud ai"
+      "how does assistant work",
+      "how does the chat work",
+      "what is this assistant"
     ],
-    "q": "Does the training chat use ChatGPT?",
-    "a": "When enabled on the server, **optional cloud AI** may answer after the **local training library** tries first. The browser cannot tell which vendor. **Official quiz prices** still come from our loaded pricing data — not guesses."
+    "q": "How does the training assistant work?",
+    "a": "It is grounded in **Friendly Party Rental** and **www.friendlypartyrental.com** — **our business and catalog only**, not the open web. It covers rentals, pricing, booking, and phone scripts. After sign-in, official pricing and staff Q&A load for accurate list prices."
   },
   {
     "k": [
@@ -134,8 +134,8 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
       "without internet",
       "library"
     ],
-    "q": "Does the assistant work without cloud AI?",
-    "a": "Yes. **Signed-in** staff load **official pricing rows** and **staff Q&A** into the browser. That works even when live AI is off or slow."
+    "q": "Does the assistant work if my connection is bad?",
+    "a": "After **sign-in**, pricing and Q&A load into your session. Use a stable connection when possible, and ask with **item + size + keywords** for the best match."
   },
   {
     "k": [
@@ -1220,6 +1220,26 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
     ],
     "q": "How do I pick the right tent size?",
     "a": "Ask **guest count**, **seated vs standing**, and **layout** (buffet, dance floor, band). Use company layout guides or a lead for math — don't wing capacity. **315-884-1498** for planning help."
+  },
+  {
+    "k": [
+      "20x20",
+      "people fit",
+      "how many under",
+      "fit under"
+    ],
+    "q": "How many people fit under a 20x20 tent?",
+    "a": "**Capacity is layout-dependent.** Training compares sizes: a **20×40** is often used around **~50 seated** in study examples; a **20×20** is **half the floor space**, so a **rough planning range** is often **~25 seated** with similar table plans—not a promise. Confirm aisles, buffet, dance floor, and poles with a lead. **315-884-1498**."
+  },
+  {
+    "k": [
+      "20x30",
+      "20 x 30",
+      "twenty by thirty",
+      "30 by 20"
+    ],
+    "q": "How many people fit under a 20x30 tent?",
+    "a": "**Seating capacity depends on layout** — table sizes, dance floor, buffet lines, aisles, and poles all change counts. Use **www.friendlypartyrental.com** and internal layout guides as **training guidance**, **not a promise on the phone**. Clarify **seated dinner vs ceremony vs cocktail**, then use **company layout guides** or a **lead** for math. Name the exact tent size (**20×30**). **315-884-1498** for layout-sensitive events."
   },
   {
     "k": [
@@ -5792,7 +5812,151 @@ module.exports.STAFF_ASSISTANT_QNA_ENTRIES = [
     ],
     "q": "Beach tent near tide line.",
     "a": "**Tide** **chart** **in** **contract** **—** **strike** **before** **surge** **reaches** **ballast**; **salt** **rinse** **gear** **after**."
+  },
+  {
+    "k": [
+      "quote intake",
+      "what to ask",
+      "before quote"
+    ],
+    "q": "What should I collect before quoting a large tent or bundled order?",
+    "a": "Capture **event date**, **delivery address** (spell it), **venue type** (yard/park/school/commercial), **guest count** and **seated vs cocktail**, **surface** (grass/asphalt) for staking/weights, **power** nearby, **delivery/setup window**, and add-ons (dance floor, stage, inflatables). Offer email for **site photos** or **planner contact**. **315-884-1498** for tight layouts."
+  },
+  {
+    "k": [
+      "rain plan",
+      "backup plan",
+      "weather backup"
+    ],
+    "q": "Customer worries about rain for an outdoor tent event.",
+    "a": "Stay calm: explain **sidewalls**, **layout adjustments**, and that **final weather decisions** follow company policy—**don’t guarantee** refunds or moves from memory. Log concerns; route **large or high-risk** events to **315-884-1498** or a lead."
+  },
+  {
+    "k": [
+      "weights",
+      "cant stake",
+      "driveway"
+    ],
+    "q": "They say we can’t stake in the driveway / blacktop.",
+    "a": "Explain **ballast / weight barrels** may be used where **staking isn’t allowed**—**crew determines** safe anchoring. **Never** promise a method until logistics reviews photos/site notes. **315-884-1498**."
+  },
+  {
+    "k": [
+      "coi deadline",
+      "certificate of insurance",
+      "venue wants coi"
+    ],
+    "q": "Venue needs COI by a specific date.",
+    "a": "Acknowledge the deadline; **don’t invent** turnaround. “I’ll have our coordinator align the **COI** with what your venue listed.” Collect **venue name**, **certificate holder wording**, and **additional insured** requirements if stated. **315-884-1498**."
+  },
+  {
+    "k": [
+      "park event",
+      "town park",
+      "public park"
+    ],
+    "q": "Event is in a public park.",
+    "a": "Flag **permits**, **power**, **water access**, **vehicle path**, and **strike time**. Parks often have **strict windows**—confirm with dispatch before promising. **315-884-1498** for park logistics."
+  },
+  {
+    "k": [
+      "narrow road",
+      "steep driveway",
+      "low bridge"
+    ],
+    "q": "Access to the site might be tight for trucks.",
+    "a": "Note **road width**, **overhead clearance**, **turnaround**, and **distance carry**—crews may need **smaller truck** or **extra labor**. **Don’t promise** truck size; escalate to **dispatch**."
+  },
+  {
+    "k": [
+      "overnight",
+      "multi-day",
+      "pickup next day"
+    ],
+    "q": "Rental spans overnight or multiple days.",
+    "a": "Clarify **delivery day/time**, **event day**, and **pickup/strike window**. Extra days are typically **priced per day** from the list—**confirm** inventory and **crew routing**. Never invent overnight rules."
+  },
+  {
+    "k": [
+      "power drop",
+      "house outlet",
+      "120v"
+    ],
+    "q": "Customer only has residential outlets for catering or DJ.",
+    "a": "Separate **household 120V** from **generator** needs for **high draw** (some catering, bands, multiple inflatables). Say you’ll **confirm amperage/voltage** with the shop—**don’t** size electrical loads from memory."
+  },
+  {
+    "k": [
+      "ada",
+      "wheelchair",
+      "accessible"
+    ],
+    "q": "They need wheelchair-accessible seating or paths.",
+    "a": "Be helpful and **non-prescriptive** on law: offer **wider aisles**, **appropriate table heights**, and **ramp coordination** through our team/venue. Escalate layout drawings to a **lead**."
+  },
+  {
+    "k": [
+      "noise",
+      "curfew",
+      "music cutoff"
+    ],
+    "q": "Town or HOA has a noise curfew.",
+    "a": "Acknowledge; **don’t quote** ordinance times from memory. “I’ll make sure our team notes **local quiet hours** on your order.” Route conflicts to **315-884-1498** / manager."
+  },
+  {
+    "k": [
+      "mud",
+      "soft ground",
+      "wet field"
+    ],
+    "q": "Yard is soggy / muddy before the event.",
+    "a": "Flag **mud** for **tent ballast**, **flooring**, and **vehicle path**—crew may adjust plan. **Don’t** promise we can drive on lawn without site review."
+  },
+  {
+    "k": [
+      "inventory check",
+      "sold out",
+      "might not have"
+    ],
+    "q": "Customer wants an item we might not have that weekend.",
+    "a": "Be honest: “Let me **check live inventory and routing** before I lock it in.” Offer **alternates** (sizes/colors) if trained. **315-884-1498** for substitutions on big jobs."
+  },
+  {
+    "k": [
+      "photo send",
+      "pictures of setup",
+      "reference photo"
+    ],
+    "q": "They want photos of past setups similar to theirs.",
+    "a": "Offer to **request** photos from the office or point to **website galleries** if applicable—**don’t invent** that we have an exact match. **315-884-1498** for marketing-approved assets."
+  },
+  {
+    "k": [
+      "referral",
+      "friend referred",
+      "heard about you"
+    ],
+    "q": "Caller says a friend referred them.",
+    "a": "Thank them; capture **how they heard about us** for notes. Keep tone warm; **don’t** promise referral discounts unless trained/promoted."
+  },
+  {
+    "k": [
+      "timeline",
+      "when to book",
+      "how far advance"
+    ],
+    "q": "How far in advance should they book peak dates?",
+    "a": "Peak **weekends/holidays** fill early—advise **as soon as they know the date**, especially for **tents + inflatables + crew-heavy** setups. **Don’t invent** “we always have X available.” **315-884-1498** for hot dates."
+  },
+  {
+    "k": [
+      "kids birthday",
+      "school carnival",
+      "church fair"
+    ],
+    "q": "School/church/community fair style event.",
+    "a": "Clarify **kids’ age range**, **supervision**, **inflatable rules**, **power**, and **setup/strike** windows. Many institutions need **COI** and **signed agreements** early—route paperwork-heavy events to the office."
   }
 ];
 
-module.exports.STAFF_ASSISTANT_QNA_VERSION = 25;
+module.exports.STAFF_ASSISTANT_QNA_VERSION = 26;

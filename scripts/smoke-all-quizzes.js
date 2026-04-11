@@ -86,6 +86,7 @@ const QUIZ_PAGES = [
   ["/quiz-products.html", "Products Knowledge Quiz"],
   ["/quiz-policies.html", "Policies & Procedures Quiz"],
   ["/quiz-customer-service.html", "Customer Service Quiz"],
+  ["/quiz-quote-calls.html", "Quote &amp; call skills quiz"],
   ["/quizzes.html", "Training quizzes"],
 ];
 
@@ -152,7 +153,13 @@ async function main() {
       return fail(`login: ${r.status} ${JSON.stringify(r.body)}`);
     }
 
-    const staffSlugs = ["products", "policies", "customer-service", "integration"];
+    const staffSlugs = [
+      "products",
+      "policies",
+      "customer-service",
+      "quote-calls",
+      "integration",
+    ];
     for (const slug of staffSlugs) {
       r = await fetchJson("/api/training/quiz-activity", {
         method: "POST",

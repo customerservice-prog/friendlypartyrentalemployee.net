@@ -17,58 +17,198 @@
     <header class="train-topnav">
       <a class="train-brand" href="/"><img src="/assets/quiz-logo.png" alt="" width="40" height="40" class="train-brand-logo" /><span>Friendly Party Rental · Training</span></a>
       <nav class="train-nav-links">
+        <a href="https://www.friendlypartyrental.com/" class="train-nav-external" target="_blank" rel="noopener noreferrer">www.friendlypartyrental.com</a>
         <a href="/" aria-current="page">Home</a>
         <a href="/quizzes">Quizzes</a>
         <a href="/assistant">AI assistant</a>
-        <a href="/ai-team">AI Team</a>
         <a href="/admin.html" class="train-nav-admin">Quiz results</a>
         <button type="button" class="train-signout" id="train-signout">Sign out</button>
       </nav>
     </header>
 
     <main class="train-hub">
-      <h1>Employee training hub</h1>
-      <p class="lead">
-        Tools for <strong>friendlypartyrental.com</strong> team members: practice pricing knowledge, get quick answers for customer calls, and master all rental knowledge.
-      </p>
+      <div class="train-visual-hero">
+        <img
+          class="train-visual-hero__img"
+          src="/assets/illu-quizzes.svg"
+          width="160"
+          height="160"
+          alt="Training hub — quizzes and practice"
+          decoding="async"
+        />
+        <div class="train-visual-hero__body">
+          <h1>Employee training hub</h1>
+          <p class="lead">
+            Tools for <strong>friendlypartyrental.com</strong> team members: practice pricing knowledge, get quick answers for customer calls, and master all rental knowledge.
+          </p>
+        </div>
+      </div>
+
+      <section class="train-audio-section" aria-labelledby="train-audio-heading">
+        <h2 id="train-audio-heading" class="train-audio-head">Phone call examples</h2>
+        <p class="train-audio-lead">
+          Compare a <strong>don’t-do-this</strong> call with the <strong>how to answer</strong> model (second recording is added when ready).
+        </p>
+        <div class="train-audio-grid">
+          <div class="train-audio-card train-audio-card--with-media">
+            <div class="train-audio-card__media-wrap train-audio-card__media-wrap--warn" aria-hidden="true">
+              <img
+                class="train-audio-card__media"
+                src="/assets/illu-call-sample-warn.svg"
+                width="560"
+                height="280"
+                alt=""
+              />
+            </div>
+            <span class="train-audio-tag train-audio-tag--warn">What not to do</span>
+            <h3>Sample call — learn what to avoid</h3>
+            <p class="train-audio-desc">
+              Listen for tone, pacing, and missed opportunities. This is for coaching, not to embarrass anyone.
+            </p>
+            <audio
+              class="train-audio-player"
+              controls
+              preload="metadata"
+              src="/assets/training-audio/call-example-what-not-to-do.mp3"
+            >
+              Your browser does not support audio playback.
+            </audio>
+          </div>
+          <div class="train-audio-card train-audio-card--with-media">
+            <div class="train-audio-card__media-wrap train-audio-card__media-wrap--ok" aria-hidden="true">
+              <img
+                class="train-audio-card__media"
+                src="/assets/illu-call-sample-model.svg"
+                width="560"
+                height="280"
+                alt=""
+              />
+            </div>
+            <span class="train-audio-tag train-audio-tag--ok">How to answer calls</span>
+            <h3>Model call — professional example</h3>
+            <p class="train-audio-desc">
+              When the model recording is ready, it will appear here so you can compare side by side with the first clip.
+            </p>
+            <div id="train-audio-howto-pending" class="train-audio-pending">
+              Model recording coming soon. Your manager will add the second file to training.
+            </div>
+            <audio
+              id="train-audio-howto"
+              class="train-audio-player"
+              controls
+              preload="metadata"
+              hidden
+            >
+              Your browser does not support audio playback.
+            </audio>
+          </div>
+        </div>
+        <p class="train-audio-lead" style="margin-top: 1.25rem">
+          When you are ready, use the <strong>Quote &amp; call skills</strong> tile below — same two examples, in a scored quiz.
+        </p>
+      </section>
 
       <div class="train-cards">
-        <a class="train-card" href="/quiz-pricing.html">
+        <a class="train-card train-card--with-media" href="/quiz-quote-calls.html">
+          <div class="train-card__media-wrap" aria-hidden="true">
+            <img class="train-card__media" src="/assets/illu-call-sample-model.svg" width="400" height="240" alt="" />
+          </div>
+          <h2>Quote &amp; call skills quiz</h2>
+          <p>
+            Practice quoting using the two phone examples above — intake questions, verifying pricing, and sounding like the model call. One attempt; score saved on this device.
+          </p>
+          <span class="badge" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#f5e6a8;border:1px solid rgba(212,175,55,0.45)">18 questions · 12 min · quote focus</span>
+        </a>
+
+        <a class="train-card train-card--with-media" href="/quiz-pricing.html">
+          <div class="train-card__media-wrap" aria-hidden="true">
+            <img class="train-card__media" src="/assets/illu-card-pricing.svg" width="400" height="240" alt="" />
+          </div>
           <h2>Pricing knowledge quiz</h2>
           <p>Timed multiple-choice quiz on tables, tents, linens, concessions, and more — same catalog facts you need on the phone.</p>
           <span class="badge">50 questions · 20 min</span>
         </a>
 
-        <a class="train-card" href="/assistant">
+        <a class="train-card train-card--with-media" href="/assistant">
+          <div class="train-card__media-wrap" aria-hidden="true">
+            <img class="train-card__media" src="/assets/illu-ai-assistant.svg" width="320" height="320" alt="" />
+          </div>
           <h2>AI training assistant</h2>
-          <p>Chat-style help: sample replies, clarifying questions, and answers drawn from the official training catalog.</p>
+          <p>
+            One assistant for everything on the job: pricing and quotes, product and inventory questions, call scripts and tone, delivery and logistics, event planning context, and policies — all grounded in the same official training the team uses.
+          </p>
           <span class="badge" style="background:linear-gradient(135deg,#d4af37,#b8860b);color:#fff;">Quick answers</span>
         </a>
 
-        <a class="train-card" href="/ai-team">
-          <h2>🤖 AI Assistant Team</h2>
-          <p>Chat with 6 specialized guides: Pricing Pro, Rentals Expert, Call Coach, Delivery Guide, Event Planner, and Policy Guide — all aligned with FPR training.</p>
-          <span class="badge" style="background:linear-gradient(135deg,#1e3a5f,#0f172a);color:#f5e6a8;">6 specialists</span>
-        </a>
-
-        <a class="train-card" href="/quiz-customer-service.html">
+        <a class="train-card train-card--with-media" href="/quiz-customer-service.html">
+          <div class="train-card__media-wrap" aria-hidden="true">
+            <img class="train-card__media" src="/assets/illu-card-service.svg" width="400" height="240" alt="" />
+          </div>
           <h2>Customer Service Quiz</h2>
           <p>Test your knowledge of customer service scripts, contact information, and how to handle calls professionally.</p>
           <span class="badge" style="background:linear-gradient(135deg,#d4af37,#b8860b);color:#fff;">20 questions · 12 min</span>
         </a>
 
-        <a class="train-card" href="/quiz-policies.html">
+        <a class="train-card train-card--with-media" href="/quiz-policies.html">
+          <div class="train-card__media-wrap" aria-hidden="true">
+            <img class="train-card__media" src="/assets/illu-card-policies.svg" width="400" height="240" alt="" />
+          </div>
           <h2>Policies & Procedures Quiz</h2>
           <p>Master booking policies, delivery procedures, company standards, and operational guidelines.</p>
           <span class="badge" style="background:linear-gradient(135deg,#d4af37,#b8860b);color:#fff;">20 questions · 12 min</span>
         </a>
 
-        <a class="train-card" href="/quiz-products.html">
+        <a class="train-card train-card--with-media" href="/quiz-products.html">
+          <div class="train-card__media-wrap" aria-hidden="true">
+            <img class="train-card__media" src="/assets/illu-card-products.svg" width="400" height="240" alt="" />
+          </div>
           <h2>Products Knowledge Quiz</h2>
           <p>Deep dive into the full rental catalog — tents, tables, chairs, inflatables, concessions, and all specialty items.</p>
           <span class="badge" style="background:linear-gradient(135deg,#d4af37,#b8860b);color:#fff;">25 questions · 15 min</span>
         </a>
       </div>
+
+      <section class="train-docs-section" aria-labelledby="train-docs-heading">
+        <h2 id="train-docs-heading" class="train-audio-head">Job aids &amp; printable sheets</h2>
+        <p class="train-audio-lead">
+          Open in a new tab to use on screen or print. To save a copy: <strong>Print → Save as PDF</strong> (or use your browser’s print dialog).
+        </p>
+        <div class="train-docs-grid">
+          <a
+            class="train-doc-card"
+            href="/training-docs/fpr-customer-quote-sheet.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="train-doc-card__tag">Quote</span>
+            <h3>Customer quote sheet</h3>
+            <p>Fill-in customer quote layout — line items, totals, and print-friendly formatting.</p>
+            <span class="train-doc-card__action">Open sheet →</span>
+          </a>
+          <a
+            class="train-doc-card"
+            href="/training-docs/fpr-call-script-faq-reference.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="train-doc-card__tag">Phone</span>
+            <h3>Call script &amp; FAQ reference</h3>
+            <p>Scripts, quick reference numbers, FAQs, and escalation cues for calls.</p>
+            <span class="train-doc-card__action">Open reference →</span>
+          </a>
+          <a
+            class="train-doc-card"
+            href="/training-docs/fpr-delivery-setup-checklist.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="train-doc-card__tag">Field</span>
+            <h3>Delivery &amp; setup checklist</h3>
+            <p>Checklist for delivery, setup, and strike — use in the field or office.</p>
+            <span class="train-doc-card__action">Open checklist →</span>
+          </a>
+        </div>
+      </section>
 
       <p class="train-footnote">
         For staff use. Questions? Contact your manager or customerservice@friendlypartyrental.com.
@@ -115,6 +255,25 @@
           } catch (_) {}
           window.location.href = "/";
         });
+
+        const howtoUrl = "/assets/training-audio/call-how-to-answer.mp3";
+        const howtoAudio = document.getElementById("train-audio-howto");
+        const howtoPending = document.getElementById("train-audio-howto-pending");
+        if (howtoAudio && howtoPending) {
+          fetch(howtoUrl, { method: "HEAD", credentials: "same-origin" })
+            .then(function (r) {
+              if (r.ok) {
+                howtoAudio.src = howtoUrl;
+                howtoAudio.removeAttribute("hidden");
+                howtoPending.setAttribute("hidden", "");
+              } else {
+                howtoPending.removeAttribute("hidden");
+              }
+            })
+            .catch(function () {
+              howtoPending.removeAttribute("hidden");
+            });
+        }
       })();
     </script>
   </body>

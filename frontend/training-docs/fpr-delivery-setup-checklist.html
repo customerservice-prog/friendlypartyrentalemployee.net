@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Friendly Party Rental – Delivery & Setup Checklist</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 11pt; color: #222; background: #fff; }
+  @media print { body { margin: 0; } .no-print { display: none; } }
+  .page { max-width: 820px; margin: 0 auto; padding: 26px 32px; }
+
+  .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #1f4cff; padding-bottom: 14px; margin-bottom: 18px; }
+  .header-left h1 { font-size: 20pt; color: #1f4cff; font-weight: 900; }
+  .header-left p { font-size: 9pt; color: #555; margin-top: 2px; }
+  .header-right { text-align: right; font-size: 9pt; color: #444; line-height: 1.7; }
+
+  .doc-title { font-size: 15pt; font-weight: 900; color: #333; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .doc-title .icon { font-size: 20pt; }
+
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .meta-box { border: 1.5px solid #dde3ff; border-radius: 8px; padding: 9px 12px; }
+  .meta-box h3 { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; color: #1f4cff; margin-bottom: 7px; }
+  .field-row { display: flex; align-items: center; margin-bottom: 5px; }
+  .field-label { font-size: 8.5pt; color: #555; width: 90px; flex-shrink: 0; }
+  .field-line { flex: 1; border-bottom: 1px solid #bbb; min-height: 17px; }
+
+  .section { margin-bottom: 16px; }
+  .section-header { background: #1f4cff; color: #fff; padding: 7px 14px; border-radius: 6px 6px 0 0; font-weight: bold; font-size: 10pt; display: flex; align-items: center; gap: 8px; }
+  .section-header .emoji { font-size: 12pt; }
+  .checklist-table { width: 100%; border-collapse: collapse; }
+  .checklist-table th { background: #e8edff; color: #1f4cff; font-size: 8.5pt; text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 10px; text-align: left; border-bottom: 1.5px solid #c0caff; }
+  .checklist-table td { padding: 7px 10px; border-bottom: 1px solid #eee; font-size: 10pt; vertical-align: middle; }
+  .checklist-table tr:nth-child(even) { background: #f7f8ff; }
+  .checklist-table .cb { width: 24px; text-align: center; }
+  .checklist-table .qty-col { width: 50px; text-align: center; }
+  .checklist-table .cond-col { width: 110px; }
+  .checklist-table .note-col { width: 140px; }
+  .checkbox { width: 16px; height: 16px; border: 1.5px solid #888; border-radius: 3px; display: inline-block; }
+
+  .status-pill { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 8pt; font-weight: bold; }
+  .pill-ok { background: #d4f7e0; color: #1a7a3f; }
+  .pill-dmg { background: #ffe0e0; color: #c0392b; }
+  .pill-miss { background: #fff3cd; color: #856404; }
+
+  .condition-select { font-size: 8.5pt; border: 1px solid #ddd; border-radius: 4px; padding: 2px 4px; width: 105px; }
+
+  .two-col-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .note-box { border: 1.5px solid #dde3ff; border-radius: 8px; padding: 10px 14px; }
+  .note-box h3 { font-size: 8.5pt; text-transform: uppercase; letter-spacing: 1px; color: #1f4cff; margin-bottom: 8px; }
+  textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 6px; font-size: 9.5pt; resize: none; font-family: Arial; color: #333; }
+
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 12px; }
+  .sig-box p { font-size: 9pt; color: #555; margin-bottom: 4px; }
+  .sig-line { border-bottom: 1.5px solid #555; height: 30px; margin-bottom: 3px; }
+  .sig-sub { font-size: 8pt; color: #999; }
+
+  .footer { text-align: center; font-size: 8pt; color: #888; border-top: 1px solid #ddd; padding-top: 10px; }
+
+  .alert-bar { background: #fffbe6; border: 1.5px solid #ffd35b; border-radius: 6px; padding: 8px 14px; font-size: 9pt; color: #555; margin-bottom: 16px; }
+  .alert-bar strong { color: #333; }
+
+  .no-print { text-align: center; padding: 16px; }
+  .no-print button { background: #1f4cff; color: white; border: none; padding: 12px 28px; font-size: 12pt; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  .no-print button:hover { background: #1637d8; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Friendly Party Rental</h1>
+      <p>Party &amp; Event Rentals — Syracuse, NY &amp; Surrounding Areas</p>
+    </div>
+    <div class="header-right">
+      📞 315-884-1498<br>
+      customerservice@friendlypartyrental.com<br>
+      330 Costello Parkway, Minoa, NY 13116
+    </div>
+  </div>
+
+  <div class="doc-title"><span class="icon">🚚</span> Delivery, Setup &amp; Return Checklist</div>
+
+  <div class="meta-grid">
+    <div class="meta-box">
+      <h3>Order Info</h3>
+      <div class="field-row"><span class="field-label">Order #</span><span class="field-line"></span></div>
+      <div class="field-row"><span class="field-label">Quote #</span><span class="field-line"></span></div>
+      <div class="field-row"><span class="field-label">Driver</span><span class="field-line"></span></div>
+    </div>
+    <div class="meta-box">
+      <h3>Customer</h3>
+      <div class="field-row"><span class="field-label">Name</span><span class="field-line"></span></div>
+      <div class="field-row"><span class="field-label">Phone</span><span class="field-line"></span></div>
+      <div class="field-row"><span class="field-label">Address</span><span class="field-line"></span></div>
+    </div>
+    <div class="meta-box">
+      <h3>Schedule</h3>
+      <div class="field-row"><span class="field-label">Event Date</span><span class="field-line"></span></div>
+      <div class="field-row"><span class="field-label">Deliver By</span><span class="field-line"></span></div>
+      <div class="field-row"><span class="field-label">Pickup By</span><span class="field-line"></span></div>
+    </div>
+  </div>
+
+  <div class="alert-bar">
+    ⚠️ <strong>Same-Day Pickup?</strong> &nbsp; □ Yes &nbsp; □ No &nbsp;&nbsp;&nbsp;
+    <strong>Setup Required?</strong> &nbsp; □ Yes &nbsp; □ No &nbsp;&nbsp;&nbsp;
+    <strong>Tent Install?</strong> &nbsp; □ Yes &nbsp; □ No
+  </div>
+
+  <!-- Outgoing -->
+  <div class="section">
+    <div class="section-header"><span class="emoji">📦</span> PRE-DELIVERY: Items Loaded &amp; Condition Check</div>
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th class="cb">✓</th>
+          <th>Item Description</th>
+          <th class="qty-col">Qty Out</th>
+          <th class="cond-col">Condition Out</th>
+          <th class="note-col">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Minor Wear</option><option>🔴 Needs Repair</option></select></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Setup Tasks -->
+  <div class="section">
+    <div class="section-header"><span class="emoji">🔧</span> ON-SITE SETUP TASKS</div>
+    <table class="checklist-table">
+      <thead>
+        <tr><th class="cb">✓</th><th>Task</th><th style="width:120px">Completed By</th><th style="width:130px">Time</th><th class="note-col">Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Confirm all items match order sheet before unloading</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Tent staked &amp; secured properly</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Tables set up in requested layout</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Chairs unfolded / arranged as directed</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Bounce house / inflatable staked &amp; inflated</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Generator placed safely &amp; fueled</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Concession equipment tested &amp; operational</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Linens placed on tables (if applicable)</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Customer walkthrough &amp; signature obtained</td><td></td><td></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td>Photo of setup taken (for records)</td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Return -->
+  <div class="section">
+    <div class="section-header"><span class="emoji">🔄</span> PICKUP &amp; RETURN: Item Count &amp; Damage Check</div>
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th class="cb">✓</th>
+          <th>Item Description</th>
+          <th class="qty-col">Qty Out</th>
+          <th class="qty-col">Qty Back</th>
+          <th class="cond-col">Condition Returned</th>
+          <th class="note-col">Damage / Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+        <tr><td class="cb"><span class="checkbox"></span></td><td></td><td class="qty-col"></td><td class="qty-col"></td><td><select class="condition-select"><option></option><option>✅ Clean / Good</option><option>⚠️ Dirty</option><option>🔴 Damaged</option><option>❌ Missing</option></select></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notes -->
+  <div class="two-col-notes">
+    <div class="note-box">
+      <h3>Damage / Incident Notes</h3>
+      <textarea rows="4" placeholder="Describe any damage, missing items, or incidents here. Include item names and quantities..."></textarea>
+    </div>
+    <div class="note-box">
+      <h3>Customer Comments / Follow-Up Needed</h3>
+      <textarea rows="4" placeholder="Note any customer feedback, complaints, or required follow-up actions..."></textarea>
+    </div>
+  </div>
+
+  <!-- Signatures -->
+  <div class="sig-grid">
+    <div class="sig-box">
+      <p>Driver / Crew Signature</p>
+      <div class="sig-line"></div>
+      <div class="sig-sub">Name &amp; Date</div>
+    </div>
+    <div class="sig-box">
+      <p>Customer Signature (Delivery Accepted)</p>
+      <div class="sig-line"></div>
+      <div class="sig-sub">Name &amp; Date</div>
+    </div>
+    <div class="sig-box">
+      <p>Customer Signature (Pickup / Return)</p>
+      <div class="sig-line"></div>
+      <div class="sig-sub">Name &amp; Date</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Friendly Party Rental L.L.C. &nbsp;|&nbsp; 330 Costello Parkway, Minoa, NY 13116 &nbsp;|&nbsp; 315-884-1498 &nbsp;|&nbsp; www.friendlypartyrental.com
+  </div>
+
+</div>
+<div class="no-print">
+  <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+</body>
+</html>

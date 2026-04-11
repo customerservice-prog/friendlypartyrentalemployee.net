@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Quote &amp; call skills quiz — Friendly Party Rental training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/train.css" />
+    <style>
+      :root{--gold:#d4af37;--gold-dark:#b8860b;--correct:#0d7a3e;--wrong:#b42318;}
+      body{margin:0;min-height:100vh;font-family:"Inter",system-ui,sans-serif;background:linear-gradient(145deg,#0f172a 0%,#1e3a5f 45%,#0c1929 100%);}
+      .shell{max-width:860px;margin:0 auto;padding:2rem 1.25rem 4rem;}
+      .card{background:#fff;border-radius:20px;padding:2.25rem 2.5rem;box-shadow:0 8px 48px rgba(0,0,0,0.28);}
+      .card h1{font-size:1.45rem;font-weight:800;color:#1a1a2e;margin:0 0 0.25rem;}
+      .card .sub{color:#64748b;font-size:0.9rem;margin:0 0 1.5rem;}
+      .quiz-examples{border:1.5px solid #e2e8f0;border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.5rem;background:#f8fafc;}
+      .quiz-examples h2{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#64748b;margin:0 0 0.75rem;}
+      .quiz-examples__pair{display:grid;gap:1rem;}
+      @media(min-width:640px){.quiz-examples__pair{grid-template-columns:1fr 1fr;}}
+      .quiz-examples__block h3{font-size:0.95rem;font-weight:700;color:#1a1a2e;margin:0 0 0.35rem;}
+      .quiz-examples__block p{font-size:0.82rem;color:#64748b;margin:0 0 0.5rem;line-height:1.45;}
+      .quiz-examples__block audio{width:100%;margin-top:0.25rem;}
+      .quiz-examples__pending{font-size:0.82rem;color:#64748b;padding:0.5rem;border-radius:8px;background:#fff;border:1px dashed #cbd5e1;}
+      .frow{margin-bottom:1rem;}
+      .frow label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.3rem;color:#64748b;}
+      .frow input{width:100%;padding:0.65rem 0.8rem;border:1.5px solid #dde1ec;border-radius:10px;font:inherit;font-size:0.95rem;outline:none;box-sizing:border-box;}
+      .frow input:focus{border-color:var(--gold);}
+      .btn-start{width:100%;padding:1rem;border:none;border-radius:14px;font:inherit;font-size:1rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#d4af37,#b8860b);color:#fff;margin-top:0.5rem;}
+      .pbar{height:6px;background:rgba(0,0,0,0.1);border-radius:999px;margin-bottom:1.5rem;overflow:hidden;}
+      .pfill{height:100%;background:linear-gradient(90deg,#d4af37,#f5e6a8,#d4af37);border-radius:999px;transition:width 0.4s;}
+      .qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;}
+      .qlabel{font-size:0.82rem;font-weight:600;color:#64748b;}
+      .timer{font-size:0.9rem;font-weight:700;color:#64748b;background:#f0f4f8;padding:0.3rem 0.8rem;border-radius:999px;}
+      .timer.low{color:#b42318;background:#fef2f2;}
+      .qcat{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold-dark);margin-bottom:0.5rem;}
+      .qtext{font-size:1.1rem;font-weight:600;color:#1a1a2e;line-height:1.5;margin-bottom:1.25rem;}
+      .opts{display:grid;gap:0.65rem;}
+      .opt{width:100%;text-align:left;padding:0.9rem 1.1rem;border:2px solid #e2e8f0;border-radius:12px;background:#fff;font:inherit;font-size:0.95rem;cursor:pointer;color:#1a1a2e;transition:all 0.15s;}
+      .opt:hover:not(:disabled){border-color:var(--gold);background:#fffdf5;}
+      .opt.correct{background:#d1fae5;border-color:var(--correct);color:var(--correct);font-weight:600;}
+      .opt.wrong{background:#fee2e2;border-color:var(--wrong);color:var(--wrong);}
+      .opt.dim{opacity:0.4;}
+      .fb{padding:0.75rem 1rem;border-radius:10px;font-size:0.9rem;font-weight:500;margin-top:0.75rem;display:none;}
+      .fb.show{display:block;}
+      .fb.ok{background:#d1fae5;color:#065f46;}
+      .fb.bad{background:#fee2e2;color:#991b1b;}
+      .nwrap{margin-top:1rem;display:none;}
+      .nwrap.show{display:block;}
+      .btn-next{padding:0.8rem 2rem;border:none;border-radius:12px;font:inherit;font-size:0.95rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#d4af37,#b8860b);color:#fff;}
+      .rcard{text-align:center;padding:1rem 0;}
+      .rscore{font-size:3rem;font-weight:800;margin:0.5rem 0;}
+      .rpct{font-size:1.1rem;color:#64748b;}
+      .pass-badge{background:#d1fae5;color:#065f46;padding:0.3rem 0.9rem;border-radius:999px;font-size:0.85rem;font-weight:700;}
+      .fail-badge{background:#fee2e2;color:#991b1b;padding:0.3rem 0.9rem;border-radius:999px;font-size:0.85rem;font-weight:700;}
+      .revlist{margin-top:1.5rem;text-align:left;}
+      .revitem{background:#f8f9fb;border-radius:10px;padding:0.75rem 1rem;margin-bottom:0.5rem;font-size:0.85rem;}
+      .revq{font-weight:600;color:#1a1a2e;margin-bottom:0.25rem;}
+      .revm{color:#64748b;}
+      .quote-shell-wait{opacity:0;transition:opacity 0.2s ease;}
+      .quote-shell-wait.quote-shell-ready{opacity:1;}
+      .quiz-result-visual{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(145deg,#1e3a5f 0%,#0f172a 100%);margin:0 auto 1.25rem;max-width:520px;min-height:200px;border:3px solid #334155;}
+      .quiz-result-visual--pass{border-color:#0d7a3e;box-shadow:0 0 0 1px rgba(13,122,62,0.25);}
+      .quiz-result-visual--fail{border-color:#b42318;box-shadow:0 0 0 1px rgba(180,35,24,0.2);}
+      .quiz-result-visual__bg{width:100%;height:180px;object-fit:contain;object-position:center bottom;opacity:0.35;display:block;}
+      .quiz-result-visual__overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.25rem;text-align:center;gap:0.25rem;}
+      .quiz-result-visual__complete{font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#f5e6a8;}
+      .quiz-result-visual__scoreline{font-size:2.75rem;font-weight:800;color:#fff;line-height:1.1;text-shadow:0 2px 16px rgba(0,0,0,0.35);}
+      .quiz-result-visual__pct{font-size:1.05rem;font-weight:600;color:#e2e8f0;}
+      .quiz-complete-title{font-size:1.35rem;font-weight:800;color:#1a1a2e;margin:0 0 0.35rem;}
+      .quiz-complete-sub{font-size:0.95rem;color:#64748b;margin:0 0 1rem;}
+      .hidden{display:none!important;}
+    </style>
+  </head>
+  <body>
+    <header class="train-topnav">
+      <a class="train-brand" href="/"><img src="/assets/quiz-logo.png" alt="" width="40" height="40" class="train-brand-logo" /><span>Training hub</span></a>
+      <nav class="train-nav-links">
+        <a href="/">Home</a>
+        <a href="/quizzes">Quizzes</a>
+        <a href="/assistant">AI assistant</a>
+        <a href="/admin.html" class="train-nav-admin">Quiz results</a>
+        <button type="button" class="train-signout" id="train-signout">Sign out</button>
+      </nav>
+    </header>
+    <div class="shell quote-shell-wait" id="quote-shell">
+      <div class="card" id="screen-intro">
+        <h1>Quote &amp; call skills quiz</h1>
+        <p class="sub">
+          Listen to the <strong>two phone examples</strong> below (same clips as the training hub), then answer questions on quoting accurately and professionally.
+        </p>
+        <div class="quiz-examples" aria-labelledby="quiz-examples-heading">
+          <h2 id="quiz-examples-heading">Examples on this quiz</h2>
+          <div class="quiz-examples__pair">
+            <div class="quiz-examples__block">
+              <h3>Sample A — coaching (what to avoid)</h3>
+              <p>Listen for tone, pacing, and missed opportunities.</p>
+              <audio controls preload="metadata" src="/assets/training-audio/call-example-what-not-to-do.mp3">
+                Your browser does not support audio playback.
+              </audio>
+            </div>
+            <div class="quiz-examples__block">
+              <h3>Sample B — model (how to answer)</h3>
+              <p>Professional example when the recording is available.</p>
+              <div id="quiz-quote-howto-pending" class="quiz-examples__pending">
+                Model recording not loaded yet — your manager can add <code>call-how-to-answer.mp3</code> to training audio.
+              </div>
+              <audio id="quiz-quote-howto" class="hidden" controls preload="metadata"></audio>
+            </div>
+          </div>
+        </div>
+        <div class="frow"><label>Your full name</label><input id="emp-name" type="text" placeholder="Full name" /></div>
+        <div class="frow"><label>Work email</label><input id="emp-email" type="email" placeholder="name@example.com" /></div>
+        <div class="frow"><label>Job title</label><input id="emp-job" type="text" placeholder="e.g. Customer Service Rep" /></div>
+        <div class="quiz-integrity-notice" role="region" aria-labelledby="quiz-integrity-heading">
+          <h2 id="quiz-integrity-heading" class="quiz-integrity-heading">Quiz integrity — read before you start</h2>
+          <p class="quiz-integrity-text">You must complete this quiz <strong>on your own</strong>, without search engines, notes, other people, phones, or any automated tools—including ChatGPT, other chatbots, or AI assistants—to look up or generate answers. Using unauthorized help is <strong>misrepresentation</strong> and may result in <strong>disciplinary action up to and including termination of employment</strong>, or <strong>withdrawal or denial of a job application or offer</strong>.</p>
+          <label class="quiz-integrity-label"><input type="checkbox" id="quiz-integrity-ack" autocomplete="off" /> <span>I understand and agree to complete this quiz without unauthorized assistance. I understand violating this policy may result in termination or other employment action.</span></label>
+        </div>
+        <button class="btn-start" id="btn-start">Start quiz · 18 questions · 12:00 timer</button>
+      </div>
+      <div class="card hidden" id="screen-quiz">
+        <div class="pbar"><div class="pfill" id="pfill" style="width:2%"></div></div>
+        <div class="qmeta"><span class="qlabel" id="qlabel">Question 1</span><span class="timer" id="timer">12:00</span></div>
+        <div class="qcat" id="qcat"></div>
+        <div class="qtext" id="qtext"></div>
+        <div class="opts" id="opts"></div>
+        <div class="fb" id="fb"></div>
+        <div class="nwrap" id="nwrap"><button class="btn-next" id="btn-next">Next question</button></div>
+      </div>
+      <div class="card hidden" id="screen-results">
+        <div class="rcard" id="rcard">
+          <div class="quiz-result-visual" id="quiz-result-visual" aria-hidden="true">
+            <img class="quiz-result-visual__bg" src="/assets/illu-call-sample-model.svg" width="560" height="280" alt="" />
+            <div class="quiz-result-visual__overlay">
+              <span class="quiz-result-visual__complete" id="result-visual-complete">Complete</span>
+              <div class="quiz-result-visual__scoreline" id="result-visual-scoreline">—</div>
+              <div class="quiz-result-visual__pct" id="result-visual-pct"></div>
+            </div>
+          </div>
+          <h2 class="quiz-complete-title" id="rkicker">Complete</h2>
+          <p class="quiz-complete-sub" id="rsubline"></p>
+          <div class="rscore hidden" id="rscore" aria-hidden="true">—</div>
+          <div class="rpct hidden" id="rpct" aria-hidden="true"></div>
+          <div id="rbadge" style="margin:0.5rem 0;"></div>
+          <div class="revlist hidden" id="revlist"><h3 style="font-size:0.9rem;font-weight:700;color:#64748b;margin-bottom:0.75rem;">Review missed questions</h3><div id="revitems"></div></div>
+          <div id="savestatus" style="margin-top:1rem;font-size:0.85rem;color:#64748b;"></div>
+          <p id="quiz-locked-note" class="hidden" style="margin-top:1rem;font-size:0.88rem;color:#64748b;">This quiz can only be taken once. Your score is saved on this device.</p>
+        </div>
+      </div>
+    </div>
+    <script src="/js/fpr-ai-bootstrap.js"></script>
+    <script src="/js/quiz-active-guard.js"></script>
+    <script>
+    (function() {
+      var STORAGE_KEY = "fpr-training-quote-calls-complete-v1";
+      var Q = [{"s":"Call examples","q":"The coaching sample (Sample A — what to avoid) is mainly for:","o":["Learning which mistakes to watch for on real calls","Proving a coworker was wrong","Recording customer credit cards"],"a":0},{"s":"Call examples","q":"The model sample (Sample B — how to answer), when available, is best used to:","o":["Memorize one script word-for-word every time","Compare tone, structure, and thoroughness with Sample A","Replace all pricing training"],"a":1},{"s":"Quote workflow","q":"Before you give a firm price for rental items, the safest approach is:","o":["Verify against current catalog or office-confirmed pricing","Quote from memory if you are pretty sure","Round down so the customer likes you"],"a":0},{"s":"Quote workflow","q":"Which set of details should you usually collect before building a quote?","o":["Name, event date, location, and items or package needs","Only the customer's first name","Nothing until they pay a deposit"],"a":0},{"s":"Quote workflow","q":"If you are unsure of a price while the customer is on the phone, you should:","o":["Say you will verify and follow up, or check with the office while they wait if appropriate","Make up a number so you do not lose the sale","Tell them to guess"],"a":0},{"s":"Quote workflow","q":"A customer asks for a quick “ballpark.” The best practice is still to:","o":["Gather key details and use official pricing sources — not random numbers","Throw out a rough number without notes","Refuse to help until they book"],"a":0},{"s":"Compared to Sample A","q":"If Sample A showed rushing or skipping details, the fix aligned with Sample B is:","o":["Slow down, ask clarifying questions, and record what you learn","End the call faster","Avoid writing anything down"],"a":0},{"s":"Compared to Sample B","q":"The model approach usually includes a professional greeting such as:","o":["“Thank you for calling Friendly Party Rental — how can I help you today?”","“Yeah, what do you need?”","“Hold on.”"],"a":0},{"s":"Compared to Sample B","q":"Ending a quote call professionally often includes:","o":["Confirming next steps (callback, written quote, booking link, etc.)","Hanging up as soon as you say a price","Assuming they understood without checking"],"a":0},{"s":"Site & logistics","q":"Why ask about delivery address and setup surface (grass, pavement, etc.)?","o":["They affect delivery, setup, safety, and accurate quoting","They never matter for tents or inflatables","Only for weddings"],"a":0},{"s":"Policies","q":"Deposit, cancellation, or payment terms should come from:","o":["Official company policy and written terms — not improvised rules","Whatever sounds fair in the moment","The lowest competitor you can name"],"a":0},{"s":"Quote workflow","q":"You may need a written quote or email follow-up when:","o":["The order is complex or the customer wants something in writing","Never — verbal quotes are always enough","Only for orders under $100"],"a":0},{"s":"Quote workflow","q":"For inflatables, surface and space questions matter because:","o":["Safety and setup requirements depend on them","They are optional small talk","Only the color of the unit matters"],"a":0},{"s":"Professional tone","q":"Compared with a rushed or dismissive call, Sample B’s style emphasizes:","o":["Listening, patience, and clear next steps","Talking over the customer","Avoiding follow-up"],"a":0},{"s":"Contact","q":"Main customer phone number for Friendly Party Rental is:","o":["315-884-1499","315-884-1498","315-844-1498"],"a":1},{"s":"Contact","q":"Customer service email for follow-up on quotes:","o":["customerservice@friendlypartyrental.com","support@randomrentals.com","info@friendlypartyrental.com"],"a":0},{"s":"Quote workflow","q":"Callback number and spelling of name/venue should be:","o":["Confirmed when needed so you can reach them with the quote","Skipped to save time","Only collected after they pay"],"a":0},{"s":"Booking","q":"A good way to explain booking after quoting:","o":["Direct them to friendlypartyrental.com/order-by-date or 315-884-1498 as appropriate","Tell them to figure it out online alone","Say booking is not available"],"a":0}];
+      var SECS = 720;
+      var idx = 0, timer = null, left = SECS, answers = [];
+
+      function $(id){return document.getElementById(id);}
+      function loadStoredCompletion() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return null;
+          var o = JSON.parse(raw);
+          if (!o || o.v !== 1 || typeof o.score !== "number" || typeof o.total !== "number") return null;
+          return o;
+        } catch (e) {
+          return null;
+        }
+      }
+      function saveCompletion(payload) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (e) {}
+      }
+      function renderResults(score, total, pct, passed, missed) {
+        var vis = $("quiz-result-visual");
+        vis.classList.toggle("quiz-result-visual--pass", !!passed);
+        vis.classList.toggle("quiz-result-visual--fail", !passed);
+        $("result-visual-complete").textContent = "Complete";
+        $("result-visual-scoreline").textContent = score + " / " + total;
+        $("result-visual-pct").textContent = pct + "% correct";
+        $("rkicker").textContent = "Complete";
+        $("rsubline").textContent = passed
+          ? "Great work — you passed."
+          : "You finished. Keep studying the hub call examples and company resources.";
+        $("rbadge").innerHTML = passed
+          ? '<span class="pass-badge">Pass ✓</span>'
+          : '<span class="fail-badge">Did not pass</span>';
+        $("savestatus").textContent = "Score saved · " + score + "/" + total + " (" + pct + "%)";
+        $("quiz-locked-note").classList.remove("hidden");
+        var revlist = $("revlist");
+        if (missed && missed.length) {
+          revlist.classList.remove("hidden");
+          var ri = $("revitems");
+          ri.innerHTML = "";
+          missed.forEach(function (m) {
+            var w = document.createElement("div");
+            w.className = "revitem";
+            w.innerHTML = '<div class="revq"></div><div class="revm"></div>';
+            w.querySelector(".revq").textContent = m.question;
+            w.querySelector(".revm").textContent =
+              "Your answer: " + m.yourAnswer + " · Correct: " + m.correctAnswer;
+            ri.appendChild(w);
+          });
+        } else {
+          revlist.classList.add("hidden");
+        }
+      }
+      function showCompletedScreen(data) {
+        $("screen-intro").classList.add("hidden");
+        $("screen-quiz").classList.add("hidden");
+        $("screen-results").classList.remove("hidden");
+        var missed = Array.isArray(data.missed) ? data.missed : [];
+        renderResults(data.score, data.total, data.pct, data.passed, missed);
+      }
+      function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+      function tick(){left--;if(left<=0){left=0;updTimer();done();return;}updTimer();}
+      function updTimer(){var el=$('timer');el.textContent=fmt(left);el.classList.toggle('low',left<=120);}
+      function setP(){$('pfill').style.width=((idx+1)/Q.length*100)+'%';$('qlabel').textContent='Question '+(idx+1)+' / '+Q.length;}
+
+      function showQ() {
+        setP(); var q=Q[idx];
+        $('qcat').textContent=q.s; $('qtext').textContent=q.q;
+        $('opts').innerHTML=''; $('fb').className='fb'; $('fb').textContent='';
+        $('nwrap').className='nwrap';
+        q.o.forEach(function(label,i){
+          var b=document.createElement('button');b.className='opt';b.type='button';b.textContent=label;
+          b.addEventListener('click',function(){choose(i);});$('opts').appendChild(b);
+        });
+      }
+
+      function choose(ci) {
+        var q=Q[idx]; var btns=$('opts').querySelectorAll('.opt');
+        btns.forEach(function(b){b.disabled=true;});
+        var ok=q.a===ci;
+        answers[idx]={wasCorrect:ok,question:q.q,yourAnswer:q.o[ci],correctAnswer:q.o[q.a]};
+        btns.forEach(function(b,i){if(i===q.a)b.classList.add('correct');else if(i===ci)b.classList.add('wrong');else b.classList.add('dim');});
+        var fb=$('fb');fb.className='fb show '+(ok?'ok':'bad');
+        fb.textContent=ok?'✓ Correct!':'✗ The correct answer is: '+q.o[q.a];
+        $('nwrap').className='nwrap show';
+        $('btn-next').textContent=(idx===Q.length-1)?'See results':'Next question';
+      }
+
+      function done() {
+        void fetch("/api/training/quiz-activity", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ active: false }),
+        }).catch(function () {});
+        clearInterval(timer);
+        timer = null;
+        $("screen-quiz").classList.add("hidden");
+        $("screen-results").classList.remove("hidden");
+        if (window.trainQuizHardGuard) window.trainQuizHardGuard(null);
+        var score = answers.filter(function (a) {
+          return a && a.wasCorrect;
+        }).length;
+        var total = Q.length;
+        var pct = Math.round((score / total) * 100);
+        var passed = pct >= 80;
+        var missed = answers.filter(function (a) {
+          return a && !a.wasCorrect;
+        });
+        var missedPayload = missed.map(function (m) {
+          return {
+            question: m.question,
+            yourAnswer: m.yourAnswer,
+            correctAnswer: m.correctAnswer,
+          };
+        });
+        saveCompletion({
+          v: 1,
+          score: score,
+          total: total,
+          pct: pct,
+          passed: passed,
+          missed: missedPayload,
+          completedAt: Date.now(),
+        });
+        renderResults(score, total, pct, passed, missed);
+      }
+
+      $("btn-start").addEventListener("click", function () {
+        var already = loadStoredCompletion();
+        if (already) {
+          showCompletedScreen(already);
+          return;
+        }
+        if (!$("emp-name").value.trim()) {
+          $("emp-name").focus();
+          return;
+        }
+        var ack = $("quiz-integrity-ack");
+        if (!ack || !ack.checked) {
+          if (ack) ack.focus();
+          return;
+        }
+        fetch('/api/training/quiz-activity',{
+          method:'POST',
+          credentials:'same-origin',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({ active:true, slug:'quote-calls' }),
+        }).then(function(res){
+          if(!res.ok){
+            alert('Could not start the quiz session. Check your connection and try again.');
+            return;
+          }
+          idx=0;left=SECS;answers=[];
+          $('screen-intro').classList.add('hidden');
+          $('screen-quiz').classList.remove('hidden');
+          if(window.trainQuizHardGuard)window.trainQuizHardGuard($('screen-quiz'));
+          updTimer();
+          timer=setInterval(tick,1000);
+          showQ();
+        }).catch(function(){
+          alert('Could not start the quiz session. Check your connection and try again.');
+        });
+      });
+
+      $("btn-next").addEventListener("click", function () {
+        idx++;
+        if (idx >= Q.length) done();
+        else showQ();
+      });
+
+      fetch("/api/employee/me", { credentials: "same-origin" })
+        .then(function (r) {
+          return r.json().catch(function () {
+            return {};
+          });
+        })
+        .then(function (d) {
+          var shell = $("quote-shell");
+          if (shell) {
+            shell.classList.add("quote-shell-ready");
+          }
+          if (!d.employeeAuthenticated)
+            window.location.href =
+              "/welcome.html?return=" +
+              encodeURIComponent(window.location.pathname + window.location.search);
+          else {
+            var saved = loadStoredCompletion();
+            if (saved) showCompletedScreen(saved);
+          }
+        })
+        .catch(function () {
+          var shell = $("quote-shell");
+          if (shell) shell.classList.add("quote-shell-ready");
+        });
+
+      document.getElementById('train-signout').addEventListener('click', async function(){
+        try {
+          await fetch('/api/employee/logout',{method:'POST',credentials:'same-origin'});
+        } catch (_) {}
+        window.location.href='/';
+      });
+
+      var howtoUrl = "/assets/training-audio/call-how-to-answer.mp3";
+      var howtoAudio = document.getElementById("quiz-quote-howto");
+      var howtoPending = document.getElementById("quiz-quote-howto-pending");
+      if (howtoAudio && howtoPending) {
+        fetch(howtoUrl, { method: "HEAD", credentials: "same-origin" })
+          .then(function (r) {
+            if (r.ok) {
+              howtoAudio.src = howtoUrl;
+              howtoAudio.removeAttribute("hidden");
+              howtoAudio.classList.remove("hidden");
+              howtoPending.setAttribute("hidden", "");
+            }
+          })
+          .catch(function () {});
+      }
+    })();
+    </script>
+  </body>
+</html>

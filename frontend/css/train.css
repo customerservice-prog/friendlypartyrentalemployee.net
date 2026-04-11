@@ -61,6 +61,15 @@
   background: rgba(212, 175, 55, 0.22);
   color: #fff;
 }
+.train-nav-links a.train-nav-external {
+  color: #a7f3d0;
+  border: 1px solid rgba(167, 243, 208, 0.45);
+  font-weight: 600;
+}
+.train-nav-links a.train-nav-external:hover {
+  color: #ecfdf5;
+  background: rgba(167, 243, 208, 0.14);
+}
 
 .train-signout {
   margin-left: 0.15rem;
@@ -77,6 +86,62 @@
 .train-signout:hover {
   background: rgba(212, 175, 55, 0.2);
   color: #fff;
+}
+
+.train-visual-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+}
+.train-visual-hero__img {
+  width: 112px;
+  height: 112px;
+  flex-shrink: 0;
+  border-radius: 22px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+  object-fit: contain;
+  background: rgba(15, 23, 42, 0.35);
+}
+.train-visual-hero__body .lead {
+  margin-bottom: 0;
+}
+.train-visual-hero__label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #a7f3d0;
+  margin: 0 0 0.35rem;
+}
+.train-visual-hero__blurb {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  margin: 0;
+  max-width: 40ch;
+}
+.train-assistant-intro {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem 0;
+  box-sizing: border-box;
+}
+.train-visual-hero--compact .train-visual-hero__img {
+  width: 96px;
+  height: 96px;
+}
+@media (max-width: 520px) {
+  .train-visual-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .train-visual-hero__img {
+    width: 88px;
+    height: 88px;
+  }
 }
 
 .train-hub {
@@ -98,6 +163,168 @@
   margin: 0 0 2rem;
   max-width: 52ch;
 }
+
+.train-audio-section {
+  margin: 0 0 2rem;
+}
+.train-audio-head {
+  margin: 0 0 0.35rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.train-audio-lead {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin: 0 0 1.1rem;
+  max-width: 56ch;
+}
+.train-audio-lead strong {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 600;
+}
+.train-audio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.train-audio-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.2rem 1.15rem 1.35rem;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+}
+.train-audio-card--with-media {
+  padding: 0 1.15rem 1.35rem;
+}
+.train-audio-card__media-wrap {
+  margin: 0 -1.15rem 0.85rem;
+  padding: 0.5rem 0.65rem 0.35rem;
+  text-align: center;
+  border-radius: 15px 15px 0 0;
+}
+.train-audio-card__media-wrap--warn {
+  background: linear-gradient(180deg, #fef2f2 0%, #ffffff 70%);
+  border-bottom: 1px solid #fecaca;
+}
+.train-audio-card__media-wrap--ok {
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 70%);
+  border-bottom: 1px solid #bbf7d0;
+}
+.train-audio-card__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 104px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.train-audio-tag {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.22rem 0.5rem;
+  border-radius: 6px;
+}
+.train-audio-tag--warn {
+  color: #991b1b;
+  background: #fef2f2;
+}
+.train-audio-tag--ok {
+  color: #166534;
+  background: #f0fdf4;
+}
+.train-audio-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+.train-audio-desc {
+  margin: 0 0 1rem;
+  font-size: 0.86rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+.train-audio-player {
+  display: block;
+  width: 100%;
+  margin-top: 0.15rem;
+}
+.train-audio-pending {
+  border: 2px dashed rgba(100, 116, 139, 0.4);
+  border-radius: 12px;
+  padding: 1.1rem 0.9rem;
+  text-align: center;
+  font-size: 0.86rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+/** Printable HTML job aids (quote sheet, call script, delivery checklist) */
+.train-docs-section {
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.train-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.train-doc-card {
+  display: block;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 14px;
+  padding: 1.1rem 1.15rem 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.train-doc-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.24);
+  border-color: rgba(212, 175, 55, 0.55);
+}
+.train-doc-card__tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b8860b;
+  margin-bottom: 0.35rem;
+}
+.train-doc-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.3;
+}
+.train-doc-card p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+.train-doc-card__action {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1e3a5f;
+}
+
 .train-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -113,6 +340,25 @@
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.5);
   transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+.train-card--with-media {
+  padding: 0 1.25rem 1.45rem;
+}
+.train-card__media-wrap {
+  margin: 0 -1.25rem 1rem;
+  padding: 0.65rem 0.75rem 0.5rem;
+  background: linear-gradient(180deg, #f1f5f9 0%, #ffffff 55%);
+  border-bottom: 1px solid #e2e8f0;
+  text-align: center;
+}
+.train-card__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 112px;
+  margin: 0 auto;
+  object-fit: contain;
 }
 .train-card:hover {
   transform: translateY(-2px);
@@ -143,6 +389,12 @@
   opacity: 0.72;
   pointer-events: none;
   cursor: default;
+}
+/** Highlight a single practice quiz on the list (e.g. Quote & call). */
+.train-card--featured {
+  border: 2px solid rgba(212, 175, 55, 0.55);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(212, 175, 55, 0.12);
 }
 .train-footnote {
   margin-top: 2rem;
@@ -208,7 +460,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  min-height: 280px;
+  min-height: 220px;
   background: #f8fafc;
 }
 .chat-bubble {

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Friendly Party Rental – Customer Quote</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #111; font-size: 11pt; }
+  @media print { .no-print { display: none !important; } body { font-size: 10pt; } }
+
+  .page { max-width: 780px; margin: 0 auto; padding: 30px 36px; }
+
+  /* HEADER */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 4px solid #1f4cff; padding-bottom: 14px; margin-bottom: 20px; }
+  .brand h1 { font-size: 24pt; font-weight: 900; color: #1f4cff; line-height: 1; }
+  .brand p { font-size: 9.5pt; color: #666; margin-top: 4px; }
+  .contact { text-align: right; font-size: 9.5pt; color: #444; line-height: 2; }
+
+  /* QUOTE TITLE */
+  .quote-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+  .quote-header h2 { font-size: 18pt; font-weight: 900; text-transform: uppercase; letter-spacing: 1.5px; color: #222; }
+  .quote-id { text-align: right; }
+  .badge { display: inline-block; background: #f0f3ff; border: 1.5px solid #b0bfff; color: #1f4cff; font-size: 8pt; font-weight: 800; padding: 3px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .id-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .id-row label { font-size: 9pt; color: #666; white-space: nowrap; min-width: 58px; text-align: right; }
+  .id-row input { border: none; border-bottom: 1.5px solid #aaa; font-size: 10pt; font-family: Arial; width: 160px; padding: 2px 4px; outline: none; background: transparent; }
+
+  /* SECTION LABEL */
+  .section-label { font-size: 8pt; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #1f4cff; margin-bottom: 10px; padding-bottom: 4px; border-bottom: 1.5px solid #dde3ff; }
+
+  /* TWO-COL FORM GRID */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+
+  /* FORM FIELDS - big and easy to type into */
+  .field-group { margin-bottom: 12px; }
+  .field-group:last-child { margin-bottom: 0; }
+  .field-group label { display: block; font-size: 8.5pt; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+  .field-group input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid #bbb;
+    font-size: 11.5pt;
+    font-family: Arial;
+    padding: 4px 2px;
+    outline: none;
+    background: transparent;
+    color: #111;
+    transition: border-color 0.15s;
+  }
+  .field-group input:focus { border-bottom-color: #1f4cff; }
+
+  /* ITEMS TABLE */
+  .items-wrap { margin-bottom: 18px; }
+  .items-table { width: 100%; border-collapse: collapse; }
+  .items-table thead tr { background: #1f4cff; }
+  .items-table thead th { color: #fff; font-size: 9pt; font-weight: 700; padding: 9px 10px; text-align: left; }
+  .items-table thead th.c { text-align: center; }
+  .items-table thead th.r { text-align: right; }
+  .items-table tbody tr { border-bottom: 1px solid #e8eaf5; }
+  .items-table tbody tr:nth-child(even) { background: #f8f9ff; }
+  .items-table tbody td { padding: 0; }
+  .items-table tbody td input {
+    width: 100%;
+    border: none;
+    font-size: 10.5pt;
+    font-family: Arial;
+    padding: 9px 10px;
+    outline: none;
+    background: transparent;
+    color: #111;
+  }
+  .items-table tbody td input:focus { background: #eef1ff; }
+  .items-table tbody td input.c { text-align: center; }
+  .items-table tbody td input.r { text-align: right; }
+
+  /* TOTALS */
+  .totals-area { display: flex; justify-content: flex-end; margin-bottom: 22px; }
+  .totals-box { width: 300px; }
+  .t-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #eee; }
+  .t-row .lbl { font-size: 10pt; color: #555; }
+  .t-row input {
+    border: none;
+    border-bottom: 1px solid #bbb;
+    font-size: 10pt;
+    font-family: Arial;
+    text-align: right;
+    width: 120px;
+    padding: 2px 4px;
+    outline: none;
+    background: transparent;
+    color: #111;
+  }
+  .t-row input:focus { border-bottom-color: #1f4cff; }
+  .t-row.grand { border-bottom: 2.5px solid #1f4cff; margin-top: 4px; }
+  .t-row.grand .lbl { font-size: 13pt; font-weight: 900; color: #1f4cff; }
+  .t-row.grand input { font-size: 13pt; font-weight: 900; color: #1f4cff; border-bottom: none; }
+
+  /* DELIVERY + NOTES */
+  .bottom-two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+  .b-box { }
+  textarea.notes {
+    width: 100%;
+    height: 80px;
+    border: 1.5px solid #dde3ff;
+    border-radius: 5px;
+    padding: 9px 10px;
+    font-size: 10.5pt;
+    font-family: Arial;
+    resize: vertical;
+    color: #111;
+    outline: none;
+  }
+  textarea.notes:focus { border-color: #1f4cff; }
+
+  /* TERMS */
+  .terms { background: #fffbe6; border: 1.5px solid #ffd35b; border-radius: 6px; padding: 11px 14px; margin-bottom: 22px; font-size: 9pt; color: #555; line-height: 1.65; }
+  .terms strong { color: #333; }
+
+  /* SIGNATURES */
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 22px; }
+  .sig-box .sig-label { font-size: 9pt; color: #555; margin-bottom: 26px; }
+  .sig-line { border-bottom: 1.5px solid #555; margin-bottom: 5px; }
+  .sig-sub { font-size: 8.5pt; color: #aaa; }
+
+  /* FOOTER */
+  .footer { text-align: center; font-size: 8pt; color: #aaa; border-top: 1px solid #eee; padding-top: 10px; line-height: 1.9; }
+
+  /* PRINT BUTTON */
+  .no-print { text-align: center; padding: 22px 0 8px; }
+  .no-print button {
+    background: #1f4cff;
+    color: #fff;
+    border: none;
+    padding: 14px 38px;
+    font-size: 12pt;
+    font-weight: 800;
+    border-radius: 7px;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+  .no-print button:hover { background: #1637d8; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">
+      <h1>Friendly Party Rental</h1>
+      <p>Party &amp; Event Rentals — Syracuse, NY &amp; Surrounding Areas</p>
+    </div>
+    <div class="contact">
+      <strong>📞 315-884-1498</strong><br>
+      customerservice@friendlypartyrental.com<br>
+      330 Costello Parkway, Minoa, NY 13116<br>
+      www.friendlypartyrental.com
+    </div>
+  </div>
+
+  <!-- QUOTE TITLE + ID -->
+  <div class="quote-header">
+    <h2>Customer Quote</h2>
+    <div class="quote-id">
+      <div class="badge">Estimate Only</div>
+      <div class="id-row">
+        <label>Quote #:</label>
+        <input type="text" placeholder="e.g. 1042">
+      </div>
+      <div class="id-row">
+        <label>Date:</label>
+        <input type="text" placeholder="MM / DD / YYYY">
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER + EVENT INFO -->
+  <div class="two-col">
+    <div>
+      <div class="section-label">Customer Information</div>
+      <div class="field-group"><label>Name</label><input type="text" placeholder="Full name"></div>
+      <div class="field-group"><label>Phone</label><input type="tel" placeholder="(xxx) xxx-xxxx"></div>
+      <div class="field-group"><label>Email</label><input type="email" placeholder="email@example.com"></div>
+      <div class="field-group"><label>Address</label><input type="text" placeholder="Street, City, ZIP"></div>
+    </div>
+    <div>
+      <div class="section-label">Event Details</div>
+      <div class="field-group"><label>Event Type</label><input type="text" placeholder="Birthday, Wedding, Graduation…"></div>
+      <div class="field-group"><label>Event Date</label><input type="text" placeholder="MM / DD / YYYY"></div>
+      <div class="field-group"><label>Event Address</label><input type="text" placeholder="Venue / delivery address"></div>
+      <div class="field-group"><label>Guest Count</label><input type="text" placeholder="Approx. number of guests"></div>
+    </div>
+  </div>
+
+  <!-- RENTAL ITEMS TABLE -->
+  <div class="items-wrap">
+    <div class="section-label">Rental Items</div>
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th style="width:36%">Item / Description</th>
+          <th class="c" style="width:18%">Category</th>
+          <th class="c" style="width:8%">Qty</th>
+          <th class="r" style="width:18%">Unit Price</th>
+          <th class="r" style="width:20%">Line Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" class="c"></td><td><input type="text" class="c"></td><td><input type="text" class="r" placeholder="$"></td><td><input type="text" class="r" placeholder="$"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TOTALS -->
+  <div class="totals-area">
+    <div class="totals-box">
+      <div class="t-row"><span class="lbl">Subtotal</span><input type="text" placeholder="$"></div>
+      <div class="t-row"><span class="lbl">Delivery Fee</span><input type="text" placeholder="$"></div>
+      <div class="t-row"><span class="lbl">Setup / Breakdown Fee</span><input type="text" placeholder="$"></div>
+      <div class="t-row"><span class="lbl">Discount / Promo Code</span><input type="text" placeholder="- $"></div>
+      <div class="t-row"><span class="lbl">Sales Tax</span><input type="text" placeholder="$"></div>
+      <div class="t-row grand"><span class="lbl">TOTAL</span><input type="text" placeholder="$"></div>
+    </div>
+  </div>
+
+  <!-- DELIVERY WINDOW + NOTES -->
+  <div class="bottom-two">
+    <div class="b-box">
+      <div class="section-label">Delivery Window</div>
+      <div class="field-group"><label>Deliver By</label><input type="text" placeholder="Date &amp; time"></div>
+      <div class="field-group"><label>Pickup By</label><input type="text" placeholder="Date &amp; time"></div>
+      <div class="field-group"><label>Same-Day?</label><input type="text" placeholder="Yes / No"></div>
+    </div>
+    <div class="b-box">
+      <div class="section-label">Special Notes / Requests</div>
+      <textarea class="notes" placeholder="Setup instructions, access notes, special requests…"></textarea>
+    </div>
+  </div>
+
+  <!-- TERMS -->
+  <div class="terms">
+    <strong>Terms &amp; Conditions:</strong> This quote is valid for 7 days from the date above. A deposit is required to confirm your booking. All rentals are subject to availability. Damage/loss fees may apply. Cancellations must be made 48+ hours in advance. Use promo code <strong>SAVE20</strong> at online checkout for available discount. Final invoice will be issued upon booking confirmation.
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="sig-grid">
+    <div class="sig-box">
+      <div class="sig-label">Customer Signature (Acceptance of Quote)</div>
+      <div class="sig-line"></div>
+      <div class="sig-sub">Signature &amp; Date</div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-label">Prepared By (FPR Staff)</div>
+      <div class="sig-line"></div>
+      <div class="sig-sub">Name, Signature &amp; Date</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Friendly Party Rental L.L.C. &nbsp;|&nbsp; 330 Costello Parkway, Minoa, NY 13116 &nbsp;|&nbsp; 315-884-1498 &nbsp;|&nbsp; www.friendlypartyrental.com<br>
+    Serving Syracuse, Minoa, Cicero, Manlius, Camillus, DeWitt, Liverpool &amp; surrounding Central New York
+  </div>
+
+</div>
+
+<!-- PRINT BUTTON -->
+<div class="no-print">
+  <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+
+</body>
+</html>

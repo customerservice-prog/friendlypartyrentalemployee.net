@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Friendly Party Rental – Virtual Employee Call Script & FAQ Reference</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 10.5pt; color: #222; background: #fff; }
+  @media print { body { margin: 0; } .no-print { display: none; } .page { padding: 20px 28px; } }
+  .page { max-width: 820px; margin: 0 auto; padding: 26px 32px; }
+
+  .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #1f4cff; padding-bottom: 14px; margin-bottom: 18px; }
+  .header-left h1 { font-size: 20pt; color: #1f4cff; font-weight: 900; }
+  .header-left p { font-size: 9pt; color: #555; margin-top: 2px; }
+  .header-right { text-align: right; font-size: 9pt; color: #444; line-height: 1.7; }
+
+  .doc-title { font-size: 14pt; font-weight: 900; color: #333; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+
+  /* Quick Reference Bar */
+  .quick-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+  .quick-card { border-radius: 8px; padding: 10px 12px; text-align: center; }
+  .qc-blue { background: #e8edff; border: 1.5px solid #b0bfff; }
+  .qc-yellow { background: #fffbe6; border: 1.5px solid #ffd35b; }
+  .qc-green { background: #e8f7ee; border: 1.5px solid #7dc99e; }
+  .qc-red { background: #fff0f0; border: 1.5px solid #ffb3b3; }
+  .quick-card .icon { font-size: 18pt; }
+  .quick-card .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; color: #555; margin-top: 3px; }
+  .quick-card .value { font-size: 11pt; font-weight: 900; color: #222; margin-top: 2px; }
+
+  /* Sections */
+  .section { margin-bottom: 16px; border: 1.5px solid #e0e4f5; border-radius: 8px; overflow: hidden; }
+  .section-header { padding: 8px 14px; font-weight: bold; font-size: 10pt; display: flex; align-items: center; gap: 8px; }
+  .sh-blue { background: #1f4cff; color: white; }
+  .sh-yellow { background: #ffd35b; color: #333; }
+  .sh-green { background: #2e8b57; color: white; }
+  .sh-orange { background: #e67e22; color: white; }
+  .sh-purple { background: #6c3483; color: white; }
+  .section-body { padding: 12px 14px; }
+
+  /* Script bubbles */
+  .script-block { margin-bottom: 10px; }
+  .script-label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 3px; }
+  .lbl-say { color: #1f4cff; }
+  .lbl-do { color: #2e8b57; }
+  .lbl-ask { color: #e67e22; }
+  .lbl-avoid { color: #c0392b; }
+  .script-text { background: #f7f8ff; border-left: 4px solid #1f4cff; border-radius: 0 6px 6px 0; padding: 8px 12px; font-size: 10pt; line-height: 1.5; color: #333; }
+  .script-text.do { border-color: #2e8b57; background: #f0fbf4; }
+  .script-text.ask { border-color: #e67e22; background: #fffaf4; }
+  .script-text.avoid { border-color: #c0392b; background: #fff5f5; }
+  .script-text em { font-style: italic; color: #888; font-size: 9pt; }
+
+  /* FAQ Grid */
+  .faq-item { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; }
+  .faq-item:last-child { border-bottom: none; margin-bottom: 0; }
+  .faq-q { font-weight: bold; color: #1f4cff; font-size: 10pt; margin-bottom: 3px; }
+  .faq-q::before { content: "Q: "; }
+  .faq-a { font-size: 10pt; color: #333; line-height: 1.5; padding-left: 16px; }
+  .faq-a::before { content: "A: "; font-weight: bold; color: #2e8b57; margin-left: -16px; }
+
+  /* Categories list */
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+  .cat-item { font-size: 10pt; padding: 3px 0; border-bottom: 1px dashed #e0e4f5; color: #333; }
+  .cat-item::before { content: "•  "; color: #1f4cff; font-weight: bold; }
+
+  /* Escalation */
+  .escalation-box { background: #fff0f0; border: 1.5px solid #ffb3b3; border-radius: 6px; padding: 10px 14px; margin-bottom: 10px; }
+  .escalation-box h4 { color: #c0392b; font-size: 9.5pt; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .escalation-box ul { padding-left: 18px; }
+  .escalation-box li { font-size: 10pt; margin-bottom: 3px; color: #555; }
+
+  /* Service area */
+  .area-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .pill { background: #e8edff; border: 1px solid #b0bfff; border-radius: 20px; padding: 3px 10px; font-size: 9pt; color: #333; }
+
+  /* Booking steps */
+  .steps { counter-reset: step; }
+  .step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 7px; }
+  .step-num { background: #1f4cff; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 9pt; font-weight: bold; flex-shrink: 0; margin-top: 2px; }
+  .step-text { font-size: 10pt; color: #333; line-height: 1.4; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .footer { text-align: center; font-size: 8pt; color: #888; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 12px; }
+
+  .highlight { background: #fffbe6; padding: 1px 4px; border-radius: 3px; font-weight: bold; }
+
+  .no-print { text-align: center; padding: 16px; }
+  .no-print button { background: #1f4cff; color: white; border: none; padding: 12px 28px; font-size: 12pt; border-radius: 6px; cursor: pointer; font-weight: bold; }
+  .no-print button:hover { background: #1637d8; }
+
+  .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 8.5pt; font-weight: bold; }
+  .badge-blue { background: #1f4cff; color: white; }
+  .badge-gold { background: #ffd35b; color: #333; }
+  .badge-green { background: #2e8b57; color: white; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Friendly Party Rental</h1>
+      <p>Party &amp; Event Rentals — Syracuse, NY &amp; Surrounding Areas</p>
+    </div>
+    <div class="header-right">
+      📞 315-884-1498<br>
+      customerservice@friendlypartyrental.com<br>
+      330 Costello Parkway, Minoa, NY 13116
+    </div>
+  </div>
+
+  <div class="doc-title">📞 Virtual Employee — Call Script &amp; FAQ Reference Card</div>
+
+  <div class="badge-row">
+    <span class="badge badge-blue">Local &amp; Family-Owned</span>
+    <span class="badge badge-gold">⭐ 4.7 Stars (78 Reviews)</span>
+    <span class="badge badge-green">✅ On-Time Delivery Guarantee</span>
+  </div>
+
+  <!-- Quick Reference -->
+  <div class="quick-bar">
+    <div class="quick-card qc-blue">
+      <div class="icon">📞</div>
+      <div class="label">Main Phone</div>
+      <div class="value">315-884-1498</div>
+    </div>
+    <div class="quick-card qc-yellow">
+      <div class="icon">📧</div>
+      <div class="label">Email</div>
+      <div class="value" style="font-size:8.5pt;">customerservice@<br>friendlypartyrental.com</div>
+    </div>
+    <div class="quick-card qc-green">
+      <div class="icon">🌐</div>
+      <div class="label">Book Online</div>
+      <div class="value" style="font-size:9pt;">friendlypartyrental.com</div>
+    </div>
+    <div class="quick-card qc-red">
+      <div class="icon">🎟️</div>
+      <div class="label">Promo Code</div>
+      <div class="value">SAVE20</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- Greeting Script -->
+      <div class="section">
+        <div class="section-header sh-blue">📞 Inbound Call Script</div>
+        <div class="section-body">
+          <div class="script-block">
+            <div class="script-label lbl-say">▶ GREETING — Say</div>
+            <div class="script-text">"Thank you for calling Friendly Party Rental, this is [Your Name]! How can I help make your event amazing today?"</div>
+          </div>
+          <div class="script-block">
+            <div class="script-label lbl-ask">▶ QUALIFYING — Ask</div>
+            <div class="script-text ask">"Can I get your name and the date of your event? And what type of event is it — birthday, wedding, graduation, or something else?"</div>
+          </div>
+          <div class="script-block">
+            <div class="script-label lbl-ask">▶ NEEDS DISCOVERY — Ask</div>
+            <div class="script-text ask">"How many guests are you expecting? Do you have a venue already, or will this be outdoors? Are you looking for a tent, tables and chairs, or something fun like a bounce house or photobooth?"</div>
+          </div>
+          <div class="script-block">
+            <div class="script-label lbl-say">▶ BOOKING PITCH — Say</div>
+            <div class="script-text">"Great! We have everything you need. The easiest way to check availability and pricing is at <em>friendlypartyrental.com</em> — you can book right online! Would you like me to walk you through how it works?"</div>
+          </div>
+          <div class="script-block">
+            <div class="script-label lbl-say">▶ PROMO — Mention</div>
+            <div class="script-text">"By the way, we currently have a promo — use code <strong>SAVE20</strong> at checkout for a discount on your order!"</div>
+          </div>
+          <div class="script-block">
+            <div class="script-label lbl-say">▶ CLOSING — Say</div>
+            <div class="script-text">"Is there anything else I can help you with today? We'd love to be part of your event — we deliver, set up, and pick up so you can focus on having fun!"</div>
+          </div>
+          <div class="script-block">
+            <div class="script-label lbl-avoid">✖ AVOID — Do NOT say</div>
+            <div class="script-text avoid">"I don't know" without offering to find out. Always say: <em>"That's a great question — let me check on that and get back to you right away."</em></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Process -->
+      <div class="section">
+        <div class="section-header sh-green">✅ How Booking Works (Explain to Customers)</div>
+        <div class="section-body">
+          <div class="steps">
+            <div class="step"><span class="step-num">1</span><span class="step-text">Visit <strong>friendlypartyrental.com</strong> and click <strong>"Book Your Party Rentals Online"</strong></span></div>
+            <div class="step"><span class="step-num">2</span><span class="step-text">Choose your <strong>event date</strong> — the site will show available items</span></div>
+            <div class="step"><span class="step-num">3</span><span class="step-text">Browse categories and <strong>add items</strong> to your order</span></div>
+            <div class="step"><span class="step-num">4</span><span class="step-text">Enter delivery address, complete checkout — <strong>apply SAVE20</strong> at checkout</span></div>
+            <div class="step"><span class="step-num">5</span><span class="step-text">FPR delivers, sets up, and picks up — <strong>you just enjoy your event!</strong></span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Area -->
+      <div class="section">
+        <div class="section-header sh-orange">📍 Service Area</div>
+        <div class="section-body">
+          <p style="font-size:9.5pt;color:#555;margin-bottom:8px;">We are based in <strong>Minoa, NY</strong> and serve all of Central New York including:</p>
+          <div class="area-pills">
+            <span class="pill">Syracuse</span><span class="pill">Minoa</span><span class="pill">Cicero</span>
+            <span class="pill">Manlius</span><span class="pill">Camillus</span><span class="pill">DeWitt</span>
+            <span class="pill">Liverpool</span><span class="pill">East Syracuse</span><span class="pill">Fayetteville</span>
+            <span class="pill">Baldwinsville</span><span class="pill">Clay</span><span class="pill">Brewerton</span>
+          </div>
+          <p style="font-size:9pt;color:#888;margin-top:8px;"><em>Not sure if we deliver to a location? Check with the main office at 315-884-1498.</em></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+
+      <!-- FAQ -->
+      <div class="section">
+        <div class="section-header sh-purple">❓ Frequently Asked Questions</div>
+        <div class="section-body">
+          <div class="faq-item">
+            <div class="faq-q">How far in advance should I book?</div>
+            <div class="faq-a">As soon as possible — especially for peak summer months and weekends. We recommend booking at least 2–4 weeks in advance to ensure availability.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Do you deliver and set up?</div>
+            <div class="faq-a">Yes! We deliver, set up, and pick up all equipment. You don't have to lift a finger.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Do you do same-day delivery and pickup?</div>
+            <div class="faq-a">Yes — we offer same-day drop off and pickup on weekends, which is ideal for venues that have back-to-back bookings.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">What is your cancellation policy?</div>
+            <div class="faq-a">Cancellations must be made at least 48 hours in advance. Please contact us at 315-884-1498 or by email as soon as possible.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Is a deposit required?</div>
+            <div class="faq-a">Yes, a deposit is required to confirm and secure your booking date. Full details are provided during checkout.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How do I know what's available on my date?</div>
+            <div class="faq-a">Go to friendlypartyrental.com, click "Order By Date," enter your event date, and only available items will be shown.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Do you have package deals?</div>
+            <div class="faq-a">Yes! We have package deals that bundle popular items at a great value. Visit the "Package Deals" category online to see current options.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Is there a promo or discount available?</div>
+            <div class="faq-a">Yes — use promo code <span class="highlight">SAVE20</span> at online checkout for a discount. This is a limited-time offer.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Do you rent bounce houses and water slides?</div>
+            <div class="faq-a">Absolutely! We carry a selection of bounce houses and waterslides. Check availability for your date online.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">What payment methods do you accept?</div>
+            <div class="faq-a">For detailed payment questions, direct the customer to call 315-884-1498 or complete their order online.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- What We Rent -->
+      <div class="section">
+        <div class="section-header sh-orange">🎉 What We Rent (Full Categories)</div>
+        <div class="section-body">
+          <div class="cat-grid">
+            <div class="cat-item">Tables &amp; Folding Chairs</div>
+            <div class="cat-item">Throne Chairs</div>
+            <div class="cat-item">Tents (all sizes)</div>
+            <div class="cat-item">Dance Floors &amp; Add-ons</div>
+            <div class="cat-item">Package Deals</div>
+            <div class="cat-item">Beverage &amp; Food Service</div>
+            <div class="cat-item">Heating &amp; Cooling</div>
+            <div class="cat-item">Linens</div>
+            <div class="cat-item">Concessions</div>
+            <div class="cat-item">Yard Games</div>
+            <div class="cat-item">Lighting</div>
+            <div class="cat-item">Generators</div>
+            <div class="cat-item">Photobooth</div>
+            <div class="cat-item">Foam Machine</div>
+            <div class="cat-item">Inflatable Movie Screen</div>
+            <div class="cat-item">Bounce Houses / Waterslides</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Escalation -->
+      <div class="section">
+        <div class="section-header" style="background:#c0392b;color:white;">🚨 When to Escalate to Nicole / Management</div>
+        <div class="section-body">
+          <div class="escalation-box">
+            <h4>Escalate immediately if customer:</h4>
+            <ul>
+              <li>Is asking about a specific item's price and you can't find it</li>
+              <li>Had a delivery problem, damage, or missing item</li>
+              <li>Wants to negotiate pricing or a custom quote</li>
+              <li>Has a complaint that you can't resolve</li>
+              <li>Is asking about an order that's already confirmed</li>
+              <li>Needs same-day service or urgent accommodation</li>
+              <li>Has a question about tent permits or large event setup</li>
+            </ul>
+          </div>
+          <p style="font-size:9.5pt;color:#333;"><strong>Say:</strong> <em>"Let me connect you with our team who can help with that right away. May I place you on a brief hold, or can I take your number and have someone call you back within [timeframe]?"</em></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    Friendly Party Rental L.L.C. &nbsp;|&nbsp; 330 Costello Parkway, Minoa, NY 13116 &nbsp;|&nbsp; 315-884-1498 &nbsp;|&nbsp; www.friendlypartyrental.com<br>
+    Internal Reference — Virtual Employee Use Only
+  </div>
+
+</div>
+<div class="no-print">
+  <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+</body>
+</html>

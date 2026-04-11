@@ -43,7 +43,6 @@
         <a href="/">Home</a>
         <a href="/quizzes" aria-current="page">Quizzes</a>
         <a href="/assistant">AI assistant</a>
-        <a href="/ai-team">AI Team</a>
         <a href="/admin.html" class="train-nav-admin">Quiz results</a>
         <button type="button" class="train-signout" id="train-signout">
           Sign out
@@ -52,11 +51,23 @@
     </header>
 
     <main class="train-hub">
-      <h1>Training quizzes</h1>
-      <p class="lead">
-        Pick a module. The <strong>pricing quiz</strong> is server-scored and can be
-        saved to the manager dashboard; the others run in your browser for practice.
-      </p>
+      <div class="train-visual-hero">
+        <img
+          class="train-visual-hero__img"
+          src="/assets/illu-quizzes.svg"
+          width="160"
+          height="160"
+          alt="Illustration: clipboard quizzes with checks"
+          decoding="async"
+        />
+        <div class="train-visual-hero__body">
+          <h1>Training quizzes</h1>
+          <p class="lead">
+            Pick a module. The <strong>pricing quiz</strong> is server-scored and can be
+            saved to the manager dashboard; the others run in your browser for practice.
+          </p>
+        </div>
+      </div>
 
       <div class="train-cards">
         <a class="train-card" href="/quiz-pricing.html">
@@ -66,6 +77,14 @@
             submitted for records.
           </p>
           <span class="badge">50 questions · 20 min · scored</span>
+        </a>
+
+        <a class="train-card train-card--featured" href="/quiz-quote-calls.html">
+          <h2>Quote &amp; call skills quiz</h2>
+          <p>
+            Same two phone examples as the hub — practice quoting, intake, and professional tone. One attempt per device.
+          </p>
+          <span class="badge">18 questions · 12 min · quote focus</span>
         </a>
 
         <a class="train-card" href="/quiz-customer-service.html">
@@ -91,6 +110,48 @@
           <span class="badge">25 questions · 15 min</span>
         </a>
       </div>
+
+      <section class="train-docs-section" aria-labelledby="quizzes-docs-heading">
+        <h2 id="quizzes-docs-heading" class="train-audio-head">Job aids &amp; printable sheets</h2>
+        <p class="train-audio-lead">
+          Same references as the hub — open to view or print; use <strong>Print → Save as PDF</strong> to download.
+        </p>
+        <div class="train-docs-grid">
+          <a
+            class="train-doc-card"
+            href="/training-docs/fpr-customer-quote-sheet.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="train-doc-card__tag">Quote</span>
+            <h3>Customer quote sheet</h3>
+            <p>Fill-in quote layout for customers.</p>
+            <span class="train-doc-card__action">Open sheet →</span>
+          </a>
+          <a
+            class="train-doc-card"
+            href="/training-docs/fpr-call-script-faq-reference.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="train-doc-card__tag">Phone</span>
+            <h3>Call script &amp; FAQ reference</h3>
+            <p>Scripts, numbers, and FAQs for calls.</p>
+            <span class="train-doc-card__action">Open reference →</span>
+          </a>
+          <a
+            class="train-doc-card"
+            href="/training-docs/fpr-delivery-setup-checklist.html"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="train-doc-card__tag">Field</span>
+            <h3>Delivery &amp; setup checklist</h3>
+            <p>Field checklist for delivery and setup.</p>
+            <span class="train-doc-card__action">Open checklist →</span>
+          </a>
+        </div>
+      </section>
 
       <p class="train-footnote">
         <a href="/" style="color: inherit">← Back to hub</a>

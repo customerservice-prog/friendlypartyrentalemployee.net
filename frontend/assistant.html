@@ -21,16 +21,34 @@
         <a href="/">Home</a>
         <a href="/quizzes">Quizzes</a>
         <a href="/assistant" aria-current="page">AI assistant</a>
-        <a href="/ai-team">AI Team</a>
         <a href="/admin.html" class="train-nav-admin">Quiz results</a>
         <button type="button" class="train-signout" id="train-signout">Sign out</button>
       </nav>
     </header>
 
+    <div class="train-assistant-intro" aria-label="About this page">
+      <div class="train-visual-hero train-visual-hero--compact">
+        <img
+          class="train-visual-hero__img"
+          src="/assets/illu-ai-assistant.svg"
+          width="160"
+          height="160"
+          alt="Illustration: chat assistant with training checklist"
+          decoding="async"
+        />
+        <div>
+          <p class="train-visual-hero__label">AI training assistant</p>
+          <p class="train-visual-hero__blurb">
+            Trained on <strong>www.friendlypartyrental.com</strong> and Friendly Party Rental operations — <strong>our business only</strong>, not general topics. Covers rentals, pricing, bookings, and phone scripts. List prices and the expanded Q&amp;A library load after you sign in.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <div class="train-chat-wrap">
       <div class="train-chat-panel">
         <div class="train-chat-header">
-          🤖 AI assistant · Official training information
+          AI assistant · www.friendlypartyrental.com
         </div>
         <div class="train-chat-messages" id="msgs"></div>
         <form class="train-chat-form" id="chat-form">
@@ -82,7 +100,7 @@
 
         addBubble(
           "system",
-          "🤖 Assistant ready. After sign-in we load **official pricing** plus **staff training Q&A**. Each question is matched to that library **first** (fast, quiz-accurate). If there is no strong match and the server has OpenAI enabled, **cloud AI** fills in—otherwise topic shortcuts handle general questions."
+          "Ask anything about **Friendly Party Rental** and **www.friendlypartyrental.com** — rentals, pricing, bookings, delivery, and what to say on the phone. I only cover our business."
         );
 
         form.addEventListener("submit", async (e) => {
@@ -121,38 +139,24 @@
               history.push({ role: "assistant", content: kbHit });
               return;
             }
-            var triedCloud = false;
-            var api = { ok: false };
-            if (me.assistantUsesOpenAI && window.FPR_ASSISTANT_REPLY) {
-              triedCloud = true;
-              api = await window.FPR_ASSISTANT_REPLY(history);
-            }
-            if (!api.ok && api.status === 403 && api.message) {
-              addBubble("assistant", api.message);
-              history.push({ role: "assistant", content: api.message });
+            /** Keyword shortcuts (greetings, scripts) — instant, no network. */
+            var fastLocal =
+              window.FPR_TRY_FAST_LOCAL_REPLY &&
+              window.FPR_TRY_FAST_LOCAL_REPLY(text);
+            if (fastLocal) {
+              addBubble("assistant", fastLocal);
+              history.push({ role: "assistant", content: fastLocal });
               return;
             }
-            var usedCloud = api.ok && api.content;
-            var response = usedCloud
-              ? api.content
-              : window.FPR_LOCAL_AI(text);
-            if (
-              !usedCloud &&
-              triedCloud &&
-              (!api.ok || api.error === "timeout")
-            ) {
-              var note =
-                "*Live AI did not return an answer in time — showing the **offline training library** instead.*\n\n";
-              if (api.message && api.status === 502) {
-                note =
-                  "*" +
-                  api.message +
-                  "*\n\n";
-              }
-              response = note + response;
-            }
+            var response = window.FPR_LOCAL_AI(text);
             addBubble("assistant", response);
             history.push({ role: "assistant", content: response });
+          } catch (err) {
+            console.error("assistant chat", err);
+            addBubble(
+              "assistant",
+              "Something went wrong loading a reply. Refresh the page and try again, or call **315-884-1498**."
+            );
           } finally {
             sendBtn.disabled = false;
             input.focus();

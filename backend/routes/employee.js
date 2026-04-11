@@ -22,11 +22,6 @@ const {
 
 const router = express.Router();
 
-function openAiConfigured() {
-  const k = process.env.OPENAI_API_KEY;
-  return Boolean(k && String(k).trim());
-}
-
 router.use((_req, res, next) => {
   res.set("Cache-Control", "no-store");
   next();
@@ -134,7 +129,8 @@ router.get("/me", (req, res) => {
   res.json({
     employeeAuthenticated: !!req.session.employeeAuthenticated,
     assistantPausedForQuiz: Boolean(quizLock),
-    assistantUsesOpenAI: openAiConfigured(),
+    /** Always false: the staff assistant is trained in-app (pricing + Q&A); no cloud API. */
+    assistantUsesOpenAI: false,
     quizAssistantMessage: quizLock
       ? "The training assistant is paused while you have a quiz in progress. Finish or leave the quiz, then try again here."
       : "",

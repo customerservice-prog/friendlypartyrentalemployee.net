@@ -99,7 +99,7 @@ function readPort() {
   return n;
 }
 
-/** Allows long POST /api/chat (OpenAI retries); tunable if a reverse proxy needs alignment. */
+/** Long timeout for slow POST bodies (e.g. future uploads); align with reverse proxy if needed. */
 function readHttpRequestTimeoutMs() {
   const raw = process.env.HTTP_REQUEST_TIMEOUT_MS;
   if (raw == null || String(raw).trim() === "") return 420_000;
@@ -273,12 +273,12 @@ const htmlDirectPaths = new Map([
   ["/employee-login.html", "employee-login.html"],
   ["/quizzes.html", "quizzes.html"],
   ["/assistant.html", "assistant.html"],
-  ["/ai-team.html", "ai-team.html"],
   ["/admin.html", "admin.html"],
   ["/quiz-pricing.html", "quiz-pricing.html"],
   ["/quiz-products.html", "quiz-products.html"],
   ["/quiz-policies.html", "quiz-policies.html"],
   ["/quiz-customer-service.html", "quiz-customer-service.html"],
+  ["/quiz-quote-calls.html", "quiz-quote-calls.html"],
 ]);
 for (const [urlPath, basename] of htmlDirectPaths) {
   app.get(urlPath, (_req, res) => sendTrainPage(res, basename));
@@ -301,8 +301,13 @@ app.get("/assistant", (_req, res) => {
   sendTrainPage(res, "assistant.html");
 });
 
+/** Former multi-specialist page — one assistant now; keep bookmarks working. */
 app.get("/ai-team", (_req, res) => {
-  sendTrainPage(res, "ai-team.html");
+  res.redirect(302, "/assistant");
+});
+
+app.get("/ai-team.html", (_req, res) => {
+  res.redirect(302, "/assistant");
 });
 
 app.get("/employee-login", (_req, res) => {
@@ -323,6 +328,10 @@ app.get("/quiz-policies", (_req, res) => {
 
 app.get("/quiz-customer-service", (_req, res) => {
   sendTrainPage(res, "quiz-customer-service.html");
+});
+
+app.get("/quiz-quote-calls", (_req, res) => {
+  sendTrainPage(res, "quiz-quote-calls.html");
 });
 
 /**
@@ -536,12 +545,6 @@ async function start() {
         "EMPLOYEE_ACCESS_PIN matches the dev-only fallback — set a unique team PIN in production."
       );
     }
-    const openai = process.env.OPENAI_API_KEY;
-    if (!openai || String(openai).trim() === "") {
-      console.warn(
-        "OPENAI_API_KEY is not set — /api/chat is disabled; staff still get the in-browser assistant (pricing FAQ + topic replies)."
-      );
-    }
   }
 
   const listenPort = readPort();
@@ -559,10 +562,7 @@ async function start() {
     server.on("error", reject);
   });
 
-  /**
-   * Node’s default request timeout can close POST /api/chat before two OpenAI
-   * attempts at the max configured timeout (2 × 180s) finish.
-   */
+  /** Generous HTTP timeouts for slow clients / large payloads. */
   const reqMs = readHttpRequestTimeoutMs();
   httpServer.requestTimeout = reqMs;
   httpServer.headersTimeout = reqMs + 1_000;
